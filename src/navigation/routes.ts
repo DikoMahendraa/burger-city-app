@@ -1,4 +1,3 @@
-// routes.ts
 export const AppRoutes = {
   HOME: 'Home',
   PROFILE: 'Profile',
@@ -7,4 +6,5 @@ export const AppRoutes = {
 export const AuthRoutes = {
   SIGNIN: 'Signin',
   SIGNUP: 'Signup',
+  INTRO: 'Intro',
 };
