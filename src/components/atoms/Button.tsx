@@ -1,5 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, ViewStyle} from 'react-native';
+import {colors} from '../../constants';
 
 interface CustomButtonProps {
   icon?: React.ReactNode;
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#007bff',
+    backgroundColor: colors.primary,
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginLeft: 5,
+    fontWeight: '700',
   },
   icon: {
     marginRight: 5,
