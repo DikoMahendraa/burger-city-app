@@ -1,58 +1,112 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {LogIn, LogOut} from 'lucide-react-native';
-import {Input, Button} from '../components/atoms';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {LockKeyhole, Mail} from 'lucide-react-native';
+import {Input, Button, Gap, RadioButton} from '../components/atoms';
+import AuthLayout from '../layouts/AuthLayout';
+import {colors} from '../constants';
 
 const SignInScreen = () => {
   const [email] = useState('');
-  const [password, setPassword] = useState('');
+  const [password] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = () => {
     console.log('Logging in with:', email, password);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
-      <Input
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        error=""
-        prefix={<LogIn />}
-        suffix={<LogOut />}
-      />
-      <Input
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        error=""
-        prefix={<LogIn />}
-        suffix={<LogOut />}
-      />
-      <Button
-        text="Sign In"
-        onPress={handleLogin}
-        size="medium"
-        icon={<LogIn color="white" size={22} />}
-      />
-    </View>
+    <AuthLayout>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.title}>Welcome Back!</Text>
+          <Text style={styles.description}>Login to continue Burger City</Text>
+        </View>
+        <Gap height={40} />
+        <View>
+          <Input
+            placeholder="Email Address"
+            prefix={<Mail color={colors.disabled} size={20} />}
+            placeholderTextColor={colors.disabled}
+          />
+          <Gap height={8} />
+          <Input
+            placeholder="Password"
+            prefix={<LockKeyhole color={colors.disabled} size={20} />}
+            placeholderTextColor={colors.disabled}
+          />
+          <Gap height={10} />
+          <View style={styles.formInput}>
+            <RadioButton
+              label="Remember me"
+              onPress={() => setRememberMe(!rememberMe)}
+              selected={rememberMe}
+            />
+            <Text style={{color: colors.white}} />
+            <TouchableOpacity onPress={() => ({})}>
+              <Text style={styles.textForgotPassword}>Forgot password?</Text>
+            </TouchableOpacity>
+          </View>
+          <Gap height={34} />
+          <Button text="Sign In" onPress={handleLogin} size="large" />
+          <Gap height={34} />
+          <TouchableOpacity>
+            <Text style={styles.textSignIn}>New user? Sign up</Text>
+          </TouchableOpacity>
+          <Gap height={34} />
+          <Text style={styles.textTnc}>
+            By signing up you indicate that you have read and agreed to the
+            Patch <Text style={styles.textToS}>Terms of Service</Text>
+          </Text>
+        </View>
+      </View>
+    </AuthLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    position: 'absolute',
+    width: '100%',
+    paddingHorizontal: 32,
+    top: 240,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    textAlign: 'center',
+    color: colors.white,
+    fontSize: 20,
+    fontWeight: '800',
+  },
+  description: {
+    textAlign: 'center',
+    marginTop: 4,
+    color: colors.white,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  textForgotPassword: {
+    color: colors.disabled,
+    fontSize: 14,
+  },
+  textSignIn: {
+    color: colors.primary,
+    fontWeight: '700',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  formInput: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textTnc: {
+    flexWrap: 'wrap',
+    paddingHorizontal: 20,
+    color: colors.white,
+    fontWeight: '400',
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  textToS: {
+    fontWeight: '800',
   },
 });
 

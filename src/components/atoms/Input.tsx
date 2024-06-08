@@ -7,6 +7,7 @@ import {
   TextInputProps,
   ViewStyle,
 } from 'react-native';
+import {colors} from '../../constants';
 
 interface InputProps extends TextInputProps {
   variant?: 'small' | 'medium' | 'large';
@@ -25,16 +26,18 @@ const Input: React.FC<InputProps> = ({
   ...rest
 }) => {
   return (
-    <View
-      style={[
-        styles.container,
-        styles[variant],
-        style,
-        error ? styles.error : {},
-      ]}>
-      {prefix && <View style={styles.prefix}>{prefix}</View>}
-      <TextInput style={styles.input} {...rest} />
-      {suffix && <View style={styles.suffix}>{suffix}</View>}
+    <View>
+      <View
+        style={[
+          styles.container,
+          styles[variant],
+          style,
+          error ? styles.error : {},
+        ]}>
+        {prefix && <View style={styles.prefix}>{prefix}</View>}
+        <TextInput autoCapitalize="none" style={styles.input} {...rest} />
+        {suffix && <View style={styles.suffix}>{suffix}</View>}
+      </View>
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
@@ -44,14 +47,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
     borderRadius: 5,
-    paddingHorizontal: 10,
+    backgroundColor: colors.white,
+    paddingHorizontal: 15,
     paddingVertical: 8,
   },
   input: {
     flex: 1,
     fontSize: 16,
+    textTransform: 'lowercase',
   },
   prefix: {
     marginRight: 8,
@@ -69,10 +73,12 @@ const styles = StyleSheet.create({
     height: 60,
   },
   error: {
+    borderWidth: 1,
     borderColor: 'red',
   },
   errorText: {
-    color: 'red',
+    fontSize: 12,
+    color: colors.error,
     marginTop: 5,
   },
 });

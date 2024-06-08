@@ -9,7 +9,7 @@ const colors = {
   muted: '#a8a8a8', // Soft gray
   success: '#8ecae6', // Soft cyan
   warning: '#f4a261', // Soft orange
-  error: '#e76f51', // Soft coral
+  error: '#FF3333', // Soft coral
   info: '#457b9d', // Soft dark blue
   textPrimary: '#1d3557', // Soft navy blue
   textSecondary: '#457b9d', // Soft dark blue
