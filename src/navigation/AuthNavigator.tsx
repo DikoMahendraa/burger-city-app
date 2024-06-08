@@ -11,7 +11,7 @@ const AuthNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={AuthRoutes.INTRO}>
+      initialRouteName={AuthRoutes.SIGNIN}>
       <Stack.Screen name={AuthRoutes.INTRO} component={IntroScreen} />
       <Stack.Screen name={AuthRoutes.SIGNIN} component={SignInScreen} />
       <Stack.Screen name={AuthRoutes.SIGNUP} component={SignupScreen} />
