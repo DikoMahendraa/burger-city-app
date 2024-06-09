@@ -7,7 +7,9 @@ const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={AppRoutes.HOME}>
+    <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName={AppRoutes.HOME}>
       <Stack.Screen name={AppRoutes.HOME} component={HomeScreen} />
       <Stack.Screen name={AppRoutes.PROFILE} component={ProfileScreen} />
     </Stack.Navigator>
