@@ -1,18 +1,23 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {LockKeyhole, Mail} from 'lucide-react-native';
-import {Input, Button, Gap, RadioButton} from '../components/atoms';
-import AuthLayout from '../layouts/AuthLayout';
-import {colors} from '../constants';
+
+import {Input, Button, Gap, RadioButton} from '../../components/atoms';
+import AuthLayout from '../../layouts/AuthLayout';
+import {colors} from '../../constants';
+import {AuthRoutes, navigate} from '../../navigation';
+import {useAuthStore} from '../../stores';
 
 const SignInScreen = () => {
-  const [email] = useState('');
-  const [password] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const {login} = useAuthStore();
 
-  const handleLogin = () => {
-    console.log('Logging in with:', email, password);
-  };
+  const onLogin = useCallback(() => login('email', 'password'), [login]);
+  const onSignUp = useCallback(() => navigate(AuthRoutes.SIGN_UP_EMAIL), []);
+  const onForgotPassword = useCallback(
+    () => navigate(AuthRoutes.FORGOT_PASSWORD),
+    [],
+  );
 
   return (
     <AuthLayout>
@@ -42,14 +47,14 @@ const SignInScreen = () => {
               selected={rememberMe}
             />
             <Text style={{color: colors.white}} />
-            <TouchableOpacity onPress={() => ({})}>
+            <TouchableOpacity onPress={onForgotPassword}>
               <Text style={styles.textForgotPassword}>Forgot password?</Text>
             </TouchableOpacity>
           </View>
           <Gap height={34} />
-          <Button text="Sign In" onPress={handleLogin} size="large" />
+          <Button text="Sign In" onPress={onLogin} size="large" />
           <Gap height={34} />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onSignUp}>
             <Text style={styles.textSignIn}>New user? Sign up</Text>
           </TouchableOpacity>
           <Gap height={34} />

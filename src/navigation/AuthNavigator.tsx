@@ -1,9 +1,14 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import SignInScreen from '../screens/SignInScreen';
-import SignupScreen from '../screens/SignUpScreen';
 import {AuthRoutes} from './routes';
 import IntroScreen from '../screens/IntroScreen';
+import {
+  ForgotPasswordScreen,
+  SignInScreen,
+  SignUpWithEmailScreen,
+  SignUpWithPhoneNumber,
+  VerificationOTPScreen,
+} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -11,10 +16,25 @@ const AuthNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={AuthRoutes.SIGNIN}>
+      initialRouteName={AuthRoutes.INTRO}>
       <Stack.Screen name={AuthRoutes.INTRO} component={IntroScreen} />
-      <Stack.Screen name={AuthRoutes.SIGNIN} component={SignInScreen} />
-      <Stack.Screen name={AuthRoutes.SIGNUP} component={SignupScreen} />
+      <Stack.Screen name={AuthRoutes.SIGN_IN} component={SignInScreen} />
+      <Stack.Screen
+        name={AuthRoutes.SIGN_UP_EMAIL}
+        component={SignUpWithEmailScreen}
+      />
+      <Stack.Screen
+        name={AuthRoutes.SIGN_UP_PHONE}
+        component={SignUpWithPhoneNumber}
+      />
+      <Stack.Screen
+        name={AuthRoutes.VERIFY_OTP}
+        component={VerificationOTPScreen}
+      />
+      <Stack.Screen
+        name={AuthRoutes.FORGOT_PASSWORD}
+        component={ForgotPasswordScreen}
+      />
     </Stack.Navigator>
   );
 };
