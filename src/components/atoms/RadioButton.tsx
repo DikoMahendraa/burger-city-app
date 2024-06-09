@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from '../../constants';
 
 interface RadioButtonProps {
@@ -14,12 +14,12 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   onPress,
 }) => {
   return (
-    <TouchableWithoutFeedback style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.radioCircle}>
         {selected && <View style={styles.selectedRb} />}
       </View>
       <Text style={styles.radioText}>{label}</Text>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 

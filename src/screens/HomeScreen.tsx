@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
-import {navigate} from '../navigation';
+import {AppRoutes, navigate} from '../navigation';
 
 const HomeScreen = () => {
-  const goToProfile = () => navigate('Profile');
+  const goToProfile = () => navigate(AppRoutes.PROFILE);
 
   return (
     <View style={styles.container}>

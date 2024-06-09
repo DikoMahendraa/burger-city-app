@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Input;
+export default React.memo(Input);

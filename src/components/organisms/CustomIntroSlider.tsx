@@ -75,7 +75,7 @@ const CustomIntroSlider = ({slides}: TPropsCustomIntroSlider) => {
         <Button
           size="large"
           text="Get start here"
-          onPress={() => navigate(AuthRoutes.SIGNIN)}
+          onPress={() => navigate(AuthRoutes.SIGN_IN)}
         />
       </View>
     </AuthLayout>
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomIntroSlider;
+export default React.memo(CustomIntroSlider);

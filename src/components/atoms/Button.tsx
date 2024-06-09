@@ -7,6 +7,7 @@ interface CustomButtonProps {
   text?: string;
   onPress: () => void;
   suffix?: string;
+  disabled?: boolean;
   prefix?: string;
   size?: 'small' | 'medium' | 'large' | 'wide';
 }
@@ -16,6 +17,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   text,
   onPress,
   suffix,
+  disabled,
   prefix,
   size = 'medium',
 }) => {
@@ -39,7 +41,10 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   }
 
   return (
-    <TouchableOpacity style={buttonStyles} onPress={onPress}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={buttonStyles}
+      onPress={onPress}>
       {prefix && <Text style={styles.prefix}>{prefix}</Text>}
       {icon && icon}
       {text && <Text style={styles.text}>{text}</Text>}
@@ -91,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButton;
+export default React.memo(CustomButton);
