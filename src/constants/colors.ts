@@ -2,7 +2,7 @@ const colors = {
   primary: '#FF9F1C',
   white: '#FFFFFF',
   disabled: '#94908d',
-  secondary: '#457b9d', // Soft dark blue
+  disabledSoft: '#6C6C6C', // Soft dark blue
   background: '#f1faee', // Soft white
   accent: '#1d3557', // Soft navy blue
   highlight: '#e63946', // Soft red

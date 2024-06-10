@@ -7,10 +7,10 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
-import {Button} from '../atoms';
-import {colors} from '../../constants';
-import {AuthRoutes, navigate} from '../../navigation';
-import AuthLayout from '../../layouts/AuthLayout';
+import {Button} from '../../atoms';
+import {colors} from '../../../constants';
+import {AuthRoutes, navigate} from '../../../navigation';
+import {AuthLayout} from '../../../layouts';
 
 const {width, height} = Dimensions.get('window');
 

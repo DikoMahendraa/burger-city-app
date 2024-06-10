@@ -1,15 +1,9 @@
 import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 import {colors} from '../constants';
-import {Header} from '../components/molecules';
 
 const MainLayout = ({children}: {children: React.ReactNode}) => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header />
-      {children}
-    </SafeAreaView>
-  );
+  return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
 };
 
 export default MainLayout;

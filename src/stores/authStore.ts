@@ -7,7 +7,7 @@ type AuthState = {
 };
 
 export const useAuthStore = create<AuthState>(set => ({
-  isAuthenticated: true,
+  isAuthenticated: false,
   login: (email, password) => {
     console.log('Logging in with:', email, password);
     set({isAuthenticated: true});

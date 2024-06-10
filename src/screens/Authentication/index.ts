@@ -1,13 +1,13 @@
 import ForgotPasswordScreen from './ForgotPasswordScreen';
 import SignInScreen from './SignInScreen';
 import SignUpWithEmailScreen from './SignUpWithEmailScreen';
-import SignUpWithPhoneNumber from './SignUpWithPhoneNumber';
+import SignUpWithPhoneScreen from './SignUpWithPhoneScreen';
 import VerificationOTPScreen from './VerificationOTPScreen';
 
 export {
   ForgotPasswordScreen,
   SignInScreen,
   SignUpWithEmailScreen,
-  SignUpWithPhoneNumber,
+  SignUpWithPhoneScreen,
   VerificationOTPScreen,
 };

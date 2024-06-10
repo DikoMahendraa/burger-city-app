@@ -2,12 +2,12 @@ import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {LockKeyhole, Phone} from 'lucide-react-native';
 
-import {Input, Button, Gap} from '../../components/atoms';
-import AuthLayout from '../../layouts/AuthLayout';
-import {colors} from '../../constants';
-import {AuthRoutes, navigate} from '../../navigation';
+import {Input, Button, Gap} from '../../../components/atoms';
+import AuthLayout from '../../../layouts/AuthLayout';
+import {colors} from '../../../constants';
+import {AuthRoutes, navigate} from '../../../navigation';
 
-const SignUpWithPhoneNumber = () => {
+const SignUpWithPhoneOrganism = () => {
   const onNextVerify = useCallback(() => navigate(AuthRoutes.VERIFY_OTP), []);
   const onSignUp = useCallback(() => navigate(AuthRoutes.SIGN_UP_EMAIL), []);
 
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpWithPhoneNumber;
+export default SignUpWithPhoneOrganism;
