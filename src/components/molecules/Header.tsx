@@ -26,7 +26,7 @@ const Header: React.FC<TPropsHeader> = ({
           </>
         )}
       </TouchableOpacity>
-      <View>
+      <View style={styles.logoCenter}>
         <Image
           style={styles.logo}
           source={require('../../assets/images/logo-text.png')}
@@ -44,21 +44,30 @@ export default React.memo(Header);
 
 const styles = StyleSheet.create({
   header: {
+    position: 'relative',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 24,
     paddingHorizontal: 16,
     backgroundColor: colors.white,
-    shadowColor: colors.disabled,
+    shadowColor: colors['gray-01'],
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 5,
   },
+  logoCenter: {
+    marginTop: 10,
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+  },
   textLanguage: {
-    fontWeight: '700',
-    fontSize: 18,
+    fontWeight: '600',
+    fontSize: 14,
     color: colors.primary,
   },
   language: {
@@ -67,7 +76,6 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   logo: {
-    marginTop: 6,
     height: 22,
     width: 65,
   },

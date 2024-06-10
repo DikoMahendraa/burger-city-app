@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
   title: {
     color: colors.white,
     fontWeight: '800',
-    fontSize: 18,
+    fontSize: 16,
   },
   description: {
     color: colors.white,
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: 12,
   },
 });

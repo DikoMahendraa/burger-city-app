@@ -4,15 +4,16 @@ import {
   Image,
   StyleSheet,
   Text,
-  FlatList,
   ImageSourcePropType,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
+import {Search} from 'lucide-react-native';
+
 import {MainLayout} from '../../../layouts';
 import {Header} from '../../molecules';
 import {Button, Gap, Input} from '../../atoms';
 import {colors} from '../../../constants';
-import {Search} from 'lucide-react-native';
 
 const LIST_MENU = [
   {
@@ -52,27 +53,11 @@ const Card = ({
   </TouchableOpacity>
 );
 
-const CardList = () => {
-  return (
-    <FlatList
-      data={LIST_MENU}
-      renderItem={({item}) => (
-        <Card onPress={() => ({})} title={item.name} image={item.image} />
-      )}
-      keyExtractor={item => item.name}
-      numColumns={2}
-      columnWrapperStyle={styles.columnContainerCard}
-      contentContainerStyle={styles.containerCard}
-    />
-  );
-};
-
 const OurBurgerOrganism = () => {
   return (
     <MainLayout>
       <Header />
-      <Gap height={20} />
-
+      <Gap height={8} />
       <View style={styles.container}>
         <Input
           style={styles.input}
@@ -80,17 +65,31 @@ const OurBurgerOrganism = () => {
           prefix={<Search color={colors.disabled} size={20} />}
           placeholderTextColor={colors.disabled}
         />
-        <Gap height={20} />
-        <View style={styles.containerHero}>
-          <Image
-            style={styles.imageHero}
-            alt="image-ilustration-burger"
-            source={require('../../../assets/images/hero-burger.png')}
-          />
-        </View>
-        <Gap height={20} />
-        <CardList />
-        <Button onPress={() => ({})} text="Burger Menu" size="large" />
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.containerHero}>
+            <Image
+              style={styles.imageHero}
+              alt="image-ilustration-burger"
+              source={require('../../../assets/images/hero-burger.png')}
+            />
+          </View>
+          <Gap height={12} />
+          <View style={styles.containerCard}>
+            {LIST_MENU.map(item => {
+              return (
+                <Card
+                  onPress={() => ({})}
+                  title={item.name}
+                  image={item.image}
+                />
+              );
+            })}
+          </View>
+          <Gap height={20} />
+          <Button onPress={() => ({})} text="Burger Menu" size="large" />
+          <Gap height={20} />
+        </ScrollView>
       </View>
     </MainLayout>
   );
@@ -111,17 +110,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   input: {
-    borderColor: colors.disabledSoft,
+    borderColor: colors['gray-05'],
     borderWidth: 1,
-  },
-  columnContainerCard: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 10,
+    marginBottom: 12,
   },
   containerCard: {
+    flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 14,
+    gap: 12,
   },
   containerHero: {
     flexDirection: 'row',
@@ -130,10 +126,15 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 8,
     width: '48%',
+    backgroundColor: colors.white,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    elevation: 4,
+    shadowOffset: {width: 0, height: 2},
   },
   cardHero: {
     height: 80,

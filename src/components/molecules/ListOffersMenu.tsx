@@ -21,8 +21,8 @@ const LIST_OFFERS = [
     image: require('../../assets/images/best-offers/best-offer-2.png'),
   },
   {
-    name: 'Chicken Big Burger',
-    rating: 1,
+    name: 'Specials Big Burger',
+    rating: 5,
     image: require('../../assets/images/best-offers/best-offer-1.png'),
   },
 ];
@@ -31,7 +31,7 @@ const ListOffersMenu: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.containerLabel}>
-        <Label variant="large" weight="semibold" customText="Best Offers" />
+        <Label variant="normal" weight="semibold" customText="Best Offers" />
         <TouchableOpacity>
           <Text style={styles.textViewAll}>View All</Text>
         </TouchableOpacity>
@@ -41,6 +41,7 @@ const ListOffersMenu: React.FC = () => {
       <FlatList
         data={LIST_OFFERS}
         horizontal
+        showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
           <>
             <CardMenu

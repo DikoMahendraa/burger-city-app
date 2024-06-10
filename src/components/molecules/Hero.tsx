@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   containerTextHero: {
     position: 'absolute',
     top: 0,
-    width: '50%',
+    width: '70%',
     paddingVertical: 30,
     paddingHorizontal: 18,
   },

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
   },
   rating: {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   price: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
   },
 });
