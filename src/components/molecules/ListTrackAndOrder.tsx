@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Gap} from '../atoms';
 import {colors} from '../../constants';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 type TPropsCardTicket = {
   image: ImageSourcePropType;
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'relative',
-    height: scale(90),
+    height: scaleHeight(90),
     objectFit: 'cover',
     flexDirection: 'row',
     alignItems: 'center',
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   heroOrder: {
     width: scale(50),
-    height: scale(50),
+    height: scaleHeight(50),
     objectFit: 'contain',
   },
   title: {

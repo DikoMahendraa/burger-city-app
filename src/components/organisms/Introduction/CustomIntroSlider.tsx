@@ -11,7 +11,7 @@ import {Button} from '../../atoms';
 import {colors} from '../../../constants';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {AuthLayout} from '../../../layouts';
-import {scale} from '../../../utils';
+import {scale, scaleHeight} from '../../../utils';
 
 const {width, height} = Dimensions.get('window');
 
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   dot: {
     width: scale(10),
-    height: scale(10),
+    height: scaleHeight(10),
     backgroundColor: colors.white,
     borderRadius: 5,
   },

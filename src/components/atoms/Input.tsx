@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {colors} from '../../constants';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 interface InputProps extends TextInputProps {
   variant?: 'small' | 'medium' | 'large';
@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   small: {
-    height: scale(40),
+    height: scaleHeight(40),
   },
   medium: {
-    height: scale(50),
+    height: scaleHeight(50),
   },
   large: {
-    height: scale(60),
+    height: scaleHeight(60),
   },
   error: {
     borderWidth: 1,

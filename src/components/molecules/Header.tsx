@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ArrowLeft, Bell, ChevronDown} from 'lucide-react-native';
 import {colors} from '../../constants';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 type TPropsHeader = {
   isBack?: boolean;
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   logo: {
-    height: scale(22),
+    height: scaleHeight(22),
     width: scale(65),
   },
 });

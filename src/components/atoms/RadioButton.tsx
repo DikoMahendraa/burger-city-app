@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from '../../constants';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 interface RadioButtonProps {
   label: string;
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: scale(10),
   },
   radioCircle: {
-    height: scale(15),
+    height: scaleHeight(15),
     width: scale(15),
     borderRadius: 7.5,
     borderWidth: 2,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   selectedRb: {
     width: scale(8),
-    height: scale(8),
+    height: scaleHeight(8),
     borderRadius: 4,
     backgroundColor: colors.white,
   },

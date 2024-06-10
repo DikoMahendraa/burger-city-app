@@ -13,7 +13,7 @@ import {MainLayout} from '../../../layouts';
 import {Gap, Label} from '../../../components/atoms';
 import {colors} from '../../../constants';
 import {Header} from '../../../components/molecules';
-import {scale} from '../../../utils';
+import {scale, scaleHeight} from '../../../utils';
 
 const LIST_FAVORITES = [
   {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   cardContentImg: {
     width: scale(66),
-    height: scale(43),
+    height: scaleHeight(43),
     objectFit: 'contain',
   },
   description: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: scale(250),
-    height: scale(200),
+    height: scaleHeight(200),
     objectFit: 'contain',
   },
 });

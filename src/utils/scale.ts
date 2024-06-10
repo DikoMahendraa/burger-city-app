@@ -9,11 +9,24 @@ const activeHeight = height > width ? height : width;
 const widthBaseScale = activeWidth / 414;
 const heightBaseScale = activeHeight / 896;
 
+/**
+ * Menormalkan ukuran berdasarkan lebar atau tinggi layar perangkat.
+ * @param {number} size - Ukuran yang ingin dinormalkan.
+ * @param {string} [based='width'] - Berdasarkan 'width' atau 'height'.
+ * @returns {number} - Ukuran yang telah dinormalkan.
+ */
+
 function normalize(size: number, based: string = 'width') {
   const newSize =
     based === 'height' ? size * heightBaseScale : size * widthBaseScale;
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
 }
+
+/**
+ * Menormalkan lebar layout berdasarkan perangkat (tablet/ponsel) dan platform (iOS/Android).
+ * @param {number} layoutWidth - Lebar layout yang ingin dinormalkan.
+ * @returns {number} - Lebar layout yang telah dinormalkan.
+ */
 
 export function scale(layoutWidth: number) {
   let size;
@@ -33,6 +46,12 @@ export function scale(layoutWidth: number) {
 
   return size;
 }
+
+/**
+ * Menormalkan tinggi layout berdasarkan perangkat (tablet/ponsel) dan platform (iOS/Android).
+ * @param {number} layoutHeight - Tinggi layout yang ingin dinormalkan.
+ * @returns {number} - Tinggi layout yang telah dinormalkan.
+ */
 
 export function scaleHeight(layoutHeight: number) {
   let size;
