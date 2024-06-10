@@ -53,7 +53,7 @@ const CustomIntroSlider = ({slides}: TPropsCustomIntroSlider) => {
       <View style={[styles.titlePosition, styles.dotWrapper]}>
         {slides.map((_, i) => {
           const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
-          const scale = scrollX.interpolate({
+          const scalex = scrollX.interpolate({
             inputRange,
             outputRange: [0.8, 1.4, 0.8],
             extrapolate: 'clamp',
@@ -66,7 +66,7 @@ const CustomIntroSlider = ({slides}: TPropsCustomIntroSlider) => {
           return (
             <Animated.View
               key={i}
-              style={[styles.dot, {transform: [{scale}], opacity}]}
+              style={[styles.dot, {transform: [{scale: scalex}], opacity}]}
             />
           );
         })}
