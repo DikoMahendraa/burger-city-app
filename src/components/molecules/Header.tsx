@@ -1,6 +1,6 @@
+import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ArrowLeft, Bell, ChevronDown} from 'lucide-react-native';
-import React from 'react';
 import {colors} from '../../constants';
 
 type TPropsHeader = {
@@ -45,21 +45,20 @@ export default React.memo(Header);
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 24,
     paddingHorizontal: 16,
     backgroundColor: colors.white,
-    justifyContent: 'space-between',
-    alignItems: 'center',
     shadowColor: colors.disabled,
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    // Android elevation property
     elevation: 5,
   },
   textLanguage: {
-    fontSize: 18,
     fontWeight: '700',
+    fontSize: 18,
     color: colors.primary,
   },
   language: {
