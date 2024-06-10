@@ -1,7 +1,7 @@
 import Header from './Header';
-import CardTicket from './CardTicket';
 import Hero from './Hero';
 import CardMenu from './CardMenu';
 import ListOffersMenu from './ListOffersMenu';
+import ListTrackAndOrder from './ListTrackAndOrder';
 
-export {CardMenu, ListOffersMenu, Header, CardTicket, Hero};
+export {CardMenu, ListOffersMenu, Header, Hero, ListTrackAndOrder};

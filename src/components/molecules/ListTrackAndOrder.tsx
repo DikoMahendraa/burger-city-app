@@ -1,14 +1,13 @@
+import React from 'react';
 import {
-  TouchableOpacity,
   Image,
   ImageBackground,
+  ImageSourcePropType,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
-  ImageSourcePropType,
 } from 'react-native';
-import React from 'react';
-
 import {Gap} from '../atoms';
 import {colors} from '../../constants';
 
@@ -45,7 +44,25 @@ const CardTicket: React.FC<TPropsCardTicket> = ({
   );
 };
 
-export default React.memo(CardTicket);
+const ListTrackAndOrder = () => {
+  return (
+    <>
+      <CardTicket
+        title="Track Here"
+        description="Order to Track Your Food"
+        image={require('../../assets/images/burger-track.png')}
+      />
+      <Gap height={10} />
+      <CardTicket
+        title="Order Here"
+        description="Order to Track Your Food"
+        image={require('../../assets/images/burger-logo.png')}
+      />
+    </>
+  );
+};
+
+export default React.memo(ListTrackAndOrder);
 
 const styles = StyleSheet.create({
   container: {

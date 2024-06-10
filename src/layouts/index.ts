@@ -1,3 +1,4 @@
-// import entire layouts
+import AuthLayout from './AuthLayout';
+import MainLayout from './MainLayout';
 
-// export as named export
+export {AuthLayout, MainLayout};

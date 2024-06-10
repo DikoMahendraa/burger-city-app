@@ -50,6 +50,7 @@ const CardMenu: React.FC<THorizontalCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
+    maxHeight: 260,
     borderRadius: 8,
     overflow: 'hidden',
     width: 140,

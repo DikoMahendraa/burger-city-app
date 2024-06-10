@@ -10,7 +10,7 @@ import {Gap, Label} from '../atoms';
 import {CardMenu} from '../molecules';
 import {colors} from '../../constants';
 
-const ListOffersMenu = () => {
+const ListOffersMenu: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.containerLabel}>

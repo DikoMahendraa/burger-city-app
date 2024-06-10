@@ -1,6 +1,8 @@
 export const AppRoutes = {
   HOME: 'HOME',
   PROFILE: 'PROFILE',
+  OUR_BURGER: 'OUR BURGER',
+  FAVORITES: 'FAVORITES',
 } as const;
 
 export const AuthRoutes = {

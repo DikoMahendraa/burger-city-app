@@ -8,7 +8,7 @@ import {
   SignUpWithEmailScreen,
   SignUpWithPhoneNumber,
   VerificationOTPScreen,
-} from '../screens';
+} from '../screens/Authentication';
 
 const Stack = createStackNavigator();
 
