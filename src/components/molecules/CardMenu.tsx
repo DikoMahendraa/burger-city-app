@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {colors} from '../../constants';
 import {Gap} from '../atoms';
+import {scale} from '../../utils';
 
 type THorizontalCardProps = {
   imageUrl: ImageSourcePropType;
@@ -50,20 +51,20 @@ const CardMenu: React.FC<THorizontalCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    maxHeight: 260,
+    maxHeight: scale(260),
     borderRadius: 8,
     overflow: 'hidden',
-    width: 140,
+    width: scale(140),
   },
   image: {
     width: '100%',
     objectFit: 'cover',
-    maxHeight: 180,
+    maxHeight: scale(180),
     borderRadius: 8,
   },
 
   label: {
-    fontSize: 14,
+    fontSize: scale(14),
     fontWeight: '500',
   },
   rating: {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   price: {
-    fontSize: 14,
+    fontSize: scale(14),
     fontWeight: '600',
   },
 });

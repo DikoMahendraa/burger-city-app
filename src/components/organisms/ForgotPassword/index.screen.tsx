@@ -6,6 +6,7 @@ import {Input, Button, Gap} from '../../../components/atoms';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {colors} from '../../../constants';
 import {AuthRoutes, navigate} from '../../../navigation';
+import {scale} from '../../../utils';
 
 const ForgotPasswordOrganism = () => {
   const [input, setInput] = useState<string>();
@@ -175,34 +176,34 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    paddingHorizontal: 32,
-    top: 240,
+    paddingHorizontal: scale(32),
+    top: scale(240),
   },
   title: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 20,
+    fontSize: scale(20),
     fontWeight: '800',
   },
   description: {
     textAlign: 'center',
     marginTop: 4,
     color: colors.white,
-    fontSize: 14,
+    fontSize: scale(14),
     fontWeight: '600',
   },
   textForgotPassword: {
     color: colors.disabled,
-    fontSize: 14,
+    fontSize: scale(14),
   },
   textError: {
     color: colors.error,
-    fontSize: 12,
+    fontSize: scale(12),
   },
   textSignIn: {
     color: colors.white,
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: scale(14),
     textAlign: 'center',
   },
   textWithPhone: {

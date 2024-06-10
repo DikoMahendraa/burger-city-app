@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ArrowLeft, Bell, ChevronDown} from 'lucide-react-native';
 import {colors} from '../../constants';
+import {scale} from '../../utils';
 
 type TPropsHeader = {
   isBack?: boolean;
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 24,
-    paddingHorizontal: 16,
+    paddingVertical: scale(24),
+    paddingHorizontal: scale(16),
     backgroundColor: colors.white,
     shadowColor: colors['gray-01'],
     shadowOffset: {width: 0, height: 1},
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   textLanguage: {
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: scale(14),
     color: colors.primary,
   },
   language: {
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   logo: {
-    height: 22,
-    width: 65,
+    height: scale(22),
+    width: scale(65),
   },
 });

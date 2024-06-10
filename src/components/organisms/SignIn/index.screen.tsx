@@ -7,6 +7,7 @@ import AuthLayout from '../../../layouts/AuthLayout';
 import {colors} from '../../../constants';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {useAuthStore} from '../../../stores';
+import {scale} from '../../../utils';
 
 const SignInOrganism = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -72,30 +73,30 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    paddingHorizontal: 32,
-    top: 240,
+    paddingHorizontal: scale(32),
+    top: scale(240),
   },
   title: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 20,
+    fontSize: scale(20),
     fontWeight: '800',
   },
   description: {
     textAlign: 'center',
     marginTop: 4,
     color: colors.white,
-    fontSize: 14,
+    fontSize: scale(14),
     fontWeight: '600',
   },
   textForgotPassword: {
     color: colors.disabled,
-    fontSize: 14,
+    fontSize: scale(14),
   },
   textSignIn: {
     color: colors.primary,
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: scale(14),
     textAlign: 'center',
   },
   formInput: {
@@ -104,10 +105,10 @@ const styles = StyleSheet.create({
   },
   textTnc: {
     flexWrap: 'wrap',
-    paddingHorizontal: 20,
+    paddingHorizontal: scale(20),
     color: colors.white,
     fontWeight: '400',
-    fontSize: 12,
+    fontSize: scale(12),
     textAlign: 'center',
   },
   textToS: {

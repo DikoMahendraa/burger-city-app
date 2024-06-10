@@ -1,6 +1,7 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../constants';
+import {scale} from '../../utils';
 
 const Hero = () => {
   return (
@@ -29,20 +30,20 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   heroImg: {
-    height: 232,
+    height: scale(232),
     width: '100%',
     objectFit: 'fill',
   },
   containerTextHero: {
     position: 'absolute',
     top: 0,
-    width: '70%',
-    paddingVertical: 30,
-    paddingHorizontal: 18,
+    width: scale(300),
+    paddingVertical: scale(30),
+    paddingHorizontal: scale(18),
   },
   textHero: {
     fontWeight: '800',
-    fontSize: 24,
+    fontSize: scale(24),
     lineHeight: 40,
     color: colors.white,
   },

@@ -13,6 +13,7 @@ import {MainLayout} from '../../../layouts';
 import {Gap, Label} from '../../../components/atoms';
 import {colors} from '../../../constants';
 import {Header} from '../../../components/molecules';
+import {scale} from '../../../utils';
 
 const LIST_FAVORITES = [
   {
@@ -92,8 +93,8 @@ const FavoriteOrganism: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingHorizontal: scale(24),
+    paddingVertical: scale(12),
   },
   card: {
     backgroundColor: colors.white,
@@ -114,18 +115,18 @@ const styles = StyleSheet.create({
   },
   cardContentTitle: {
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: scale(16),
   },
   cardContent: {
     flexDirection: 'row',
   },
   cardContentPrice: {
-    fontSize: 14,
+    fontSize: scale(14),
     color: colors.disabledSoft,
   },
   cardContentImg: {
-    width: 66,
-    height: 43,
+    width: scale(66),
+    height: scale(43),
     objectFit: 'contain',
   },
   description: {
@@ -133,9 +134,9 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 22,
     marginTop: 22,
-    fontSize: 16,
+    fontSize: scale(16),
     color: colors.disabled,
-    paddingHorizontal: 60,
+    paddingHorizontal: scale(60),
   },
   containerContain: {
     flex: 1,
@@ -144,8 +145,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 250,
-    height: 200,
+    width: scale(250),
+    height: scale(200),
     objectFit: 'contain',
   },
 });

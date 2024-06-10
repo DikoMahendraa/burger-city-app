@@ -1,5 +1,5 @@
 import React from 'react';
-import OurBurgerOrganism from '../../components/organisms/OurBurger/index.screen';
+import {OurBurgerOrganism} from '../../components/organisms';
 
 const OurBurgerScreen = () => {
   return <OurBurgerOrganism />;

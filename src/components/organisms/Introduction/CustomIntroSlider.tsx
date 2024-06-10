@@ -11,6 +11,7 @@ import {Button} from '../../atoms';
 import {colors} from '../../../constants';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {AuthLayout} from '../../../layouts';
+import {scale} from '../../../utils';
 
 const {width, height} = Dimensions.get('window');
 
@@ -93,8 +94,8 @@ const styles = StyleSheet.create({
   },
   titlePosition: {
     position: 'absolute',
-    marginLeft: 42,
-    bottom: 240,
+    marginLeft: scale(42),
+    bottom: scale(240),
   },
   title: {
     zIndex: 10,
@@ -107,18 +108,18 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     width: '100%',
-    bottom: 60,
-    paddingHorizontal: 42,
+    bottom: scale(60),
+    paddingHorizontal: scale(42),
   },
   dotWrapper: {
     gap: 4,
     flexDirection: 'row',
-    bottom: 220,
+    bottom: scale(220),
     width: '100%',
   },
   dot: {
-    width: 10,
-    height: 10,
+    width: scale(10),
+    height: scale(10),
     backgroundColor: colors.white,
     borderRadius: 5,
   },

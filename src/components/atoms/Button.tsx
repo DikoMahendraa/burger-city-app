@@ -1,6 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, ViewStyle} from 'react-native';
 import {colors} from '../../constants';
+import {scale} from '../../utils';
 
 interface CustomButtonProps {
   icon?: React.ReactNode;
@@ -60,28 +61,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.primary,
     borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: scale(10),
+    paddingHorizontal: scale(20),
   },
   small: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: scale(5),
+    paddingHorizontal: scale(10),
   },
   medium: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: scale(10),
+    paddingHorizontal: scale(20),
   },
   large: {
-    paddingVertical: 15,
-    paddingHorizontal: 25,
+    paddingVertical: scale(15),
+    paddingHorizontal: scale(25),
   },
   wide: {
-    paddingVertical: 10,
-    paddingHorizontal: 100,
+    paddingVertical: scale(10),
+    paddingHorizontal: scale(100),
   },
   text: {
     color: 'white',
-    fontSize: 16,
+    fontSize: scale(16),
     marginLeft: 5,
     fontWeight: '700',
   },

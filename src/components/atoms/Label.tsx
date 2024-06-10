@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, TextProps, StyleSheet} from 'react-native';
+import {scale} from '../../utils';
 
 interface CustomLabelProps extends TextProps {
   customText: string;
@@ -23,13 +24,13 @@ const CustomLabel: React.FC<CustomLabelProps> = ({
 
 const styles = StyleSheet.create({
   large: {
-    fontSize: 20,
+    fontSize: scale(20),
   },
   normal: {
-    fontSize: 16,
+    fontSize: scale(16),
   },
   small: {
-    fontSize: 14,
+    fontSize: scale(14),
   },
   bold: {
     fontWeight: '800',

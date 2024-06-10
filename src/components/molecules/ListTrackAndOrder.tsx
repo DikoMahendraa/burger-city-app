@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Gap} from '../atoms';
 import {colors} from '../../constants';
+import {scale} from '../../utils';
 
 type TPropsCardTicket = {
   image: ImageSourcePropType;
@@ -66,11 +67,11 @@ export default React.memo(ListTrackAndOrder);
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: scale(16),
   },
   image: {
     position: 'relative',
-    height: 90,
+    height: scale(90),
     objectFit: 'cover',
     flexDirection: 'row',
     alignItems: 'center',
@@ -84,18 +85,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   heroOrder: {
-    width: 50,
-    height: 50,
+    width: scale(50),
+    height: scale(50),
     objectFit: 'contain',
   },
   title: {
     color: colors.white,
     fontWeight: '800',
-    fontSize: 16,
+    fontSize: scale(16),
   },
   description: {
     color: colors.white,
     fontWeight: '600',
-    fontSize: 12,
+    fontSize: scale(12),
   },
 });

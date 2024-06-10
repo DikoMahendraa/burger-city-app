@@ -1,8 +1,8 @@
 import React from 'react';
-import FavoriteOrganism from '../../components/organisms/Favorites/index.screen';
+import {FavoritesOrganism} from '../../components/organisms';
 
 const FavoriteScreen = () => {
-  return <FavoriteOrganism />;
+  return <FavoritesOrganism />;
 };
 
 export default FavoriteScreen;

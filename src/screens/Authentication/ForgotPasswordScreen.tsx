@@ -1,5 +1,5 @@
 import React from 'react';
-import ForgotPasswordOrganism from '../../components/organisms/ForgotPassword/index.screen';
+import {ForgotPasswordOrganism} from '../../components/organisms';
 
 const ForgotPasswordScreen = () => {
   return <ForgotPasswordOrganism />;

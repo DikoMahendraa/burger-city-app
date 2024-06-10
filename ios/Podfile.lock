@@ -1166,6 +1166,8 @@ PODS:
     - React-logger (= 0.74.2)
     - React-perflogger (= 0.74.2)
     - React-utils (= 0.74.2)
+  - RNDeviceInfo (11.1.0):
+    - React-Core
   - RNGestureHandler (2.16.2):
     - DoubleConversion
     - glog
@@ -1271,6 +1273,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1390,6 +1393,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
@@ -1454,6 +1459,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 56b642bf605ba5afa500d35790928fc1d51565ad
   React-utils: 4476b7fcbbd95cfd002f3e778616155241d86e31
   ReactCommon: ecad995f26e0d1e24061f60f4e5d74782f003f12
+  RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
   RNGestureHandler: 2282cfbcf86c360d29f44ace393203afd5c6cff7
   RNScreens: b32a9ff15bea7fcdbe5dff6477bc503f792b1208
   RNSVG: a48668fd382115bc89761ce291a81c4ca5f2fd2e

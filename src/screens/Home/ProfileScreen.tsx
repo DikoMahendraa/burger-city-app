@@ -1,8 +1,8 @@
 import React from 'react';
-import ProfileOrganism from '../../components/organisms/Profiles/index.screen';
+import {ProfilesOrganism} from '../../components/organisms';
 
 const ProfileScreen = () => {
-  return <ProfileOrganism />;
+  return <ProfilesOrganism />;
 };
 
 export default ProfileScreen;

@@ -1,3 +1,3 @@
-// import entire file utils
+import {scale, scaleHeight} from './scale';
 
-// export as named
+export {scale, scaleHeight};

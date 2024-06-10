@@ -14,6 +14,7 @@ import {MainLayout} from '../../../layouts';
 import {Header} from '../../molecules';
 import {Button, Gap, Input} from '../../atoms';
 import {colors} from '../../../constants';
+import {scale} from '../../../utils';
 
 const LIST_MENU = [
   {
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
   },
   imageHero: {
     objectFit: 'cover',
-    height: 193,
+    height: scale(193),
     width: '100%',
     borderRadius: 8,
     backgroundColor: colors.white,
@@ -130,20 +131,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: scale(20),
     shadowColor: 'black',
     shadowOpacity: 0.2,
     elevation: 4,
     shadowOffset: {width: 0, height: 2},
   },
   cardHero: {
-    height: 80,
-    width: 80,
+    height: scale(80),
+    width: scale(80),
     objectFit: 'contain',
   },
   cardLabel: {
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: scale(16),
   },
 });
 

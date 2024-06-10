@@ -6,6 +6,7 @@ import {Input, Button, Gap} from '../../../components/atoms';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {colors} from '../../../constants';
 import {AuthRoutes, navigate} from '../../../navigation';
+import {scale} from '../../../utils';
 
 const SignUpWithEmailOrganism = () => {
   const onNextVerify = useCallback(() => navigate(AuthRoutes.VERIFY_OTP), []);
@@ -72,26 +73,26 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    paddingHorizontal: 32,
-    top: 240,
+    paddingHorizontal: scale(32),
+    top: scale(240),
   },
   title: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 22,
+    fontSize: scale(22),
     fontWeight: '800',
   },
   description: {
     textAlign: 'center',
     marginTop: 4,
     color: colors.white,
-    fontSize: 16,
+    fontSize: scale(16),
     fontWeight: '600',
   },
   textSignIn: {
     color: colors.white,
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: scale(14),
     textAlign: 'center',
   },
   textWithPhone: {

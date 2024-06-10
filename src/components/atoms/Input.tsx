@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {colors} from '../../constants';
+import {scale} from '../../utils';
 
 interface InputProps extends TextInputProps {
   variant?: 'small' | 'medium' | 'large';
@@ -49,12 +50,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: colors.white,
-    paddingHorizontal: 15,
+    paddingHorizontal: scale(15),
     paddingVertical: 8,
   },
   input: {
     flex: 1,
-    fontSize: 16,
+    fontSize: scale(16),
     textTransform: 'lowercase',
   },
   prefix: {
@@ -64,20 +65,20 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   small: {
-    height: 40,
+    height: scale(40),
   },
   medium: {
-    height: 50,
+    height: scale(50),
   },
   large: {
-    height: 60,
+    height: scale(60),
   },
   error: {
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: colors.error,
   },
   errorText: {
-    fontSize: 12,
+    fontSize: scale(12),
     color: colors.error,
     marginTop: 5,
   },
