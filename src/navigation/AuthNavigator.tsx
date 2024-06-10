@@ -6,7 +6,7 @@ import {
   ForgotPasswordScreen,
   SignInScreen,
   SignUpWithEmailScreen,
-  SignUpWithPhoneNumber,
+  SignUpWithPhoneScreen,
   VerificationOTPScreen,
 } from '../screens/Authentication';
 
@@ -25,7 +25,7 @@ const AuthNavigator = () => {
       />
       <Stack.Screen
         name={AuthRoutes.SIGN_UP_PHONE}
-        component={SignUpWithPhoneNumber}
+        component={SignUpWithPhoneScreen}
       />
       <Stack.Screen
         name={AuthRoutes.VERIFY_OTP}
