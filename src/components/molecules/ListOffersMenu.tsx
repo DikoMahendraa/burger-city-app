@@ -1,14 +1,31 @@
-import {
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
 import {Gap, Label} from '../atoms';
 import {CardMenu} from '../molecules';
 import {colors} from '../../constants';
+
+const LIST_OFFERS = [
+  {
+    name: 'Cheesy Burger',
+    rating: 4,
+    image: require('../../assets/images/best-offers/best-offer-1.png'),
+  },
+  {
+    name: 'Chicken Big Burger',
+    rating: 3,
+    image: require('../../assets/images/best-offers/best-offer-3.png'),
+  },
+  {
+    name: 'Beef Burger',
+    rating: 4,
+    image: require('../../assets/images/best-offers/best-offer-2.png'),
+  },
+  {
+    name: 'Chicken Big Burger',
+    rating: 1,
+    image: require('../../assets/images/best-offers/best-offer-1.png'),
+  },
+];
 
 const ListOffersMenu: React.FC = () => {
   return (
@@ -21,35 +38,22 @@ const ListOffersMenu: React.FC = () => {
       </View>
       <Gap height={16} />
 
-      <ScrollView horizontal>
-        <CardMenu
-          label="Cheesy Burger"
-          price="50.000"
-          rating={4}
-          imageUrl={require('../../assets/images/best-offers/best-offer-1.png')}
-        />
-        <Gap width={12} />
-        <CardMenu
-          label="Cheesy Burger"
-          price="50.000"
-          rating={4}
-          imageUrl={require('../../assets/images/best-offers/best-offer-2.png')}
-        />
-        <Gap width={12} />
-        <CardMenu
-          label="Cheesy Burger"
-          price="50.000"
-          rating={4}
-          imageUrl={require('../../assets/images/best-offers/best-offer-3.png')}
-        />
-        <Gap width={12} />
-        <CardMenu
-          label="Cheesy Burger"
-          price="50.000"
-          rating={4}
-          imageUrl={require('../../assets/images/best-offers/best-offer-1.png')}
-        />
-      </ScrollView>
+      <FlatList
+        data={LIST_OFFERS}
+        horizontal
+        renderItem={({item}) => (
+          <>
+            <CardMenu
+              label={item.name}
+              price="50.000"
+              rating={item.rating}
+              imageUrl={item.image}
+            />
+            <Gap width={10} />
+          </>
+        )}
+        keyExtractor={item => item.name}
+      />
     </View>
   );
 };
