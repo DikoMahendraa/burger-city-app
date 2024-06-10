@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   normal: {
-    fontSize: 18,
+    fontSize: 16,
   },
   small: {
     fontSize: 14,

@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeOrganism from '../../components/organisms/Home/index.screen';
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
   return <HomeOrganism />;
 };
 

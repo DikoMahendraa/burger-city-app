@@ -1,45 +1,149 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  ImageSourcePropType,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import {Search} from 'lucide-react-native';
+
+import {MainLayout} from '../../../layouts';
+import {Header} from '../../molecules';
+import {Button, Gap, Input} from '../../atoms';
+import {colors} from '../../../constants';
+
+const LIST_MENU = [
+  {
+    name: 'Value meals',
+    image: require('../../../assets/images/list-menus/menu-1.png'),
+  },
+  {
+    name: 'Salads / Sides',
+    image: require('../../../assets/images/list-menus/menu-2.png'),
+  },
+  {
+    name: 'Beverages',
+    image: require('../../../assets/images/list-menus/menu-3.png'),
+  },
+  {
+    name: 'Desserts',
+    image: require('../../../assets/images/list-menus/menu-4.png'),
+  },
+];
+
+const Card = ({
+  title,
+  image,
+  onPress,
+}: {
+  title: string;
+  onPress: () => void;
+  image: ImageSourcePropType;
+}) => (
+  <TouchableOpacity onPress={onPress} style={styles.card}>
+    <Image
+      style={styles.cardHero}
+      alt={`ilustration-${title}`}
+      source={image}
+    />
+    <Text style={styles.cardLabel}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const OurBurgerOrganism = () => {
   return (
-    <View style={styles.container}>
-      <Image
-        source={{uri: 'https://via.placeholder.com/150'}}
-        style={styles.profileImage}
-      />
-      <Text style={styles.name}>John Doe</Text>
-      <Text style={styles.bio}>
-        Software Developer at XYZ Company. Passionate about technology and
-        open-source projects.
-      </Text>
-    </View>
+    <MainLayout>
+      <Header />
+      <Gap height={8} />
+      <View style={styles.container}>
+        <Input
+          style={styles.input}
+          placeholder="Search for a Food"
+          prefix={<Search color={colors.disabled} size={20} />}
+          placeholderTextColor={colors.disabled}
+        />
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.containerHero}>
+            <Image
+              style={styles.imageHero}
+              alt="image-ilustration-burger"
+              source={require('../../../assets/images/hero-burger.png')}
+            />
+          </View>
+          <Gap height={12} />
+          <View style={styles.containerCard}>
+            {LIST_MENU.map(item => {
+              return (
+                <Card
+                  onPress={() => ({})}
+                  title={item.name}
+                  image={item.image}
+                />
+              );
+            })}
+          </View>
+          <Gap height={20} />
+          <Button onPress={() => ({})} text="Burger Menu" size="large" />
+          <Gap height={20} />
+        </ScrollView>
+      </View>
+    </MainLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.white,
+    paddingHorizontal: 24,
+    overflow: 'hidden',
+  },
+  imageHero: {
+    objectFit: 'cover',
+    height: 193,
+    width: '100%',
+    borderRadius: 8,
+    backgroundColor: colors.white,
+  },
+  input: {
+    borderColor: colors['gray-05'],
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  containerCard: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  containerHero: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  card: {
+    borderRadius: 8,
+    width: '48%',
+    backgroundColor: colors.white,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f0f0f0',
+    paddingVertical: 20,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    elevation: 4,
+    shadowOffset: {width: 0, height: 2},
   },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
+  cardHero: {
+    height: 80,
+    width: 80,
+    objectFit: 'contain',
   },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  bio: {
+  cardLabel: {
+    fontWeight: '700',
     fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
   },
 });
 

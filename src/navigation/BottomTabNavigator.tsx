@@ -9,6 +9,7 @@ import {
   ProfileScreen,
 } from '../screens/Home';
 import {colors} from '../constants';
+import {Text, TextStyle} from 'react-native';
 
 const LIST_TABS = [
   {
@@ -35,6 +36,19 @@ const LIST_TABS = [
 
 const Tab = createBottomTabNavigator();
 
+const TabItem: React.FC<{focused: boolean; name: string}> = ({
+  focused,
+  name,
+}) => {
+  const textStyles = {
+    fontWeight: focused ? '600' : '400',
+    textTransform: 'capitalize',
+    fontSize: 12,
+    color: focused ? colors.primary : colors.disabled,
+  };
+  return <Text style={textStyles as TextStyle}>{name}</Text>;
+};
+
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
@@ -48,18 +62,10 @@ const BottomTabNavigator = () => {
         <Tab.Screen
           key={item.name}
           options={{
-            tabBarLabel: item.name,
-            tabBarLabelStyle: {
-              fontWeight: '400',
-              fontSize: 12,
-              textTransform: 'capitalize',
-            },
-            tabBarStyle: {
-              paddingTop: 4,
-              height: 80,
-            },
+            tabBarLabel: ({focused}) =>
+              (<TabItem name={item.name} focused={focused} />) as JSX.Element,
             tabBarIcon: ({color}) =>
-              (<item.icon color={color} size={22} />) as JSX.Element,
+              (<item.icon color={color} />) as JSX.Element,
           }}
           name={item.name}
           component={item.component}

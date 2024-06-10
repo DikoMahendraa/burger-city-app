@@ -28,7 +28,7 @@ const LIST_FAVORITES = [
     image: require('../../../assets/images/burger-menu/menu-2.png'),
   },
   {
-    name: 'Chicken Big Burger',
+    name: 'Specials Big Burger',
     image: require('../../../assets/images/burger-menu/menu-1.png'),
   },
 ];
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingVertical: 32,
+    paddingVertical: 12,
   },
   card: {
     backgroundColor: colors.white,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   cardContentPrice: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.disabledSoft,
   },
   cardContentImg: {
