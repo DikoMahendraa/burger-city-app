@@ -1,15 +1,16 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {CircleUser, Flame, Home, Star} from 'lucide-react-native';
-import {AppRoutes} from './routes';
+import {CircleUser, Utensils, Home, NotebookText} from 'lucide-react-native';
+import {Text, TextStyle} from 'react-native';
 import {
   FavoriteScreen,
   HomeScreen,
   OurBurgerScreen,
   ProfileScreen,
 } from '../screens/Home';
+import {AppRoutes} from './routes';
 import {colors} from '../constants';
-import {Text, TextStyle} from 'react-native';
+import {scale, scaleHeight} from '../utils';
 
 const LIST_TABS = [
   {
@@ -19,12 +20,12 @@ const LIST_TABS = [
   },
   {
     name: AppRoutes.OUR_BURGER,
-    icon: Flame,
+    icon: Utensils,
     component: OurBurgerScreen,
   },
   {
     name: AppRoutes.FAVORITES,
-    icon: Star,
+    icon: NotebookText,
     component: FavoriteScreen,
   },
   {
@@ -40,13 +41,16 @@ const TabItem: React.FC<{focused: boolean; name: string}> = ({
   focused,
   name,
 }) => {
-  const textStyles = {
+  const textStyles: TextStyle = {
     fontWeight: focused ? '600' : '400',
     textTransform: 'capitalize',
-    fontSize: 12,
+    fontSize: scale(12),
+    marginTop: -12,
+    textAlign: 'center',
     color: focused ? colors.primary : colors.disabled,
   };
-  return <Text style={textStyles as TextStyle}>{name}</Text>;
+  const replaceUnderScore = name.replaceAll('_', ' ');
+  return <Text style={textStyles}>{replaceUnderScore}</Text>;
 };
 
 const BottomTabNavigator = () => {
@@ -64,8 +68,25 @@ const BottomTabNavigator = () => {
           options={{
             tabBarLabel: ({focused}) =>
               (<TabItem name={item.name} focused={focused} />) as JSX.Element,
-            tabBarIcon: ({color}) =>
-              (<item.icon color={color} />) as JSX.Element,
+            tabBarIcon: ({color, focused}) =>
+              (
+                <item.icon
+                  strokeWidth={focused ? 3 : 2}
+                  color={color}
+                  size={20}
+                />
+              ) as JSX.Element,
+            tabBarStyle: {
+              height: scaleHeight(90),
+              backgroundColor: colors.white,
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+            },
+            tabBarItemStyle: {
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
           }}
           name={item.name}
           component={item.component}

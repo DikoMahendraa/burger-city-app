@@ -1,5 +1,7 @@
 const colors = {
   primary: '#FF9F1C',
+  dark: '#1D2126',
+  black: '#121212',
   white: '#FFFFFF',
   disabled: '#94908d',
   disabledSoft: '#6C6C6C',
@@ -27,6 +29,8 @@ const colors = {
   ['gray-03']: '#bfbfbf',
   ['gray-04']: '#c9c9c9',
   ['gray-05']: '#d9d9d9',
-};
+} as const;
 
 export default colors;
+
+export type TColors = keyof typeof colors;

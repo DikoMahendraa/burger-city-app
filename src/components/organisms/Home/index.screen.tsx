@@ -6,8 +6,8 @@ import {
   ListOffersMenu,
   ListTrackAndOrder,
 } from '../../../components/molecules';
-import {Gap} from '../../../components/atoms';
 import {MainLayout} from '../../../layouts';
+import {Gap} from '../../../components/atoms';
 
 const HomeOrganism: React.FC = () => {
   return (
@@ -18,8 +18,9 @@ const HomeOrganism: React.FC = () => {
         <Gap height={12} />
         <ListTrackAndOrder />
         <Gap height={24} />
-        <ListOffersMenu />
+        <ListOffersMenu label="Best Offers" />
         <Gap height={12} />
+        <ListOffersMenu label="Burgers Menu" />
       </ScrollView>
     </MainLayout>
   );

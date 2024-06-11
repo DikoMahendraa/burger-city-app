@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Gap} from '../atoms';
 import {colors} from '../../constants';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 type TPropsCardTicket = {
   image: ImageSourcePropType;
@@ -29,7 +29,8 @@ const CardTicket: React.FC<TPropsCardTicket> = ({
     <View style={styles.container}>
       <ImageBackground
         source={require('../../assets/images/ticket-background.png')}
-        resizeMode="cover"
+        resizeMethod="scale"
+        resizeMode="stretch"
         style={styles.image}>
         <TouchableOpacity onPress={onPress} style={styles.containTicket}>
           <Image style={styles.heroOrder} alt="hero-image" source={image} />
@@ -56,7 +57,7 @@ const ListTrackAndOrder = () => {
       <Gap height={10} />
       <CardTicket
         title="Order Here"
-        description="Order to Track Your Food"
+        description="Choice Your Delicious Burger"
         image={require('../../assets/images/burger-logo.png')}
       />
     </>
@@ -71,7 +72,8 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'relative',
-    height: scale(90),
+    height: scaleHeight(100),
+    width: '100%',
     objectFit: 'cover',
     flexDirection: 'row',
     alignItems: 'center',
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   },
   heroOrder: {
     width: scale(50),
-    height: scale(50),
+    height: scaleHeight(50),
     objectFit: 'contain',
   },
   title: {

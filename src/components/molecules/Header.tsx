@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ArrowLeft, Bell, ChevronDown} from 'lucide-react-native';
 import {colors} from '../../constants';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 type TPropsHeader = {
   isBack?: boolean;
@@ -27,6 +27,7 @@ const Header: React.FC<TPropsHeader> = ({
           </>
         )}
       </TouchableOpacity>
+
       <View style={styles.logoCenter}>
         <Image
           style={styles.logo}
@@ -34,6 +35,7 @@ const Header: React.FC<TPropsHeader> = ({
           alt="logo-title-burger"
         />
       </View>
+
       <TouchableOpacity onPress={onPressRight}>
         <Bell color={colors.disabled} />
       </TouchableOpacity>
@@ -60,6 +62,7 @@ const styles = StyleSheet.create({
   },
   logoCenter: {
     marginTop: 10,
+    zIndex: -2,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -72,12 +75,13 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   language: {
+    justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
     color: colors.primary,
   },
   logo: {
-    height: scale(22),
+    height: scaleHeight(22),
     width: scale(65),
   },
 });

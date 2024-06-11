@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {colors} from '../../constants';
 import {Gap} from '../atoms';
-import {scale} from '../../utils';
+import {scale, scaleHeight} from '../../utils';
 
 type THorizontalCardProps = {
   imageUrl: ImageSourcePropType;
@@ -51,7 +51,7 @@ const CardMenu: React.FC<THorizontalCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    maxHeight: scale(260),
+    maxHeight: scaleHeight(260),
     borderRadius: 8,
     overflow: 'hidden',
     width: scale(140),
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     objectFit: 'cover',
-    maxHeight: scale(180),
+    maxHeight: scaleHeight(180),
     borderRadius: 8,
   },
 

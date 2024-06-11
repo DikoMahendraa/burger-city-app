@@ -12,3 +12,7 @@ export const navigationRef =
 export function navigate(name: TAuthRoutes, params?: any) {
   navigationRef.current?.navigate(name, params);
 }
+
+export function goBack() {
+  navigationRef.current?.goBack();
+}

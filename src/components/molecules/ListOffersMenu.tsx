@@ -27,11 +27,11 @@ const LIST_OFFERS = [
   },
 ];
 
-const ListOffersMenu: React.FC = () => {
+const ListOffersMenu: React.FC<{label: string}> = ({label}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerLabel}>
-        <Label variant="normal" weight="semibold" customText="Best Offers" />
+        <Label variant="normal" weight="semibold" customText={label} />
         <TouchableOpacity>
           <Text style={styles.textViewAll}>View All</Text>
         </TouchableOpacity>

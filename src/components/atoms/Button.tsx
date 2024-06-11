@@ -1,15 +1,23 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet, ViewStyle} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import {colors} from '../../constants';
 import {scale} from '../../utils';
 
 interface CustomButtonProps {
   icon?: React.ReactNode;
   text?: string;
-  onPress: () => void;
-  suffix?: string;
+  onPress?: () => void;
+  suffix?: string | React.ReactNode;
   disabled?: boolean;
   prefix?: string;
+  textStyle?: TextStyle;
+  variant?: 'primary' | 'secondary' | 'transparent';
   size?: 'small' | 'medium' | 'large' | 'wide';
 }
 
@@ -20,9 +28,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   suffix,
   disabled,
   prefix,
+  textStyle,
+  variant = 'primary',
   size = 'medium',
 }) => {
-  let buttonStyles: ViewStyle[] = [styles.button];
+  let buttonStyles: ViewStyle[] = [styles.button, styles[variant]];
   switch (size) {
     case 'small':
       buttonStyles.push(styles.small);
@@ -48,7 +58,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       onPress={onPress}>
       {prefix && <Text style={styles.prefix}>{prefix}</Text>}
       {icon && icon}
-      {text && <Text style={styles.text}>{text}</Text>}
+      {text && <Text style={[styles.text, textStyle]}>{text}</Text>}
       {suffix && <Text style={styles.suffix}>{suffix}</Text>}
     </TouchableOpacity>
   );
@@ -59,10 +69,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.primary,
     borderRadius: 5,
     paddingVertical: scale(10),
     paddingHorizontal: scale(20),
+  },
+  primary: {
+    backgroundColor: colors.primary,
+  },
+  secondary: {
+    backgroundColor: colors.disabled,
+  },
+  transparent: {
+    backgroundColor: 'transparent',
   },
   small: {
     paddingVertical: scale(5),
@@ -78,13 +96,11 @@ const styles = StyleSheet.create({
   },
   wide: {
     paddingVertical: scale(10),
-    paddingHorizontal: scale(100),
+    width: '100%',
   },
   text: {
     color: 'white',
     fontSize: scale(16),
-    marginLeft: 5,
-    fontWeight: '700',
   },
   icon: {
     marginRight: 5,
