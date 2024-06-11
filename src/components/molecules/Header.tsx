@@ -27,6 +27,7 @@ const Header: React.FC<TPropsHeader> = ({
           </>
         )}
       </TouchableOpacity>
+
       <View style={styles.logoCenter}>
         <Image
           style={styles.logo}
@@ -34,6 +35,7 @@ const Header: React.FC<TPropsHeader> = ({
           alt="logo-title-burger"
         />
       </View>
+
       <TouchableOpacity onPress={onPressRight}>
         <Bell color={colors.disabled} />
       </TouchableOpacity>
@@ -60,6 +62,7 @@ const styles = StyleSheet.create({
   },
   logoCenter: {
     marginTop: 10,
+    zIndex: -2,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   language: {
+    justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
     color: colors.primary,

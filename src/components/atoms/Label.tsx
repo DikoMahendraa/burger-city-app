@@ -7,14 +7,14 @@ import {TColors} from '../../constants/colors';
 interface CustomLabelProps extends TextProps {
   customText: string;
   variant?: 'large' | 'normal' | 'small' | 'xsmall';
-  weight?: 'bold' | 'semibold' | 'normal';
+  weight?: 'bold' | 'semibold' | 'normalWeight';
   color?: TColors | ColorValue;
 }
 
 const CustomLabel: React.FC<CustomLabelProps> = ({
   customText,
   variant = 'normal',
-  weight = 'normal',
+  weight = 'normalWeight',
   color = colors.black,
   style,
   ...rest

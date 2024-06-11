@@ -12,7 +12,7 @@ import {Gap, Label} from '../../atoms';
 import {colors} from '../../../constants';
 import {CardBurgerItem} from '../../molecules';
 import {scale, scaleHeight} from '../../../utils';
-import {AppRoutes, navigate} from '../../../navigation';
+import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
 
 const ITEMS_BURGERS = [
   {
@@ -181,8 +181,17 @@ const DetailsBurgerMenuOrganism: React.FC<{
   };
 }> = ({route}) => {
   const {id, name, description} = route.params || {};
+  const hasViewMenu = id.includes('meals');
 
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
+
+  const onViewMenu = useCallback(() => {
+    if (hasViewMenu) {
+      navigate(AppDetailRoutes.DETAIL_BURGER_MEALS);
+    } else {
+      console.log('bookmarked');
+    }
+  }, [hasViewMenu]);
 
   return (
     <View style={styles.container}>
@@ -192,11 +201,12 @@ const DetailsBurgerMenuOrganism: React.FC<{
         renderItem={({item}) => (
           <View style={styles.containerCard}>
             <CardBurgerItem
+              hasButton
               name={item.name}
               image={item.image}
               price={item.price}
-              hasDetail
-              hasButton
+              hasDetail={hasViewMenu}
+              onPressIcon={onViewMenu}
               textButton="Add +"
               textButtonStyle={styles.fontSmall}
             />
@@ -220,7 +230,6 @@ const DetailsBurgerMenuOrganism: React.FC<{
                 <Label
                   variant="normal"
                   color={colors.disabledSoft}
-                  weight="normal"
                   customText={description}
                 />
               </View>
@@ -229,11 +238,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
               <Gap height={16} />
               <View>
                 <View style={styles.row}>
-                  <Label
-                    variant="small"
-                    weight="normal"
-                    customText="Delivery cost"
-                  />
+                  <Label variant="small" customText="Delivery cost" />
                   <Label
                     variant="normal"
                     weight="semibold"
@@ -245,7 +250,6 @@ const DetailsBurgerMenuOrganism: React.FC<{
                 <View style={styles.row}>
                   <Label
                     variant="small"
-                    weight="normal"
                     customText="Check for available promos"
                   />
 

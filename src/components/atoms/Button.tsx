@@ -12,11 +12,12 @@ import {scale} from '../../utils';
 interface CustomButtonProps {
   icon?: React.ReactNode;
   text?: string;
-  onPress: () => void;
+  onPress?: () => void;
   suffix?: string | React.ReactNode;
   disabled?: boolean;
   prefix?: string;
   textStyle?: TextStyle;
+  variant?: 'primary' | 'secondary' | 'transparent';
   size?: 'small' | 'medium' | 'large' | 'wide';
 }
 
@@ -28,9 +29,10 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   disabled,
   prefix,
   textStyle,
+  variant = 'primary',
   size = 'medium',
 }) => {
-  let buttonStyles: ViewStyle[] = [styles.button];
+  let buttonStyles: ViewStyle[] = [styles.button, styles[variant]];
   switch (size) {
     case 'small':
       buttonStyles.push(styles.small);
@@ -67,10 +69,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.primary,
     borderRadius: 5,
     paddingVertical: scale(10),
     paddingHorizontal: scale(20),
+  },
+  primary: {
+    backgroundColor: colors.primary,
+  },
+  secondary: {
+    backgroundColor: colors.disabled,
+  },
+  transparent: {
+    backgroundColor: 'transparent',
   },
   small: {
     paddingVertical: scale(5),
@@ -86,12 +96,11 @@ const styles = StyleSheet.create({
   },
   wide: {
     paddingVertical: scale(10),
-    paddingHorizontal: scale(100),
+    width: '100%',
   },
   text: {
     color: 'white',
     fontSize: scale(16),
-    marginLeft: 5,
   },
   icon: {
     marginRight: 5,

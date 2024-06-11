@@ -7,6 +7,7 @@ export const AppRoutes = {
 
 export const AppDetailRoutes = {
   DETAIL_BURGER_MENU: 'DETAIL_BURGER_MENU',
+  DETAIL_BURGER_MEALS: 'DETAIL_BURGER_MEALS',
 } as const;
 
 export const AuthRoutes = {

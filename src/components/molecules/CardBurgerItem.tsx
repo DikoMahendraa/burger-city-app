@@ -22,6 +22,8 @@ type TPropsCardBurgerItem = {
   hasDetail?: boolean;
   textButton?: string;
   textButtonStyle?: TextStyle;
+  onPressIcon?: () => void;
+  onPressButton?: () => void;
 };
 
 const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
@@ -32,6 +34,8 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
   textButton,
   textButtonStyle,
   hasDetail,
+  onPressButton,
+  onPressIcon,
 }) => {
   const hasButtonStyle: ViewStyle = {
     flexDirection: 'column',
@@ -52,7 +56,7 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
         </View>
       </View>
       <View style={hasButton ? hasButtonStyle : {}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPressIcon}>
           {hasDetail ? (
             <ChevronRight size={20} color={colors.primary} />
           ) : (
@@ -65,7 +69,7 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
             text={textButton}
             size="small"
             textStyle={textButtonStyle}
-            onPress={() => ({})}
+            onPress={onPressButton}
           />
         )}
       </View>

@@ -2,7 +2,7 @@ import React from 'react';
 import BottomTabNavigator from './BottomTabNavigator';
 import {createStackNavigator} from '@react-navigation/stack';
 import {AppDetailRoutes, AppRoutes} from './routes';
-import BurgerMenuScreen from '../screens/Home/BurgerMenuScreen';
+import {BurgerMealsScreen, BurgerMenuScreen} from '../screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +13,10 @@ const MainNavigator = () => {
       <Stack.Screen
         name={AppDetailRoutes.DETAIL_BURGER_MENU}
         component={BurgerMenuScreen}
+      />
+      <Stack.Screen
+        name={AppDetailRoutes.DETAIL_BURGER_MEALS}
+        component={BurgerMealsScreen}
       />
     </Stack.Navigator>
   );
