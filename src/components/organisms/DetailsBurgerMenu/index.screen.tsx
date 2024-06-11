@@ -14,7 +14,7 @@ import {CardBurgerItem} from '../../molecules';
 import {scale, scaleHeight} from '../../../utils';
 import {AppRoutes, navigate} from '../../../navigation';
 
-const LIST_ITEMS = [
+const ITEMS_BURGERS = [
   {
     id: 'cheese_burger',
     name: 'Cheesy Burger',
@@ -35,13 +35,135 @@ const LIST_ITEMS = [
   },
   {
     id: 'special_burger',
-    name: 'Specials Big Burger',
+    name: 'Chicken Spicy Burger',
     price: '49.260',
     image: require('../../../assets/images/burger-menu/menu-1.png'),
   },
 ];
 
-const SWITCH_HERO = {
+const ITEMS_BAVERAGES = [
+  {
+    id: 'pespi',
+    name: 'Pepsi Small',
+    price: '10.000',
+    image: require('../../../assets/images/list-baverages/baverages-1.png'),
+  },
+  {
+    id: 'cocal_small',
+    name: 'Coca Cola Small',
+    price: '10.000',
+    image: require('../../../assets/images/list-baverages/baverages-2.png'),
+  },
+  {
+    id: 'coca_large',
+    name: 'Coca Cola Large',
+    price: '10.000',
+    image: require('../../../assets/images/list-baverages/baverages-3.png'),
+  },
+  {
+    id: 'red_lemon_soda',
+    name: 'Red Lemon Soda',
+    price: '10.000',
+    image: require('../../../assets/images/list-baverages/baverages-4.png'),
+  },
+  {
+    id: 'blue_soda',
+    name: 'Bluesea Soda',
+    price: '10.000',
+    image: require('../../../assets/images/list-baverages/baverages-5.png'),
+  },
+];
+
+const ITEMS_SALADS = [
+  {
+    id: 'white_salads',
+    name: 'White Purple Salads',
+    price: '49.260',
+    image: require('../../../assets/images/list-salads/salad-1.png'),
+  },
+  {
+    id: 'dragon_salads',
+    name: 'Dragon Salads',
+    price: '49.260',
+    image: require('../../../assets/images/list-salads/salad-2.png'),
+  },
+  {
+    id: 'red_salads',
+    name: 'Red Salads',
+    price: '49.260',
+    image: require('../../../assets/images/list-salads/salad-3.png'),
+  },
+  {
+    id: 'beef_salads',
+    name: 'Beef Meat Salad',
+    price: '49.260',
+    image: require('../../../assets/images/list-salads/salad-4.png'),
+  },
+];
+
+const ITEMS_DESERTS = [
+  {
+    id: 'vanilla',
+    name: 'Vanilla Ice Cream',
+    price: '49.260',
+    image: require('../../../assets/images/list-desserts/desserts-1.png'),
+  },
+  {
+    id: 'strawberry',
+    name: 'Strawberry Ice Cream',
+    price: '49.260',
+    image: require('../../../assets/images/list-desserts/desserts-2.png'),
+  },
+  {
+    id: 'matcha',
+    name: 'Red Lemon Soda',
+    price: '49.260',
+    image: require('../../../assets/images/list-desserts/desserts-3.png'),
+  },
+  {
+    id: 'mango',
+    name: 'Bluesea Soda',
+    price: '49.260',
+    image: require('../../../assets/images/list-desserts/desserts-4.png'),
+  },
+];
+
+const ITEMS_MEALS = [
+  {
+    id: 'lunch',
+    name: 'Lunch Pack',
+    price: '49.260',
+    image: require('../../../assets/images/list-meals/meals-1.png'),
+  },
+  {
+    id: 'chessy',
+    name: 'Chessy MiLo',
+    price: '49.260',
+    image: require('../../../assets/images/list-meals/meals-2.png'),
+  },
+  {
+    id: 'cola_beef',
+    name: 'Cola Beef',
+    price: '49.260',
+    image: require('../../../assets/images/list-meals/meals-3.png'),
+  },
+  {
+    id: 'burger_meal',
+    name: 'Cheese Burger Meal ',
+    price: '49.260',
+    image: require('../../../assets/images/list-meals/meals-4.png'),
+  },
+];
+
+const LIST_ITEMS = {
+  burger: ITEMS_BURGERS,
+  salads: ITEMS_SALADS,
+  meals: ITEMS_MEALS,
+  baverages: ITEMS_BAVERAGES,
+  dessert: ITEMS_DESERTS,
+};
+
+const SWITCH_HERO_IMAGE = {
   burger: require('../../../assets/images/hero-slider-2.png'),
   salads: require('../../../assets/images/hero-salads.png'),
   meals: require('../../../assets/images/hero-burger.png'),
@@ -54,17 +176,18 @@ const DetailsBurgerMenuOrganism: React.FC<{
     params: {
       name: string;
       description: string;
-      id: keyof typeof SWITCH_HERO;
+      id: keyof typeof SWITCH_HERO_IMAGE;
     };
   };
 }> = ({route}) => {
   const {id, name, description} = route.params || {};
 
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={LIST_ITEMS}
+        data={LIST_ITEMS[id]}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <View style={styles.containerCard}>
@@ -83,7 +206,9 @@ const DetailsBurgerMenuOrganism: React.FC<{
         contentContainerStyle={styles.containerContent}
         ListHeaderComponent={
           <>
-            <ImageBackground source={SWITCH_HERO[id]} style={styles.heroImg}>
+            <ImageBackground
+              source={SWITCH_HERO_IMAGE[id]}
+              style={styles.heroImg}>
               <TouchableOpacity onPress={onBack} style={styles.buttonBack}>
                 <ArrowLeft color={colors.primary} />
               </TouchableOpacity>
