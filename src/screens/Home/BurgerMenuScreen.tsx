@@ -1,8 +1,8 @@
 import React from 'react';
-import {BurgerMenuOrganism} from '../../components/organisms';
+import {DetailsBurgerMenuOrganism} from '../../components/organisms';
 
-const BurgerMenuScreen: React.FC = () => {
-  return <BurgerMenuOrganism />;
+const BurgerMenuScreen: React.FC<any> = ({route}) => {
+  return <DetailsBurgerMenuOrganism route={route} />;
 };
 
 export default BurgerMenuScreen;

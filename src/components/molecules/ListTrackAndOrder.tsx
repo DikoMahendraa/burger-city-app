@@ -29,7 +29,8 @@ const CardTicket: React.FC<TPropsCardTicket> = ({
     <View style={styles.container}>
       <ImageBackground
         source={require('../../assets/images/ticket-background.png')}
-        resizeMode="cover"
+        resizeMethod="scale"
+        resizeMode="stretch"
         style={styles.image}>
         <TouchableOpacity onPress={onPress} style={styles.containTicket}>
           <Image style={styles.heroOrder} alt="hero-image" source={image} />
@@ -71,7 +72,8 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'relative',
-    height: scaleHeight(90),
+    height: scaleHeight(100),
+    width: '100%',
     objectFit: 'cover',
     flexDirection: 'row',
     alignItems: 'center',

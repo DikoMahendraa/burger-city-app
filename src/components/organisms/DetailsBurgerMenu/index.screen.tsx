@@ -8,42 +8,64 @@ import {
 import React, {useCallback} from 'react';
 import {ArrowLeft} from 'lucide-react-native';
 
-import {scale, scaleHeight} from '../../../utils';
-import {colors} from '../../../constants';
-import {AppRoutes, navigate} from '../../../navigation';
 import {Gap, Label} from '../../atoms';
+import {colors} from '../../../constants';
 import {CardBurgerItem} from '../../molecules';
+import {scale, scaleHeight} from '../../../utils';
+import {AppRoutes, navigate} from '../../../navigation';
 
 const LIST_ITEMS = [
   {
+    id: 'cheese_burger',
     name: 'Cheesy Burger',
     price: '49.260',
     image: require('../../../assets/images/burger-menu/menu-1.png'),
   },
   {
+    id: 'chicken_burger',
     name: 'Chicken Big Burger',
     price: '49.260',
     image: require('../../../assets/images/burger-menu/menu-3.png'),
   },
   {
+    id: 'beef_burger',
     name: 'Beef Burger',
     price: '49.260',
     image: require('../../../assets/images/burger-menu/menu-2.png'),
   },
   {
+    id: 'special_burger',
     name: 'Specials Big Burger',
     price: '49.260',
     image: require('../../../assets/images/burger-menu/menu-1.png'),
   },
 ];
 
-const BurgerMenuOrganism = () => {
+const SWITCH_HERO = {
+  burger: require('../../../assets/images/hero-slider-2.png'),
+  salads: require('../../../assets/images/hero-salads.png'),
+  meals: require('../../../assets/images/hero-burger.png'),
+  baverages: require('../../../assets/images/hero-baverages.png'),
+  dessert: require('../../../assets/images/hero-escream.png'),
+};
+
+const DetailsBurgerMenuOrganism: React.FC<{
+  route: {
+    params: {
+      name: string;
+      description: string;
+      id: keyof typeof SWITCH_HERO;
+    };
+  };
+}> = ({route}) => {
+  const {id, name, description} = route.params || {};
+
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
   return (
     <View style={styles.container}>
       <FlatList
         data={LIST_ITEMS}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.id}
         renderItem={({item}) => (
           <View style={styles.containerCard}>
             <CardBurgerItem
@@ -61,26 +83,20 @@ const BurgerMenuOrganism = () => {
         contentContainerStyle={styles.containerContent}
         ListHeaderComponent={
           <>
-            <ImageBackground
-              source={require('../../../assets/images/hero-slider-2.png')}
-              style={styles.heroImg}>
+            <ImageBackground source={SWITCH_HERO[id]} style={styles.heroImg}>
               <TouchableOpacity onPress={onBack} style={styles.buttonBack}>
                 <ArrowLeft color={colors.primary} />
               </TouchableOpacity>
             </ImageBackground>
             <View style={styles.containerDescription}>
               <View>
-                <Label
-                  variant="large"
-                  weight="semibold"
-                  customText="Burger Menu"
-                />
+                <Label variant="large" weight="semibold" customText={name} />
                 <Gap height={8} />
                 <Label
                   variant="normal"
                   color={colors.disabledSoft}
                   weight="normal"
-                  customText="Chees, Beef, Spicy"
+                  customText={description}
                 />
               </View>
               <Gap height={16} />
@@ -156,7 +172,7 @@ const BurgerMenuOrganism = () => {
   );
 };
 
-export default BurgerMenuOrganism;
+export default DetailsBurgerMenuOrganism;
 
 const styles = StyleSheet.create({
   container: {
@@ -165,7 +181,6 @@ const styles = StyleSheet.create({
   },
   heroImg: {
     height: scaleHeight(300),
-    objectFit: 'cover',
     width: '100%',
   },
   fontSmall: {
@@ -177,7 +192,7 @@ const styles = StyleSheet.create({
     top: scale(80),
     left: scale(24),
     backgroundColor: colors.white,
-    opacity: 0.6,
+    opacity: 0.8,
     width: scale(40),
     height: scaleHeight(40),
     borderRadius: 8,

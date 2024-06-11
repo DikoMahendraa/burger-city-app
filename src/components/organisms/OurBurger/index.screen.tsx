@@ -10,29 +10,41 @@ import {
 } from 'react-native';
 import {Search} from 'lucide-react-native';
 
-import {MainLayout} from '../../../layouts';
 import {Header} from '../../molecules';
-import {Button, Gap, Input} from '../../atoms';
 import {colors} from '../../../constants';
+import {MainLayout} from '../../../layouts';
+import {Button, Gap, Input} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
 import {navigate, AppDetailRoutes} from '../../../navigation';
 
 const LIST_MENU = [
   {
+    id: 'meals',
+    description: 'Burger, Fries, Drinks',
     name: 'Value meals',
+    imagePath: 'menu-1.png',
+    image: require('../../../assets/images/list-menus/menu-4.png'),
+  },
+  {
+    id: 'salads',
+    description: 'Vegetables, and Meat Beef',
+    name: 'Salads / Sides',
+    imagePath: 'menu-2.png',
     image: require('../../../assets/images/list-menus/menu-1.png'),
   },
   {
-    name: 'Salads / Sides',
+    id: 'dessert',
+    description: 'Pancake, Sundae, Cake',
+    name: 'Desserts',
+    imagePath: 'menu-4.png',
     image: require('../../../assets/images/list-menus/menu-2.png'),
   },
   {
+    id: 'baverages',
+    description: 'Pepsi, CocaCola, Soft Drinks',
     name: 'Beverages',
+    imagePath: 'menu-3.png',
     image: require('../../../assets/images/list-menus/menu-3.png'),
-  },
-  {
-    name: 'Desserts',
-    image: require('../../../assets/images/list-menus/menu-4.png'),
   },
 ];
 
@@ -57,9 +69,18 @@ const Card = ({
 
 const OurBurgerOrganism: React.FC = () => {
   const onBurgerMenu = useCallback(
-    () => navigate(AppDetailRoutes.DETAIL_BURGER_MENU),
+    () =>
+      navigate(AppDetailRoutes.DETAIL_BURGER_MENU, {
+        name: 'Burger Menu',
+        description: 'Chess, Beef, Spicy ',
+        id: 'burger',
+      }),
     [],
   );
+
+  const onViewMenu = useCallback((props: any) => {
+    navigate(AppDetailRoutes.DETAIL_BURGER_MENU, {...props});
+  }, []);
 
   return (
     <MainLayout>
@@ -87,7 +108,7 @@ const OurBurgerOrganism: React.FC = () => {
               return (
                 <Card
                   key={item.name}
-                  onPress={() => ({})}
+                  onPress={() => onViewMenu(item)}
                   title={item.name}
                   image={item.image}
                 />
@@ -95,7 +116,12 @@ const OurBurgerOrganism: React.FC = () => {
             })}
           </View>
           <Gap height={20} />
-          <Button onPress={onBurgerMenu} text="Burger Menu" size="large" />
+          <Button
+            onPress={onBurgerMenu}
+            text="Burger Menu"
+            textStyle={styles.textBurgerMenuBtn}
+            size="large"
+          />
           <Gap height={20} />
         </ScrollView>
       </View>
@@ -126,6 +152,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
+  },
+  textBurgerMenuBtn: {
+    fontWeight: '700',
   },
   containerHero: {
     flexDirection: 'row',
