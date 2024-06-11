@@ -189,7 +189,6 @@ const DetailsBurgerMenuOrganism: React.FC<{
     if (hasViewMenu) {
       navigate(AppDetailRoutes.DETAIL_BURGER_MEALS);
     } else {
-      console.log('bookmarked');
     }
   }, [hasViewMenu]);
 
