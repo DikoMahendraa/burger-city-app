@@ -1,35 +1,31 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {Star} from 'lucide-react-native';
+import {View, StyleSheet, Text, Image, FlatList} from 'react-native';
 
 import {MainLayout} from '../../../layouts';
 import {Gap, Label} from '../../../components/atoms';
 import {colors} from '../../../constants';
-import {Header} from '../../../components/molecules';
+import {CardBurgerItem, Header} from '../../../components/molecules';
 import {scale, scaleHeight} from '../../../utils';
 
 const LIST_FAVORITES = [
   {
     name: 'Cheesy Burger',
+    price: '49.500',
     image: require('../../../assets/images/burger-menu/menu-1.png'),
   },
   {
     name: 'Chicken Big Burger',
+    price: '49.500',
     image: require('../../../assets/images/burger-menu/menu-3.png'),
   },
   {
     name: 'Beef Burger',
+    price: '49.500',
     image: require('../../../assets/images/burger-menu/menu-2.png'),
   },
   {
     name: 'Specials Big Burger',
+    price: '49.500',
     image: require('../../../assets/images/burger-menu/menu-1.png'),
   },
 ];
@@ -49,25 +45,11 @@ const FavoriteOrganism: React.FC = () => {
             keyExtractor={item => item.name}
             renderItem={({item}) => (
               <>
-                <TouchableOpacity style={styles.card}>
-                  <View style={styles.cardContent}>
-                    <Image
-                      style={styles.cardContentImg}
-                      alt={`${item.name.toLowerCase()}-burger`}
-                      source={item.image}
-                    />
-
-                    <Gap width={8} />
-                    <View>
-                      <Text style={styles.cardContentTitle}>{item.name}</Text>
-                      <Gap height={8} />
-                      <Text style={styles.cardContentPrice}>Rp.50,000</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity>
-                    <Star color={colors.primary} fill={colors.primary} />
-                  </TouchableOpacity>
-                </TouchableOpacity>
+                <CardBurgerItem
+                  name={item.name}
+                  image={item.image}
+                  price={item.price}
+                />
                 <Gap height={12} />
               </>
             )}
@@ -95,39 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: scale(24),
     paddingVertical: scale(12),
-  },
-  card: {
-    backgroundColor: colors.white,
-    borderRadius: 6,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 15,
-    paddingHorizontal: 14,
-    alignItems: 'center',
-    shadowColor: colors.disabledSoft,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-  },
-  cardContentTitle: {
-    fontWeight: '500',
-    fontSize: scale(16),
-  },
-  cardContent: {
-    flexDirection: 'row',
-  },
-  cardContentPrice: {
-    fontSize: scale(14),
-    color: colors.disabledSoft,
-  },
-  cardContentImg: {
-    width: scale(66),
-    height: scaleHeight(43),
-    objectFit: 'contain',
   },
   description: {
     textAlign: 'center',

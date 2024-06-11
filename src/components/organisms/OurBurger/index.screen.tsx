@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   View,
   Image,
@@ -15,6 +15,7 @@ import {Header} from '../../molecules';
 import {Button, Gap, Input} from '../../atoms';
 import {colors} from '../../../constants';
 import {scale, scaleHeight} from '../../../utils';
+import {navigate, AppDetailRoutes} from '../../../navigation';
 
 const LIST_MENU = [
   {
@@ -54,7 +55,12 @@ const Card = ({
   </TouchableOpacity>
 );
 
-const OurBurgerOrganism = () => {
+const OurBurgerOrganism: React.FC = () => {
+  const onBurgerMenu = useCallback(
+    () => navigate(AppDetailRoutes.DETAIL_BURGER_MENU),
+    [],
+  );
+
   return (
     <MainLayout>
       <Header />
@@ -80,6 +86,7 @@ const OurBurgerOrganism = () => {
             {LIST_MENU.map(item => {
               return (
                 <Card
+                  key={item.name}
                   onPress={() => ({})}
                   title={item.name}
                   image={item.image}
@@ -88,7 +95,7 @@ const OurBurgerOrganism = () => {
             })}
           </View>
           <Gap height={20} />
-          <Button onPress={() => ({})} text="Burger Menu" size="large" />
+          <Button onPress={onBurgerMenu} text="Burger Menu" size="large" />
           <Gap height={20} />
         </ScrollView>
       </View>
@@ -143,8 +150,9 @@ const styles = StyleSheet.create({
     objectFit: 'contain',
   },
   cardLabel: {
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: scale(16),
+    color: colors.dark,
   },
 });
 

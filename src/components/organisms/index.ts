@@ -9,6 +9,7 @@ import SignInOrganism from './SignIn/index.screen';
 import SignUpWithEmailOrganism from './SignUpWithEmail/index.screen';
 import SignUpWithPhoneOrganism from './SignUpWithPhone/index.screen';
 import VerificationOTPOrganism from './VerificationOTP/index.screen';
+import BurgerMenuOrganism from './BurgerMenu/index.screen';
 
 export {
   FavoritesOrganism,
@@ -22,4 +23,5 @@ export {
   SignUpWithEmailOrganism,
   SignUpWithPhoneOrganism,
   VerificationOTPOrganism,
+  BurgerMenuOrganism,
 };

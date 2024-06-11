@@ -4,7 +4,7 @@ import MainNavigator from './MainNavigator';
 import {navigate} from './NavigationService';
 import BottomTabNavigator from './BottomTabNavigator';
 
-import {AuthRoutes, AppRoutes} from './routes';
+import {AuthRoutes, AppRoutes, AppDetailRoutes} from './routes';
 
 export {
   AppNavigator,
@@ -12,6 +12,7 @@ export {
   MainNavigator,
   BottomTabNavigator,
   AuthRoutes,
+  AppDetailRoutes,
   navigate,
   AppRoutes,
 };

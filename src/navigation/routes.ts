@@ -1,8 +1,12 @@
 export const AppRoutes = {
   HOME: 'HOME',
   PROFILE: 'PROFILE',
-  OUR_BURGER: 'OUR BURGER',
+  OUR_BURGER: 'OUR_BURGER',
   FAVORITES: 'FAVORITES',
+} as const;
+
+export const AppDetailRoutes = {
+  DETAIL_BURGER_MENU: 'DETAIL_BURGER_MENU',
 } as const;
 
 export const AuthRoutes = {
@@ -14,4 +18,7 @@ export const AuthRoutes = {
   VERIFY_OTP: 'VERIFY_OTP',
 } as const;
 
-export type TAuthRoutes = keyof typeof AuthRoutes | keyof typeof AppRoutes;
+export type TAuthRoutes =
+  | keyof typeof AuthRoutes
+  | keyof typeof AppRoutes
+  | keyof typeof AppDetailRoutes;

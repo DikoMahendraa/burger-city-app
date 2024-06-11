@@ -1,15 +1,15 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CircleUser, Flame, Home, Star} from 'lucide-react-native';
-import {AppRoutes} from './routes';
+import {Text, TextStyle} from 'react-native';
 import {
   FavoriteScreen,
   HomeScreen,
   OurBurgerScreen,
   ProfileScreen,
 } from '../screens/Home';
+import {AppRoutes} from './routes';
 import {colors} from '../constants';
-import {Text, TextStyle} from 'react-native';
 
 const LIST_TABS = [
   {
@@ -46,7 +46,8 @@ const TabItem: React.FC<{focused: boolean; name: string}> = ({
     fontSize: 12,
     color: focused ? colors.primary : colors.disabled,
   };
-  return <Text style={textStyles as TextStyle}>{name}</Text>;
+  const replaceUnderScore = name.replaceAll('_', ' ');
+  return <Text style={textStyles as TextStyle}>{replaceUnderScore}</Text>;
 };
 
 const BottomTabNavigator = () => {

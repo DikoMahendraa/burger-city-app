@@ -56,7 +56,7 @@ const ListTrackAndOrder = () => {
       <Gap height={10} />
       <CardTicket
         title="Order Here"
-        description="Order to Track Your Food"
+        description="Choice Your Delicious Burger"
         image={require('../../assets/images/burger-logo.png')}
       />
     </>

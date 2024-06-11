@@ -1,5 +1,11 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet, ViewStyle} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import {colors} from '../../constants';
 import {scale} from '../../utils';
 
@@ -7,9 +13,10 @@ interface CustomButtonProps {
   icon?: React.ReactNode;
   text?: string;
   onPress: () => void;
-  suffix?: string;
+  suffix?: string | React.ReactNode;
   disabled?: boolean;
   prefix?: string;
+  textStyle?: TextStyle;
   size?: 'small' | 'medium' | 'large' | 'wide';
 }
 
@@ -20,6 +27,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   suffix,
   disabled,
   prefix,
+  textStyle,
   size = 'medium',
 }) => {
   let buttonStyles: ViewStyle[] = [styles.button];
@@ -48,7 +56,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       onPress={onPress}>
       {prefix && <Text style={styles.prefix}>{prefix}</Text>}
       {icon && icon}
-      {text && <Text style={styles.text}>{text}</Text>}
+      {text && <Text style={[styles.text, textStyle]}>{text}</Text>}
       {suffix && <Text style={styles.suffix}>{suffix}</Text>}
     </TouchableOpacity>
   );
@@ -84,7 +92,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: scale(16),
     marginLeft: 5,
-    fontWeight: '700',
   },
   icon: {
     marginRight: 5,
