@@ -9,7 +9,10 @@ const Stack = createStackNavigator();
 const MainNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name={AppRoutes.HOME} component={BottomTabNavigator} />
+      <Stack.Screen
+        name={AppRoutes.BOTTOM_NAVIGATION}
+        component={BottomTabNavigator}
+      />
       <Stack.Screen
         name={AppDetailRoutes.DETAIL_BURGER_MENU}
         component={BurgerMenuScreen}

@@ -287,7 +287,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
           <Label
             customText="View your cart"
             color={colors.white}
-            variant="xsmall"
+            variant="normal"
           />
           <Label
             customText="Rp.50.000"
