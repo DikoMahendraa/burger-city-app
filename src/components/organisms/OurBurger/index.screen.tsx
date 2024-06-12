@@ -16,6 +16,7 @@ import {MainLayout} from '../../../layouts';
 import {Button, Gap, Input} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
 import {navigate, AppDetailRoutes} from '../../../navigation';
+import {FormProvider, useForm} from 'react-hook-form';
 
 const LIST_MENU = [
   {
@@ -68,6 +69,8 @@ const Card = ({
 );
 
 const OurBurgerOrganism: React.FC = () => {
+  const methods = useForm<{search: string}>();
+
   const onBurgerMenu = useCallback(
     () =>
       navigate(AppDetailRoutes.DETAIL_BURGER_MENU, {
@@ -87,12 +90,15 @@ const OurBurgerOrganism: React.FC = () => {
       <Header />
       <Gap height={8} />
       <View style={styles.container}>
-        <Input
-          style={styles.input}
-          placeholder="Search for a Food"
-          prefix={<Search color={colors.disabled} size={20} />}
-          placeholderTextColor={colors.disabled}
-        />
+        <FormProvider {...methods}>
+          <Input
+            name="search"
+            style={styles.input}
+            placeholder="Search for a Food"
+            prefix={<Search color={colors.disabled} size={20} />}
+            placeholderTextColor={colors.disabled}
+          />
+        </FormProvider>
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerHero}>
