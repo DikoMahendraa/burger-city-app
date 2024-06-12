@@ -8,9 +8,9 @@ import {scale} from '../../../utils';
 import {colors} from '../../../constants';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {AuthRoutes, navigate} from '../../../navigation';
+import {signInSchema} from '../../../schemas/authSchema';
 import {useAuthStore, useGlobalStore} from '../../../stores';
 import {Input, Button, Gap, RadioButton} from '../../../components/atoms';
-import {signInSchema} from '../../../schemas/authSchema';
 
 type FormData = {
   password: string;
@@ -82,13 +82,14 @@ const SignInOrganism = () => {
             <Gap height={34} />
             <Button
               text="Sign In"
+              weight="600"
               isLoading={isLoading}
               disabled={isLoading}
               onPress={onSubmit}
               size="large"
             />
             <Gap height={34} />
-            <TouchableOpacity onPress={onSignUp}>
+            <TouchableOpacity disabled={isLoading} onPress={onSignUp}>
               <Text style={styles.textSignIn}>New user? Sign up</Text>
             </TouchableOpacity>
             <Gap height={34} />

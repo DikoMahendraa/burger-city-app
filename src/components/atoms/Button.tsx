@@ -18,6 +18,7 @@ interface CustomButtonProps {
   disabled?: boolean;
   isLoading?: boolean;
   prefix?: string;
+  weight?: TextStyle['fontWeight'];
   textStyle?: TextStyle;
   variant?: 'primary' | 'secondary' | 'transparent';
   size?: 'small' | 'medium' | 'large' | 'wide';
@@ -32,6 +33,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   prefix,
   textStyle,
   isLoading,
+  weight,
   variant = 'primary',
   size = 'medium',
 }) => {
@@ -67,7 +69,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       {prefix && <Text style={styles.prefix}>{prefix}</Text>}
       {icon && icon}
       {!isLoading && text && (
-        <Text style={[styles.text, textStyle]}>{text}</Text>
+        <Text style={[styles.text, textStyle, {fontWeight: weight}]}>
+          {text}
+        </Text>
       )}
       {suffix && <Text style={styles.suffix}>{suffix}</Text>}
     </TouchableOpacity>

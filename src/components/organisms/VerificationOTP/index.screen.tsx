@@ -61,6 +61,7 @@ const VerificationOTPOrganism = () => {
             <Gap height={34} />
             <Button
               text="Verify"
+              weight="600"
               disabled={isLoading}
               isLoading={isLoading}
               onPress={onVerifyCode}

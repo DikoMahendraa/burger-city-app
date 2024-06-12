@@ -92,6 +92,7 @@ const SignUpWithEmailOrganism = () => {
 
             <Gap height={34} />
             <Button
+              weight="600"
               text="Next"
               isLoading={isLoading}
               disabled={isLoading}
@@ -101,7 +102,9 @@ const SignUpWithEmailOrganism = () => {
             <Gap height={34} />
             <Text style={styles.textSignIn}>
               With
-              <TouchableOpacity onPress={onSignUpWithPhone}>
+              <TouchableOpacity
+                disabled={isLoading}
+                onPress={onSignUpWithPhone}>
                 <Text style={styles.textWithPhone}> Phone Number</Text>
               </TouchableOpacity>
             </Text>
