@@ -21,3 +21,10 @@ export const signUpEmailSchema = z
     message: "Passwords don't match",
     path: ['confirm_password'],
   });
+
+export const verifyOTPSchema = z.object({
+  code: z
+    .string()
+    .min(1, {message: 'please enter your OTP code'})
+    .max(4, {message: 'Invalid code OTP'}),
+});

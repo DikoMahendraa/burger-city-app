@@ -1,15 +1,37 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {FormProvider, useForm} from 'react-hook-form';
 import {ClipboardPen} from 'lucide-react-native';
 
-import {Input, Button, Gap} from '../../../components/atoms';
-import AuthLayout from '../../../layouts/AuthLayout';
-import {colors} from '../../../constants';
-import {AuthRoutes, navigate} from '../../../navigation';
 import {scale} from '../../../utils';
+import {colors} from '../../../constants';
+import AuthLayout from '../../../layouts/AuthLayout';
+import {AuthRoutes, navigate} from '../../../navigation';
+import {Input, Button, Gap} from '../../../components/atoms';
+import {useGlobalStore} from '../../../stores';
+import {verifyOTPSchema} from '../../../schemas/authSchema';
 
 const VerificationOTPOrganism = () => {
-  const onLogin = useCallback(() => navigate(AuthRoutes.SIGN_IN), []);
+  const methods = useForm<{code: string}>({
+    resolver: zodResolver(verifyOTPSchema),
+  });
+  const {isLoading, setLoading} = useGlobalStore();
+
+  const onVerifyCode = methods.handleSubmit(async () => {
+    setLoading(true);
+
+    try {
+      await new Promise(() =>
+        setTimeout(() => {
+          setLoading(false);
+          navigate(AuthRoutes.SIGN_IN);
+        }, 2000),
+      );
+    } finally {
+      setLoading(false);
+    }
+  });
 
   return (
     <AuthLayout>
@@ -23,16 +45,25 @@ const VerificationOTPOrganism = () => {
           </Text>
         </View>
         <Gap height={40} />
-        <View>
-          <Input
-            placeholder="Code OTP"
-            prefix={<ClipboardPen color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
+        <FormProvider {...methods}>
+          <View>
+            <Input
+              name="code"
+              placeholder="Code OTP"
+              prefix={<ClipboardPen color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
+            />
 
-          <Gap height={34} />
-          <Button text="Verify" onPress={onLogin} size="large" />
-        </View>
+            <Gap height={34} />
+            <Button
+              text="Verify"
+              disabled={isLoading}
+              isLoading={isLoading}
+              onPress={onVerifyCode}
+              size="large"
+            />
+          </View>
+        </FormProvider>
       </View>
     </AuthLayout>
   );
