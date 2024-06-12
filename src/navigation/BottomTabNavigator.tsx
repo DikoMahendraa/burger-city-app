@@ -61,7 +61,7 @@ const BottomTabNavigator = () => {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.disabled,
       }}
-      initialRouteName={AppRoutes.HOME}>
+      initialRouteName={AppRoutes.PROFILE}>
       {LIST_TABS.map(item => (
         <Tab.Screen
           key={item.name}
