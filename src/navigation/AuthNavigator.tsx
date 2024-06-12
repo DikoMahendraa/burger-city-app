@@ -16,7 +16,7 @@ const AuthNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={AuthRoutes.VERIFY_OTP}>
+      initialRouteName={AuthRoutes.SIGN_UP_PHONE}>
       <Stack.Screen name={AuthRoutes.INTRO} component={IntroScreen} />
       <Stack.Screen name={AuthRoutes.SIGN_IN} component={SignInScreen} />
       <Stack.Screen

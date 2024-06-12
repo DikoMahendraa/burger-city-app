@@ -1,8 +1,9 @@
 import {create} from 'zustand';
 
 type ParamsLogin = {
-  email: string;
+  email?: string;
   username?: string;
+  phone?: string;
 };
 
 type AuthState = {
@@ -10,6 +11,7 @@ type AuthState = {
   users: {
     email: undefined | string;
     username?: undefined | string;
+    phone?: undefined | string;
   };
   setLogin: (params: ParamsLogin) => void;
   setRegister: (params: ParamsLogin) => void;
@@ -28,7 +30,7 @@ export const useAuthStore = create<AuthState>(set => ({
       users: {email: undefined, username: undefined},
     });
   },
-  setRegister: ({username, email}) => {
-    set({users: {username, email}, isAuthenticated: false});
+  setRegister: ({username, email, phone}) => {
+    set({users: {username, email, phone}, isAuthenticated: false});
   },
 }));

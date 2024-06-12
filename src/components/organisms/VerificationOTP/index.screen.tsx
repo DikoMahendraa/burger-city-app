@@ -9,13 +9,16 @@ import {colors} from '../../../constants';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {Input, Button, Gap} from '../../../components/atoms';
-import {useGlobalStore} from '../../../stores';
+import {useAuthStore, useGlobalStore} from '../../../stores';
 import {verifyOTPSchema} from '../../../schemas/authSchema';
 
 const VerificationOTPOrganism = () => {
   const methods = useForm<{code: string}>({
     resolver: zodResolver(verifyOTPSchema),
   });
+  const {
+    users: {phone},
+  } = useAuthStore();
   const {isLoading, setLoading} = useGlobalStore();
 
   const onVerifyCode = methods.handleSubmit(async () => {
@@ -40,8 +43,9 @@ const VerificationOTPOrganism = () => {
           <Text style={styles.title}>Enter Verif Code</Text>
           <Gap height={12} />
           <Text style={styles.description}>
-            For your security, a Verification Code has been sent to your email
-            address. Please enter it below to continue.
+            For your security, a Verification Code has been sent to your{' '}
+            {phone ? 'phone number' : 'email address'}. Please enter it below to
+            continue.
           </Text>
         </View>
         <Gap height={40} />

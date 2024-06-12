@@ -5,6 +5,13 @@ export const signInSchema = z.object({
   password: z.string().min(1, {message: 'passsword is required'}),
 });
 
+const passwordValidation = {
+  password: z.string().min(1, {message: 'Password is required'}),
+  confirm_password: z
+    .string()
+    .min(1, {message: 'Confirm password is required'}),
+};
+
 export const signUpEmailSchema = z
   .object({
     username: z.string().min(1, {message: 'Username is required'}),
@@ -12,10 +19,21 @@ export const signUpEmailSchema = z
       .string()
       .email({message: 'Invalid email'})
       .min(1, {message: 'Email is required'}),
-    password: z.string().min(1, {message: 'Password is required'}),
-    confirm_password: z
+    ...passwordValidation,
+  })
+  .refine(data => data.password === data.confirm_password, {
+    message: "Passwords don't match",
+    path: ['confirm_password'],
+  });
+
+export const signUpPhoneSchema = z
+  .object({
+    phone: z
       .string()
-      .min(1, {message: 'Confirm password is required'}),
+      .min(10, {message: 'Phone must be at least 10 digits long'})
+      .max(15, {message: 'Phone must be at most 15 digits long'})
+      .regex(/^[0-9]+$/, {message: 'Phone must contain only digits'}),
+    ...passwordValidation,
   })
   .refine(data => data.password === data.confirm_password, {
     message: "Passwords don't match",
