@@ -1,19 +1,42 @@
 import React, {useCallback, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {LockKeyhole, Mail} from 'lucide-react-native';
+import {FormProvider, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
-import {Input, Button, Gap, RadioButton} from '../../../components/atoms';
-import AuthLayout from '../../../layouts/AuthLayout';
-import {colors} from '../../../constants';
-import {AuthRoutes, navigate} from '../../../navigation';
-import {useAuthStore} from '../../../stores';
 import {scale} from '../../../utils';
+import {colors} from '../../../constants';
+import AuthLayout from '../../../layouts/AuthLayout';
+import {AuthRoutes, navigate} from '../../../navigation';
+import {useAuthStore, useGlobalStore} from '../../../stores';
+import {Input, Button, Gap, RadioButton} from '../../../components/atoms';
+import {signInSchema} from '../../../schemas/authSchema';
+
+type FormData = {
+  password: string;
+  email: string;
+};
 
 const SignInOrganism = () => {
   const [rememberMe, setRememberMe] = useState(false);
-  const {login} = useAuthStore();
+  const {setLoading, isLoading} = useGlobalStore();
+  const {setLogin} = useAuthStore();
 
-  const onLogin = useCallback(() => login('email', 'password'), [login]);
+  const methods = useForm<FormData>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit = methods.handleSubmit(async ({email}) => {
+    setLoading(true);
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    } finally {
+      setLogin({email});
+      setLoading(false);
+    }
+  });
+
   const onSignUp = useCallback(() => navigate(AuthRoutes.SIGN_UP_EMAIL), []);
   const onForgotPassword = useCallback(
     () => navigate(AuthRoutes.FORGOT_PASSWORD),
@@ -28,42 +51,53 @@ const SignInOrganism = () => {
           <Text style={styles.description}>Login to continue Burger City</Text>
         </View>
         <Gap height={40} />
-        <View>
-          <Input
-            placeholder="Email Address"
-            prefix={<Mail color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={8} />
-          <Input
-            placeholder="Password"
-            prefix={<LockKeyhole color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={10} />
-          <View style={styles.formInput}>
-            <RadioButton
-              label="Remember me"
-              onPress={() => setRememberMe(!rememberMe)}
-              selected={rememberMe}
+        <FormProvider {...methods}>
+          <View>
+            <Input
+              name="email"
+              placeholder="Email Address"
+              prefix={<Mail color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
             />
-            <Text style={{color: colors.white}} />
-            <TouchableOpacity onPress={onForgotPassword}>
-              <Text style={styles.textForgotPassword}>Forgot password?</Text>
+            <Gap height={8} />
+            <Input
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+              prefix={<LockKeyhole color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={10} />
+            <View style={styles.formInput}>
+              <RadioButton
+                label="Remember me"
+                onPress={() => setRememberMe(!rememberMe)}
+                selected={rememberMe}
+              />
+              <Text style={{color: colors.white}} />
+              <TouchableOpacity onPress={onForgotPassword}>
+                <Text style={styles.textForgotPassword}>Forgot password?</Text>
+              </TouchableOpacity>
+            </View>
+            <Gap height={34} />
+            <Button
+              text="Sign In"
+              isLoading={isLoading}
+              disabled={isLoading}
+              onPress={onSubmit}
+              size="large"
+            />
+            <Gap height={34} />
+            <TouchableOpacity onPress={onSignUp}>
+              <Text style={styles.textSignIn}>New user? Sign up</Text>
             </TouchableOpacity>
+            <Gap height={34} />
+            <Text style={styles.textTnc}>
+              By signing up you indicate that you have read and agreed to the
+              Patch <Text style={styles.textToS}>Terms of Service</Text>
+            </Text>
           </View>
-          <Gap height={34} />
-          <Button text="Sign In" onPress={onLogin} size="large" />
-          <Gap height={34} />
-          <TouchableOpacity onPress={onSignUp}>
-            <Text style={styles.textSignIn}>New user? Sign up</Text>
-          </TouchableOpacity>
-          <Gap height={34} />
-          <Text style={styles.textTnc}>
-            By signing up you indicate that you have read and agreed to the
-            Patch <Text style={styles.textToS}>Terms of Service</Text>
-          </Text>
-        </View>
+        </FormProvider>
       </View>
     </AuthLayout>
   );

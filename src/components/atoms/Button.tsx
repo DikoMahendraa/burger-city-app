@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ViewStyle,
   TextStyle,
+  ActivityIndicator,
 } from 'react-native';
 import {colors} from '../../constants';
 import {scale} from '../../utils';
@@ -15,6 +16,7 @@ interface CustomButtonProps {
   onPress?: () => void;
   suffix?: string | React.ReactNode;
   disabled?: boolean;
+  isLoading?: boolean;
   prefix?: string;
   textStyle?: TextStyle;
   variant?: 'primary' | 'secondary' | 'transparent';
@@ -29,10 +31,15 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   disabled,
   prefix,
   textStyle,
+  isLoading,
   variant = 'primary',
   size = 'medium',
 }) => {
-  let buttonStyles: ViewStyle[] = [styles.button, styles[variant]];
+  let buttonStyles: ViewStyle[] = [
+    styles.button,
+    styles[variant],
+    styles[isLoading || disabled ? 'disabled' : 'primary'],
+  ];
   switch (size) {
     case 'small':
       buttonStyles.push(styles.small);
@@ -53,12 +60,15 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={disabled}
+      disabled={disabled || isLoading}
       style={buttonStyles}
       onPress={onPress}>
+      {isLoading && <ActivityIndicator size="small" color={colors.white} />}
       {prefix && <Text style={styles.prefix}>{prefix}</Text>}
       {icon && icon}
-      {text && <Text style={[styles.text, textStyle]}>{text}</Text>}
+      {!isLoading && text && (
+        <Text style={[styles.text, textStyle]}>{text}</Text>
+      )}
       {suffix && <Text style={styles.suffix}>{suffix}</Text>}
     </TouchableOpacity>
   );
@@ -110,6 +120,10 @@ const styles = StyleSheet.create({
   },
   suffix: {
     marginLeft: 5,
+  },
+  disabled: {
+    backgroundColor: colors.primary,
+    opacity: 0.8,
   },
 });
 
