@@ -7,10 +7,41 @@ import AuthLayout from '../../../layouts/AuthLayout';
 import {colors} from '../../../constants';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {scale} from '../../../utils';
+import {FormProvider, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useAuthStore, useGlobalStore} from '../../../stores';
+import {signUpPhoneSchema} from '../../../schemas/authSchema';
+
+type FormData = {
+  phone: string;
+  password: string;
+  confirm_password: string;
+};
 
 const SignUpWithPhoneOrganism = () => {
-  const onNextVerify = useCallback(() => navigate(AuthRoutes.VERIFY_OTP), []);
   const onSignUp = useCallback(() => navigate(AuthRoutes.SIGN_UP_EMAIL), []);
+
+  const {isLoading, setLoading} = useGlobalStore();
+  const {setRegister} = useAuthStore();
+
+  const methods = useForm<FormData>({
+    resolver: zodResolver(signUpPhoneSchema),
+  });
+
+  const onSubmit = methods.handleSubmit(async ({phone}) => {
+    setLoading(true);
+    try {
+      await new Promise(() =>
+        setTimeout(() => {
+          setLoading(false);
+          setRegister({phone});
+          navigate(AuthRoutes.VERIFY_OTP);
+        }, 2000),
+      );
+    } finally {
+      setLoading(false);
+    }
+  });
 
   return (
     <AuthLayout>
@@ -23,38 +54,50 @@ const SignUpWithPhoneOrganism = () => {
           </Text>
         </View>
         <Gap height={40} />
-        <View>
-          <Input
-            placeholder="Phone Number"
-            prefix={<Phone color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={16} />
-          <Input
-            placeholder="Password"
-            prefix={<LockKeyhole color={colors.disabled} size={20} />}
-            secureTextEntry
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={16} />
-          <Input
-            placeholder="Confirm Password"
-            prefix={<LockKeyhole color={colors.disabled} size={20} />}
-            secureTextEntry
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={10} />
+        <FormProvider {...methods}>
+          <View>
+            <Input
+              name="phone"
+              placeholder="Phone Number"
+              prefix={<Phone color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={16} />
+            <Input
+              name="password"
+              placeholder="Password"
+              prefix={<LockKeyhole color={colors.disabled} size={20} />}
+              secureTextEntry
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={16} />
+            <Input
+              name="confirm_password"
+              placeholder="Confirm Password"
+              prefix={<LockKeyhole color={colors.disabled} size={20} />}
+              secureTextEntry
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={10} />
 
-          <Gap height={34} />
-          <Button text="Next" onPress={onNextVerify} size="large" />
-          <Gap height={34} />
-          <Text style={styles.textSignIn}>
-            With
-            <TouchableOpacity onPress={onSignUp}>
-              <Text style={styles.textWithPhone}> Email</Text>
-            </TouchableOpacity>
-          </Text>
-        </View>
+            <Gap height={34} />
+            <Button
+              text="Next"
+              weight="600"
+              isLoading={isLoading}
+              onPress={onSubmit}
+              disabled={isLoading}
+              size="large"
+            />
+            <Gap height={34} />
+            <Text style={styles.textSignIn}>
+              With
+              <TouchableOpacity disabled={isLoading} onPress={onSignUp}>
+                <Text style={styles.textWithPhone}> Email</Text>
+              </TouchableOpacity>
+            </Text>
+          </View>
+        </FormProvider>
       </View>
     </AuthLayout>
   );

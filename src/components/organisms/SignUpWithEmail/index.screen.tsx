@@ -1,19 +1,50 @@
 import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {CircleUserRound, LockKeyhole, Mail} from 'lucide-react-native';
+import {FormProvider, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
-import {Input, Button, Gap} from '../../../components/atoms';
-import AuthLayout from '../../../layouts/AuthLayout';
-import {colors} from '../../../constants';
-import {AuthRoutes, navigate} from '../../../navigation';
 import {scale} from '../../../utils';
+import {colors} from '../../../constants';
+import AuthLayout from '../../../layouts/AuthLayout';
+import {AuthRoutes, navigate} from '../../../navigation';
+import {Input, Button, Gap} from '../../../components/atoms';
+import {signUpEmailSchema} from '../../../schemas/authSchema';
+import {useAuthStore, useGlobalStore} from '../../../stores';
+
+type FormData = {
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+};
 
 const SignUpWithEmailOrganism = () => {
-  const onNextVerify = useCallback(() => navigate(AuthRoutes.VERIFY_OTP), []);
+  const methods = useForm<FormData>({
+    resolver: zodResolver(signUpEmailSchema),
+  });
+  const {isLoading, setLoading} = useGlobalStore();
+  const {setRegister} = useAuthStore();
   const onSignUpWithPhone = useCallback(
     () => navigate(AuthRoutes.SIGN_UP_PHONE),
     [],
   );
+
+  const onSubmit = methods.handleSubmit(async ({email, username}) => {
+    setLoading(true);
+
+    try {
+      await new Promise(() =>
+        setTimeout(() => {
+          setLoading(false);
+          setRegister({email, username});
+          navigate(AuthRoutes.VERIFY_OTP);
+        }, 2000),
+      );
+    } finally {
+      setLoading(false);
+    }
+  });
 
   return (
     <AuthLayout>
@@ -26,44 +57,59 @@ const SignUpWithEmailOrganism = () => {
           </Text>
         </View>
         <Gap height={40} />
-        <View>
-          <Input
-            placeholder="Username"
-            prefix={<CircleUserRound color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={16} />
-          <Input
-            placeholder="Email"
-            prefix={<Mail color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={16} />
-          <Input
-            placeholder="Password"
-            prefix={<LockKeyhole color={colors.disabled} size={20} />}
-            secureTextEntry
-            placeholderTextColor={colors.disabled}
-          />
-          <Gap height={16} />
-          <Input
-            placeholder="Confirm Password"
-            prefix={<LockKeyhole color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-            secureTextEntry
-          />
-          <Gap height={10} />
+        <FormProvider {...methods}>
+          <View>
+            <Input
+              name="username"
+              placeholder="Username"
+              prefix={<CircleUserRound color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={16} />
+            <Input
+              name="email"
+              placeholder="Email"
+              prefix={<Mail color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={16} />
+            <Input
+              name="password"
+              placeholder="Password"
+              prefix={<LockKeyhole color={colors.disabled} size={20} />}
+              secureTextEntry
+              placeholderTextColor={colors.disabled}
+            />
+            <Gap height={16} />
+            <Input
+              name="confirm_password"
+              placeholder="Confirm Password"
+              prefix={<LockKeyhole color={colors.disabled} size={20} />}
+              placeholderTextColor={colors.disabled}
+              secureTextEntry
+            />
+            <Gap height={10} />
 
-          <Gap height={34} />
-          <Button text="Next" onPress={onNextVerify} size="large" />
-          <Gap height={34} />
-          <Text style={styles.textSignIn}>
-            With
-            <TouchableOpacity onPress={onSignUpWithPhone}>
-              <Text style={styles.textWithPhone}> Phone Number</Text>
-            </TouchableOpacity>
-          </Text>
-        </View>
+            <Gap height={34} />
+            <Button
+              weight="600"
+              text="Next"
+              isLoading={isLoading}
+              disabled={isLoading}
+              onPress={onSubmit}
+              size="large"
+            />
+            <Gap height={34} />
+            <Text style={styles.textSignIn}>
+              With
+              <TouchableOpacity
+                disabled={isLoading}
+                onPress={onSignUpWithPhone}>
+                <Text style={styles.textWithPhone}> Phone Number</Text>
+              </TouchableOpacity>
+            </Text>
+          </View>
+        </FormProvider>
       </View>
     </AuthLayout>
   );

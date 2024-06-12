@@ -1,153 +1,169 @@
 import React, {useCallback, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {ClipboardPen, LockKeyhole, Mail} from 'lucide-react-native';
+import {FormProvider, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
-import {Input, Button, Gap} from '../../../components/atoms';
-import AuthLayout from '../../../layouts/AuthLayout';
-import {colors} from '../../../constants';
-import {AuthRoutes, navigate} from '../../../navigation';
+import {
+  confirmPasswordValidation,
+  forgotPasswordSchema,
+  verifyOTPSchema,
+} from '../../../schemas/authSchema';
 import {scale} from '../../../utils';
+import {colors} from '../../../constants';
+import {useGlobalStore} from '../../../stores';
+import AuthLayout from '../../../layouts/AuthLayout';
+import {AuthRoutes, navigate} from '../../../navigation';
+import {Input, Button, Gap} from '../../../components/atoms';
+
+type FormData = {
+  email?: string;
+  phone?: string;
+  code?: string;
+  password?: string;
+  confirm_password?: string;
+};
 
 const ForgotPasswordOrganism = () => {
-  const [input, setInput] = useState<string>();
-  const [textSendTo, setTextSendTo] = useState<string>();
-  const [sendVerification, setSendVerification] = useState<boolean>(false);
-  const [withPhone, setWithPhone] = useState<boolean>(false);
-  const [passNotMatch, setPassNotMatch] = useState<boolean>(false);
-  const [password, setPassword] = useState<{new: string; confirm: string}>({
-    new: '',
-    confirm: '',
+  const [switchMethod, setSwitchMethod] = useState<'phone' | 'email'>('email');
+  const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false);
+  const [isSendOTP, setIsSendOTP] = useState<boolean>(false);
+  const emailMethod = switchMethod === 'email';
+
+  const {setLoading, isLoading} = useGlobalStore();
+  const methods = useForm<FormData>({
+    resolver: zodResolver(
+      isSendOTP
+        ? verifyOTPSchema
+        : isConfirmPassword
+        ? confirmPasswordValidation
+        : forgotPasswordSchema,
+    ),
   });
-  const [isCreateNewPassword, setIsCreateNewPassword] =
-    useState<boolean>(false);
 
-  const onProcess = useCallback(() => {
-    setTextSendTo(input);
+  const values = methods.getValues();
 
-    if (input) {
-      setSendVerification(true);
-      setInput('');
-    } else {
-      setSendVerification(false);
+  const setButtonText = (() =>
+    isSendOTP ? 'Verify' : isConfirmPassword ? 'Process' : 'Send')();
+
+  const onProcessAction = methods.handleSubmit(async ({email, phone}) => {
+    setLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      if (isSendOTP) {
+        methods.reset({});
+        setIsSendOTP(false);
+        setIsConfirmPassword(true);
+      } else if (isConfirmPassword) {
+        methods.reset({});
+        setIsConfirmPassword(false);
+        navigate(AuthRoutes.SIGN_IN);
+      } else {
+        setIsSendOTP(true);
+        const resetData = emailMethod
+          ? {phone, code: '', email: ''}
+          : {phone: '', code: '', email};
+        methods.reset({...resetData});
+      }
+    } finally {
+      setLoading(false);
     }
-  }, [input]);
-
-  const onVerify = useCallback(() => {
-    setIsCreateNewPassword(true);
-  }, []);
-
-  const onSubmit = useCallback(() => {
-    if (password.new === password.confirm) {
-      navigate(AuthRoutes.SIGN_IN);
-      setPassNotMatch(false);
-    } else {
-      setPassNotMatch(true);
-    }
-  }, [password.confirm, password.new]);
+  });
 
   const onWithPhone = useCallback(() => {
-    setWithPhone(!withPhone);
-  }, [withPhone]);
-
-  const onChangeValue = useCallback((event: string) => setInput(event), []);
-
-  const onChangePassword = useCallback((event: string, name?: string) => {
-    setPassword(prev => ({
-      ...prev,
-      [name as string]: event,
-    }));
-  }, []);
-
-  const setButtonText = (() => (sendVerification ? 'Verify' : 'Process'))();
-
-  const setOnProcess = (() => (sendVerification ? onVerify : onProcess))();
+    return setSwitchMethod(emailMethod ? 'phone' : 'email');
+  }, [emailMethod]);
 
   const setPlaceholder = (() => {
-    if (sendVerification) {
+    if (isSendOTP) {
       return 'Code OTP';
     } else {
-      if (withPhone) {
-        return 'Phone number';
-      } else {
-        return 'Email address';
-      }
+      return emailMethod ? 'Phone number' : 'Email address';
     }
   })();
 
   const setPrefix = (() =>
-    sendVerification ? (
+    isSendOTP ? (
       <ClipboardPen color={colors.disabled} size={20} />
     ) : (
       <Mail color={colors.disabled} size={20} />
     ))();
 
   const setDescription = (() => {
-    if (isCreateNewPassword) {
+    if (isConfirmPassword) {
       return 'Please enter a new password and confirm the password';
     } else {
-      return sendVerification
-        ? `A text message with a 4-digit verification code was just sent to ${textSendTo}`
+      return isSendOTP
+        ? `A text message with a 4-digit verification code was just sent to ${
+            values[emailMethod ? 'phone' : 'email']
+          }`
         : `For your security, a one time password has been sent to your ${
-            withPhone ? 'phone number' : 'email address'
+            emailMethod ? 'phone number' : 'email address'
           }. Please enter it below to continue.`;
     }
   })();
 
   const renderComponent = () => {
-    if (isCreateNewPassword) {
+    if (isConfirmPassword) {
       return (
         <View>
           <Input
-            onChangeText={text => onChangePassword(text, 'new')}
             placeholder="New password"
+            name="password"
             prefix={<LockKeyhole color={colors.disabled} size={20} />}
             placeholderTextColor={colors.disabled}
             secureTextEntry
           />
           <Gap height={12} />
           <Input
-            onChangeText={text => onChangePassword(text, 'confirm')}
+            name="confirm_password"
             placeholder="Confirm Password"
             secureTextEntry
             prefix={<LockKeyhole color={colors.disabled} size={20} />}
             placeholderTextColor={colors.disabled}
           />
-          <Gap height={2} />
-          <Text style={styles.textError}>
-            {passNotMatch && 'Passwords do not match. Please try again.'}
-          </Text>
 
           <Gap height={34} />
-          <Button text="Submit" onPress={onSubmit} size="large" />
+          <Button
+            text="Confirm"
+            weight="600"
+            isLoading={isLoading}
+            disabled={isLoading}
+            onPress={onProcessAction}
+            size="large"
+          />
         </View>
       );
     } else {
       return (
         <View>
           <Input
-            value={input}
-            onChangeText={onChangeValue}
+            name={isSendOTP ? 'code' : emailMethod ? 'phone' : 'email'}
             placeholder={setPlaceholder}
             prefix={setPrefix}
+            secureTextEntry={false}
             placeholderTextColor={colors.disabled}
           />
 
           <Gap height={34} />
           <Button
-            disabled={!input}
+            disabled={isLoading}
+            isLoading={isLoading}
             text={setButtonText}
-            onPress={setOnProcess}
+            weight="600"
+            onPress={onProcessAction}
             size="large"
           />
 
           <Gap height={34} />
 
-          {!sendVerification && (
+          {!isSendOTP && (
             <Text style={styles.textSignIn}>
               With{' '}
-              <TouchableOpacity onPress={onWithPhone}>
+              <TouchableOpacity disabled={isLoading} onPress={onWithPhone}>
                 <Text style={styles.textWithPhone}>
-                  {withPhone ? 'Email' : 'Phone Number'}
+                  {emailMethod ? 'Email' : 'Phone Number'}
                 </Text>
               </TouchableOpacity>
             </Text>
@@ -166,7 +182,7 @@ const ForgotPasswordOrganism = () => {
           <Text style={styles.description}>{setDescription}</Text>
         </View>
         <Gap height={40} />
-        {renderComponent()}
+        <FormProvider {...methods}>{renderComponent()}</FormProvider>
       </View>
     </AuthLayout>
   );
