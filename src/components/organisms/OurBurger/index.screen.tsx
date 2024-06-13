@@ -125,6 +125,7 @@ const OurBurgerOrganism: React.FC = () => {
           <Button
             onPress={onBurgerMenu}
             text="Burger Menu"
+            weight="600"
             textStyle={styles.textBurgerMenuBtn}
             size="large"
           />

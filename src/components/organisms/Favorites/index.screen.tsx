@@ -1,54 +1,44 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, StyleSheet, Text, Image, FlatList} from 'react-native';
 
-import {MainLayout} from '../../../layouts';
-import {Gap, Label} from '../../../components/atoms';
 import {colors} from '../../../constants';
-import {CardBurgerItem, Header} from '../../../components/molecules';
+import {MainLayout} from '../../../layouts';
 import {scale, scaleHeight} from '../../../utils';
-
-const LIST_FAVORITES = [
-  {
-    name: 'Cheesy Burger',
-    price: '49.500',
-    image: require('../../../assets/images/burger-menu/menu-1.png'),
-  },
-  {
-    name: 'Chicken Big Burger',
-    price: '49.500',
-    image: require('../../../assets/images/burger-menu/menu-3.png'),
-  },
-  {
-    name: 'Beef Burger',
-    price: '49.500',
-    image: require('../../../assets/images/burger-menu/menu-2.png'),
-  },
-  {
-    name: 'Specials Big Burger',
-    price: '49.500',
-    image: require('../../../assets/images/burger-menu/menu-1.png'),
-  },
-];
+import {AppRoutes, navigate} from '../../../navigation';
+import {Button, Gap, Label} from '../../../components/atoms';
+import {ourBurgerStore} from '../../../stores/ourBurgerStore';
+import {CardBurgerItem, Header} from '../../../components/molecules';
 
 const FavoriteOrganism: React.FC = () => {
-  const hasFavorite = true;
+  const {favorites, setRemoveFavorite} = ourBurgerStore();
+  const hasFavorite = favorites?.length;
+
+  const onCheckMenu = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
+  const onBack = useCallback(() => navigate('OUR_BURGER'), []);
+  const onRemoveItem = useCallback(
+    (id: string) => setRemoveFavorite(id),
+    [setRemoveFavorite],
+  );
 
   return (
     <MainLayout>
-      <Header isBack />
+      <Header isBack onPressLeft={onBack} />
       <View style={styles.container}>
         <Label customText="Favorites" variant="large" weight="semibold" />
         <Gap height={30} />
         {hasFavorite ? (
           <FlatList
-            data={LIST_FAVORITES}
-            keyExtractor={item => item.name}
+            showsVerticalScrollIndicator={false}
+            data={favorites}
+            keyExtractor={item => `${item.id}-${item.name}`}
             renderItem={({item}) => (
               <>
                 <CardBurgerItem
                   name={item.name}
                   image={item.image}
                   price={item.price}
+                  selected
+                  onPressIcon={() => onRemoveItem(item.id)}
                 />
                 <Gap height={12} />
               </>
@@ -65,6 +55,8 @@ const FavoriteOrganism: React.FC = () => {
               Hmm... Your Favotites Bag is Empty Try to Add some Favovrites
               Burger or Menu what do You Want
             </Text>
+            <Gap height={22} />
+            <Button onPress={onCheckMenu} text="Check menu" />
           </View>
         )}
       </View>
@@ -82,10 +74,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
     lineHeight: 22,
-    marginTop: 22,
+    marginTop: scale(22),
     fontSize: scale(16),
     color: colors.disabled,
-    paddingHorizontal: scale(60),
+    paddingHorizontal: scale(30),
   },
   containerContain: {
     flex: 1,

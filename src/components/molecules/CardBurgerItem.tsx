@@ -11,7 +11,7 @@ import {
 import {ChevronRight, Star} from 'lucide-react-native';
 import React from 'react';
 import {colors} from '../../constants';
-import {scale, scaleHeight} from '../../utils';
+import {formatCurrency, scale, scaleHeight} from '../../utils';
 import {Button, Gap} from '../atoms';
 
 type TPropsCardBurgerItem = {
@@ -21,6 +21,7 @@ type TPropsCardBurgerItem = {
   hasButton?: boolean;
   hasDetail?: boolean;
   textButton?: string;
+  selected?: boolean;
   textButtonStyle?: TextStyle;
   onPressIcon?: () => void;
   onPressButton?: () => void;
@@ -36,6 +37,7 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
   hasDetail,
   onPressButton,
   onPressIcon,
+  selected,
 }) => {
   const hasButtonStyle: ViewStyle = {
     flexDirection: 'column',
@@ -52,7 +54,9 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
         <View>
           <Text style={styles.cardContentTitle}>{name}</Text>
           <Gap height={8} />
-          <Text style={styles.cardContentPrice}>Rp.{price}</Text>
+          <Text style={styles.cardContentPrice}>
+            {formatCurrency(Number(price))}
+          </Text>
         </View>
       </View>
       <View style={hasButton ? hasButtonStyle : {}}>
@@ -60,7 +64,11 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
           {hasDetail ? (
             <ChevronRight size={20} color={colors.primary} />
           ) : (
-            <Star size={20} color={colors.primary} fill={colors.white} />
+            <Star
+              size={20}
+              color={colors.primary}
+              fill={selected ? colors.primary : colors.white}
+            />
           )}
         </TouchableOpacity>
 

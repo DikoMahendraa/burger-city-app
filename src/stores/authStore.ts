@@ -19,7 +19,7 @@ type AuthState = {
 };
 
 export const useAuthStore = create<AuthState>(set => ({
-  isAuthenticated: false,
+  isAuthenticated: true,
   users: {email: ''},
   setLogin: ({email}) => {
     set({isAuthenticated: true, users: {email}});

@@ -1,3 +1,21 @@
 import colors from './colors';
+import {
+  ITEMS_BAVERAGES,
+  ITEMS_BURGERS,
+  ITEMS_DESERTS,
+  ITEMS_MEALS,
+  ITEMS_SALADS,
+  LIST_ITEMS,
+  SWITCH_HERO_IMAGE,
+} from './menus';
 
-export {colors};
+export {
+  colors,
+  ITEMS_BAVERAGES,
+  ITEMS_BURGERS,
+  ITEMS_DESERTS,
+  ITEMS_MEALS,
+  ITEMS_SALADS,
+  LIST_ITEMS,
+  SWITCH_HERO_IMAGE,
+};
