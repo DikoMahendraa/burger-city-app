@@ -8,7 +8,7 @@ import {
   confirmPasswordValidation,
   forgotPasswordSchema,
   verifyOTPSchema,
-} from '../../../schemas/authSchema';
+} from '../../../schema/authSchema';
 import {scale} from '../../../utils';
 import {colors} from '../../../constants';
 import {useGlobalStore} from '../../../stores';
