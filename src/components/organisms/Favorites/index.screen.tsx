@@ -3,14 +3,14 @@ import {View, StyleSheet, Text, Image, FlatList} from 'react-native';
 
 import {colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
+import {useOurBurgerStore} from '../../../stores';
 import {scale, scaleHeight} from '../../../utils';
 import {AppRoutes, navigate} from '../../../navigation';
 import {Button, Gap, Label} from '../../../components/atoms';
-import {ourBurgerStore} from '../../../stores/ourBurgerStore';
 import {CardBurgerItem, Header} from '../../../components/molecules';
 
 const FavoriteOrganism: React.FC = () => {
-  const {favorites, setRemoveFavorite} = ourBurgerStore();
+  const {favorites, setRemoveFavorite} = useOurBurgerStore();
   const hasFavorite = favorites?.length;
 
   const onCheckMenu = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
@@ -56,7 +56,7 @@ const FavoriteOrganism: React.FC = () => {
               Burger or Menu what do You Want
             </Text>
             <Gap height={22} />
-            <Button onPress={onCheckMenu} text="Check menu" />
+            <Button onPress={onCheckMenu} weight="600" text="Check menu" />
           </View>
         )}
       </View>

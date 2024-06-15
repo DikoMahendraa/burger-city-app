@@ -11,7 +11,7 @@ import {ArrowLeft} from 'lucide-react-native';
 import {Gap, Label} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
 import {useOurBurgerStore} from '../../../stores';
-import {AppRoutes, navigate} from '../../../navigation';
+import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
 import {FloatingBasket, CardBurgerItem} from '../../molecules';
 import {TCarts, TFavorites} from '../../../stores/ourBurgerStore';
 import {LIST_ITEMS, SWITCH_HERO_IMAGE, colors} from '../../../constants';
@@ -75,6 +75,10 @@ const DetailsBurgerMenuOrganism: React.FC<{
     },
     [setCarts],
   );
+
+  const onViewCart = useCallback(() => {
+    navigate(AppDetailRoutes.DETAIL_CART);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -178,6 +182,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
 
       {hasCarts && (
         <FloatingBasket
+          onPress={onViewCart}
           length={String(carts?.length)}
           total={Number(totalCart)}
         />

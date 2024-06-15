@@ -9,10 +9,11 @@ const FloatingBasket: React.FC<{
   total: number;
   length: string;
   rootStyle?: ViewStyle;
-}> = ({total, length, rootStyle}) => {
+  onPress: () => void;
+}> = ({total, length, rootStyle, onPress}) => {
   return (
     <View style={[styles.container, rootStyle]}>
-      <TouchableOpacity onPress={() => ({})} style={styles.button}>
+      <TouchableOpacity onPress={onPress} style={styles.button}>
         <View style={styles.textCount}>
           <Label
             customText={String(length)}
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     paddingBottom: scale(20),
     shadowOpacity: 0.1,
     borderTopLeftRadius: scale(12),
-    zIndex: 20,
+    zIndex: 30,
   },
   button: {
     backgroundColor: colors.primary,

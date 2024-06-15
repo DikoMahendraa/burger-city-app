@@ -79,8 +79,12 @@ const BottomTabNavigator = () => {
             tabBarStyle: {
               height: scaleHeight(90),
               backgroundColor: colors.white,
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
+              borderTopLeftRadius: scale(52),
+              borderTopRightRadius: scale(52),
+              position: 'absolute',
+              shadowColor: colors.dark,
+              shadowOffset: {height: 2, width: 0},
+              shadowOpacity: 0.4,
             },
             tabBarItemStyle: {
               flexDirection: 'column',

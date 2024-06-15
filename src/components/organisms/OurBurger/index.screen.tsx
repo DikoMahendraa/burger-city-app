@@ -11,13 +11,13 @@ import {
 import {Search} from 'lucide-react-native';
 import {FormProvider, useForm} from 'react-hook-form';
 
-import {Header, FloatingBasket} from '../../molecules';
-import {LIST_MENU, colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
 import {Button, Gap, Input} from '../../atoms';
-import {scale, scaleHeight} from '../../../utils';
-import {navigate, AppDetailRoutes} from '../../../navigation';
 import {useOurBurgerStore} from '../../../stores';
+import {scale, scaleHeight} from '../../../utils';
+import {LIST_MENU, colors} from '../../../constants';
+import {Header, FloatingBasket} from '../../molecules';
+import {navigate, AppDetailRoutes} from '../../../navigation';
 
 const Card = ({
   title,
@@ -62,6 +62,10 @@ const OurBurgerOrganism: React.FC = () => {
 
   const onViewMenu = useCallback((props: any) => {
     navigate(AppDetailRoutes.DETAIL_BURGER_MENU, {...props});
+  }, []);
+
+  const onViewCart = useCallback(() => {
+    navigate(AppDetailRoutes.DETAIL_CART);
   }, []);
 
   return (
@@ -115,18 +119,19 @@ const OurBurgerOrganism: React.FC = () => {
                 textStyle={styles.textBurgerMenuBtn}
                 size="large"
               />
-              <Gap height={120} />
+              <Gap height={160} />
             </>
           }
         />
+        {hasCarts && (
+          <FloatingBasket
+            onPress={onViewCart}
+            rootStyle={styles.resetPaddingBottom}
+            length={String(carts?.length)}
+            total={Number(totalCart)}
+          />
+        )}
       </View>
-      {hasCarts && (
-        <FloatingBasket
-          rootStyle={styles.resetPaddingBottom}
-          length={String(carts?.length)}
-          total={Number(totalCart)}
-        />
-      )}
     </MainLayout>
   );
 };
@@ -136,13 +141,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingHorizontal: 24,
-    overflow: 'hidden',
+    position: 'relative',
   },
   gap: {
     gap: scale(14),
   },
   resetPaddingBottom: {
-    paddingBottom: 0,
+    right: 0,
+    left: 0,
+    bottom: 50,
+    paddingBottom: 12,
   },
   row: {
     flexDirection: 'row',

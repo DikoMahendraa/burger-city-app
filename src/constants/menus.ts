@@ -1,3 +1,5 @@
+import {ShoppingBag, ShoppingCart, Truck} from 'lucide-react-native';
+
 export const ITEMS_BURGERS = [
   {
     id: 'cheese_burger',
@@ -199,6 +201,27 @@ export const LIST_MENU = [
   },
 ];
 
+export const LIST_BURGER_MEALS = [
+  {
+    id: '1',
+    hasButton: false,
+    name: 'Cheesy Burger',
+    image: require('../assets/images/list-details-meals/details-meals-1.png'),
+  },
+  {
+    id: '2',
+    hasButton: true,
+    name: 'Coca Cola Small',
+    image: require('../assets/images/list-details-meals/details-meals-2.png'),
+  },
+  {
+    id: '3',
+    hasButton: false,
+    name: 'Fries Pack',
+    image: require('../assets/images/list-details-meals/details-meals-3.png'),
+  },
+];
+
 export const SWITCH_HERO_IMAGE = {
   burger: require('../assets/images/hero-slider-2.png'),
   salads: require('../assets/images/hero-salads.png'),
@@ -206,3 +229,51 @@ export const SWITCH_HERO_IMAGE = {
   baverages: require('../assets/images/hero-baverages.png'),
   dessert: require('../assets/images/hero-escream.png'),
 };
+
+export const SELECT_ORDERS_METHOD = [
+  {
+    name: 'In - Store',
+    icon: ShoppingBag,
+  },
+  {
+    name: 'Delivery',
+    icon: ShoppingCart,
+  },
+  {
+    name: 'Drive Thru',
+    icon: Truck,
+  },
+];
+
+export const LIST_WALLET = [
+  {
+    name: 'gopay',
+    image: require('../assets/images/profiles/gopay-card.png'),
+  },
+  {
+    image: require('../assets/images/profiles/dana-card.png'),
+    name: 'dana',
+  },
+  {
+    image: require('../assets/images/profiles/ovo-card.png'),
+    name: 'ovo',
+  },
+];
+
+export const LIST_TRANSACTION = [
+  {
+    price: '20.210',
+    date: '12/11/2024',
+    name: 'Chicken Speacy',
+  },
+  {
+    price: '20.210',
+    date: '12/11/2024',
+    name: 'Big Burger',
+  },
+  {
+    price: '20.210',
+    date: '12/11/2024',
+    name: 'Beef Burger',
+  },
+];

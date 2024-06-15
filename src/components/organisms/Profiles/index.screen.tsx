@@ -10,48 +10,16 @@ import {
 
 import {Header} from '../../molecules';
 import {Gap, Label} from '../../atoms';
-import {colors} from '../../../constants';
+import {LIST_TRANSACTION, LIST_WALLET, colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
 import {scale, scaleHeight} from '../../../utils';
-
-const LIST_WALLET = [
-  {
-    name: 'gopay',
-    image: require('../../../assets/images/profiles/gopay-card.png'),
-  },
-  {
-    image: require('../../../assets/images/profiles/dana-card.png'),
-    name: 'dana',
-  },
-  {
-    image: require('../../../assets/images/profiles/ovo-card.png'),
-    name: 'ovo',
-  },
-];
-
-const LIST_TRANSACTION = [
-  {
-    price: '20.210',
-    date: '12/11/2024',
-    name: 'Chicken Speacy',
-  },
-  {
-    price: '20.210',
-    date: '12/11/2024',
-    name: 'Big Burger',
-  },
-  {
-    price: '20.210',
-    date: '12/11/2024',
-    name: 'Beef Burger',
-  },
-];
 
 const ProfileOrganism = () => {
   return (
     <MainLayout>
       <Header />
       <FlatList
+        style={styles.container}
         data={[{id: '1'}]}
         keyExtractor={item => item.id}
         renderItem={() => (
@@ -139,6 +107,8 @@ const ProfileOrganism = () => {
                 </TouchableOpacity>
               )}
             />
+
+            <Gap height={140} />
           </>
         )}
       />
@@ -147,6 +117,9 @@ const ProfileOrganism = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   profileImage: {
     width: 150,
     height: 150,

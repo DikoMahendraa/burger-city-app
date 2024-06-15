@@ -8,44 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {CircleMinus, CirclePlus, CircleX, Star} from 'lucide-react-native';
-import React, {useCallback, useState} from 'react';
-
-import {Header} from '../../molecules';
-import {colors} from '../../../constants';
-import {goBack} from '../../../navigation';
-import {MainLayout} from '../../../layouts';
-import {Button, Gap, Label} from '../../atoms';
-import {scale, scaleHeight} from '../../../utils';
-
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import {CircleMinus, CirclePlus, CircleX, Star} from 'lucide-react-native';
+import React, {useCallback, useState} from 'react';
+
+import {Header} from '../../molecules';
+import {goBack} from '../../../navigation';
+import {MainLayout} from '../../../layouts';
+import {Button, Gap, Label} from '../../atoms';
+import {scale, scaleHeight} from '../../../utils';
+import {LIST_BURGER_MEALS, colors} from '../../../constants';
 
 const {height} = Dimensions.get('window');
-
-const LIST_ITEMS = [
-  {
-    id: '1',
-    hasButton: false,
-    name: 'Cheesy Burger',
-    image: require('../../../assets/images/list-details-meals/details-meals-1.png'),
-  },
-  {
-    id: '2',
-    hasButton: true,
-    name: 'Coca Cola Small',
-    image: require('../../../assets/images/list-details-meals/details-meals-2.png'),
-  },
-  {
-    id: '3',
-    hasButton: false,
-    name: 'Fries Pack',
-    image: require('../../../assets/images/list-details-meals/details-meals-3.png'),
-  },
-];
 
 const ListHeaderComponent = () => {
   return (
@@ -157,7 +135,7 @@ const BurgerMealsOrganism: React.FC = () => {
       <FlatList
         style={styles.container}
         contentContainerStyle={styles.paddingBottom}
-        data={LIST_ITEMS}
+        data={LIST_BURGER_MEALS}
         ListHeaderComponent={<ListHeaderComponent />}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
@@ -173,7 +151,7 @@ const BurgerMealsOrganism: React.FC = () => {
       <Animated.View style={[styles.drawer, animatedStyle]}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={LIST_ITEMS}
+          data={LIST_BURGER_MEALS}
           ListHeaderComponent={
             <View style={styles.headerDrawer}>
               <Label
@@ -203,7 +181,7 @@ const BurgerMealsOrganism: React.FC = () => {
   );
 };
 
-export default BurgerMealsOrganism;
+export default React.memo(BurgerMealsOrganism);
 
 const styles = StyleSheet.create({
   container: {
