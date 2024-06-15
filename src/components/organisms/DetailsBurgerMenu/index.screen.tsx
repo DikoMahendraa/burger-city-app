@@ -8,15 +8,12 @@ import {
 import React, {useCallback, useMemo} from 'react';
 import {ArrowLeft} from 'lucide-react-native';
 
-import {
-  TCarts,
-  TFavorites,
-  ourBurgerStore,
-} from '../../../stores/ourBurgerStore';
 import {Gap, Label} from '../../atoms';
-import {CardBurgerItem} from '../../molecules';
-import {formatCurrency, scale, scaleHeight} from '../../../utils';
+import {scale, scaleHeight} from '../../../utils';
+import {useOurBurgerStore} from '../../../stores';
 import {AppRoutes, navigate} from '../../../navigation';
+import {FloatingBasket, CardBurgerItem} from '../../molecules';
+import {TCarts, TFavorites} from '../../../stores/ourBurgerStore';
 import {LIST_ITEMS, SWITCH_HERO_IMAGE, colors} from '../../../constants';
 
 const DetailsBurgerMenuOrganism: React.FC<{
@@ -31,7 +28,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
   const {id, name, description} = route.params || {};
   const hasViewMenu = id.includes('meals');
   const {setFavorites, setRemoveFavorite, favorites, setCarts, carts} =
-    ourBurgerStore();
+    useOurBurgerStore();
 
   const listFavorites = favorites?.flatMap(item => item.id);
   const hasCarts = Number(carts?.length) >= 1;
@@ -180,29 +177,10 @@ const DetailsBurgerMenuOrganism: React.FC<{
       />
 
       {hasCarts && (
-        <View style={styles.containerCart}>
-          <TouchableOpacity onPress={() => ({})} style={styles.buttonCart}>
-            <View style={styles.textCount}>
-              <Label
-                customText={String(Number(carts?.length) + 1)}
-                color={colors.primary}
-                weight="semibold"
-                variant="normal"
-              />
-            </View>
-            <Label
-              customText="View your cart"
-              color={colors.white}
-              variant="normal"
-            />
-            <Label
-              customText={formatCurrency(Number(totalCart))}
-              color={colors.white}
-              weight="semibold"
-              variant="normal"
-            />
-          </TouchableOpacity>
-        </View>
+        <FloatingBasket
+          length={String(carts?.length)}
+          total={Number(totalCart)}
+        />
       )}
     </View>
   );
@@ -259,32 +237,5 @@ const styles = StyleSheet.create({
   },
   containerListItem: {
     paddingHorizontal: scale(24),
-  },
-  textCount: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-    color: colors.primary,
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
-  containerCart: {
-    backgroundColor: colors.white,
-    position: 'absolute',
-    bottom: scale(0),
-    paddingBottom: 30,
-    paddingHorizontal: scale(24),
-    zIndex: 20,
-  },
-  buttonCart: {
-    backgroundColor: colors.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingVertical: scale(12),
-    paddingHorizontal: scale(16),
-    borderRadius: 8,
   },
 });

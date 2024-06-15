@@ -74,6 +74,7 @@ const CustomIntroSlider = ({slides}: TPropsCustomIntroSlider) => {
 
       <View style={styles.button}>
         <Button
+          weight="600"
           size="large"
           text="Get start here"
           onPress={() => navigate(AuthRoutes.SIGN_IN)}

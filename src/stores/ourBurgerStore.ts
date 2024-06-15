@@ -25,7 +25,7 @@ type TOurBurgerStore = {
   setRemoveFavorite: (id: string) => void;
 };
 
-export const ourBurgerStore = create<TOurBurgerStore>((set, get) => ({
+export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
   favorites: [],
   carts: [],
   setFavorites: ({...props}) => {

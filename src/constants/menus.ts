@@ -168,6 +168,37 @@ export const LIST_ITEMS = {
   dessert: ITEMS_DESERTS,
 };
 
+export const LIST_MENU = [
+  {
+    id: 'meals',
+    description: 'Burger, Fries, Drinks',
+    name: 'Value meals',
+    imagePath: 'menu-1.png',
+    image: require('../assets/images/list-menus/menu-4.png'),
+  },
+  {
+    id: 'salads',
+    description: 'Vegetables, and Meat Beef',
+    name: 'Salads / Sides',
+    imagePath: 'menu-2.png',
+    image: require('../assets/images/list-menus/menu-1.png'),
+  },
+  {
+    id: 'dessert',
+    description: 'Pancake, Sundae, Cake',
+    name: 'Desserts',
+    imagePath: 'menu-4.png',
+    image: require('../assets/images/list-menus/menu-2.png'),
+  },
+  {
+    id: 'baverages',
+    description: 'Pepsi, CocaCola, Soft Drinks',
+    name: 'Beverages',
+    imagePath: 'menu-3.png',
+    image: require('../assets/images/list-menus/menu-3.png'),
+  },
+];
+
 export const SWITCH_HERO_IMAGE = {
   burger: require('../assets/images/hero-slider-2.png'),
   salads: require('../assets/images/hero-salads.png'),

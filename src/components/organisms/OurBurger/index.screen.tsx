@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   View,
   Image,
@@ -6,48 +6,18 @@ import {
   Text,
   ImageSourcePropType,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
 } from 'react-native';
 import {Search} from 'lucide-react-native';
+import {FormProvider, useForm} from 'react-hook-form';
 
-import {Header} from '../../molecules';
-import {colors} from '../../../constants';
+import {Header, FloatingBasket} from '../../molecules';
+import {LIST_MENU, colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
 import {Button, Gap, Input} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
 import {navigate, AppDetailRoutes} from '../../../navigation';
-import {FormProvider, useForm} from 'react-hook-form';
-
-const LIST_MENU = [
-  {
-    id: 'meals',
-    description: 'Burger, Fries, Drinks',
-    name: 'Value meals',
-    imagePath: 'menu-1.png',
-    image: require('../../../assets/images/list-menus/menu-4.png'),
-  },
-  {
-    id: 'salads',
-    description: 'Vegetables, and Meat Beef',
-    name: 'Salads / Sides',
-    imagePath: 'menu-2.png',
-    image: require('../../../assets/images/list-menus/menu-1.png'),
-  },
-  {
-    id: 'dessert',
-    description: 'Pancake, Sundae, Cake',
-    name: 'Desserts',
-    imagePath: 'menu-4.png',
-    image: require('../../../assets/images/list-menus/menu-2.png'),
-  },
-  {
-    id: 'baverages',
-    description: 'Pepsi, CocaCola, Soft Drinks',
-    name: 'Beverages',
-    imagePath: 'menu-3.png',
-    image: require('../../../assets/images/list-menus/menu-3.png'),
-  },
-];
+import {useOurBurgerStore} from '../../../stores';
 
 const Card = ({
   title,
@@ -70,6 +40,15 @@ const Card = ({
 
 const OurBurgerOrganism: React.FC = () => {
   const methods = useForm<{search: string}>();
+  const {carts} = useOurBurgerStore();
+  const hasCarts = Number(carts?.length) >= 1;
+  const totalCart = useMemo(
+    () =>
+      carts
+        ?.flatMap(item => Number(item.price))
+        .reduce((acc, cur) => acc + cur, 0),
+    [carts],
+  );
 
   const onBurgerMenu = useCallback(
     () =>
@@ -88,50 +67,66 @@ const OurBurgerOrganism: React.FC = () => {
   return (
     <MainLayout>
       <Header />
-      <Gap height={8} />
       <View style={styles.container}>
-        <FormProvider {...methods}>
-          <Input
-            name="search"
-            style={styles.input}
-            placeholder="Search for a Food"
-            prefix={<Search color={colors.disabled} size={20} />}
-            placeholderTextColor={colors.disabled}
-          />
-        </FormProvider>
-
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.containerHero}>
-            <Image
-              style={styles.imageHero}
-              alt="image-ilustration-burger"
-              source={require('../../../assets/images/hero-burger.png')}
-            />
-          </View>
-          <Gap height={12} />
-          <View style={styles.containerCard}>
-            {LIST_MENU.map(item => {
-              return (
-                <Card
-                  key={item.name}
-                  onPress={() => onViewMenu(item)}
-                  title={item.name}
-                  image={item.image}
+        <FlatList
+          data={LIST_MENU}
+          ListHeaderComponent={
+            <>
+              <FormProvider {...methods}>
+                <Input
+                  name="search"
+                  style={styles.input}
+                  placeholder="Search for a Food"
+                  prefix={<Search color={colors.disabled} size={20} />}
+                  placeholderTextColor={colors.disabled}
                 />
-              );
-            })}
-          </View>
-          <Gap height={20} />
-          <Button
-            onPress={onBurgerMenu}
-            text="Burger Menu"
-            weight="600"
-            textStyle={styles.textBurgerMenuBtn}
-            size="large"
-          />
-          <Gap height={20} />
-        </ScrollView>
+              </FormProvider>
+
+              <View style={styles.containerHero}>
+                <Image
+                  style={styles.imageHero}
+                  alt="image-ilustration-burger"
+                  source={require('../../../assets/images/hero-burger.png')}
+                />
+              </View>
+            </>
+          }
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.gap}
+          renderItem={({item}) => (
+            <>
+              <Card
+                key={item.name}
+                onPress={() => onViewMenu(item)}
+                title={item.name}
+                image={item.image}
+              />
+            </>
+          )}
+          ListFooterComponent={
+            <>
+              <Gap height={30} />
+              <Button
+                onPress={onBurgerMenu}
+                text="Burger Menu"
+                weight="600"
+                textStyle={styles.textBurgerMenuBtn}
+                size="large"
+              />
+              <Gap height={120} />
+            </>
+          }
+        />
       </View>
+      {hasCarts && (
+        <FloatingBasket
+          rootStyle={styles.resetPaddingBottom}
+          length={String(carts?.length)}
+          total={Number(totalCart)}
+        />
+      )}
     </MainLayout>
   );
 };
@@ -142,6 +137,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingHorizontal: 24,
     overflow: 'hidden',
+  },
+  gap: {
+    gap: scale(14),
+  },
+  resetPaddingBottom: {
+    paddingBottom: 0,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   imageHero: {
     objectFit: 'cover',
@@ -154,11 +159,6 @@ const styles = StyleSheet.create({
     borderColor: colors['gray-05'],
     borderWidth: 1,
     marginBottom: 12,
-  },
-  containerCard: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
   },
   textBurgerMenuBtn: {
     fontWeight: '700',

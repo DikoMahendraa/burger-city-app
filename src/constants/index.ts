@@ -6,12 +6,14 @@ import {
   ITEMS_MEALS,
   ITEMS_SALADS,
   LIST_ITEMS,
+  LIST_MENU,
   SWITCH_HERO_IMAGE,
 } from './menus';
 
 export {
   colors,
   ITEMS_BAVERAGES,
+  LIST_MENU,
   ITEMS_BURGERS,
   ITEMS_DESERTS,
   ITEMS_MEALS,
