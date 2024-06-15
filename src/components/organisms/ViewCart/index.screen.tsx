@@ -3,11 +3,11 @@ import {View, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import {ChevronRight, LucideIcon, Pencil} from 'lucide-react-native';
 
 import {Header} from '../../molecules';
-import {SELECT_ORDERS_METHOD, colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
 import {navigate} from '../../../navigation';
 import {scale, scaleHeight} from '../../../utils';
 import {Gap, Label, RadioButton} from '../../atoms';
+import {SELECT_ORDERS_METHOD, colors} from '../../../constants';
 
 const SectionOrderMethod: React.FC<{
   icon: LucideIcon;
@@ -282,11 +282,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: colors.primary,
-    paddingVertical: 20,
-    marginHorizontal: 12,
-    borderRadius: 32,
+    paddingVertical: scale(20),
+    marginHorizontal: scale(12),
+    borderRadius: scale(32),
     flexDirection: 'row',
-    paddingHorizontal: 24,
+    paddingHorizontal: scale(24),
   },
   cardOrderMethod: {
     paddingVertical: 8,
