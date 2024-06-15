@@ -10,7 +10,7 @@ import AuthLayout from '../../../layouts/AuthLayout';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {Input, Button, Gap} from '../../../components/atoms';
 import {useAuthStore, useGlobalStore} from '../../../stores';
-import {verifyOTPSchema} from '../../../schemas/authSchema';
+import {verifyOTPSchema} from '../../../schema/authSchema';
 
 const VerificationOTPOrganism = () => {
   const methods = useForm<{code: string}>({

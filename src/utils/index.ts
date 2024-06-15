@@ -1,3 +1,4 @@
 import {scale, scaleHeight} from './scale';
+import {formatCurrency} from './formatCurrency';
 
-export {scale, scaleHeight};
+export {scale, scaleHeight, formatCurrency};

@@ -8,7 +8,7 @@ import {scale} from '../../../utils';
 import {colors} from '../../../constants';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {AuthRoutes, navigate} from '../../../navigation';
-import {signInSchema} from '../../../schemas/authSchema';
+import {signInSchema} from '../../../schema/authSchema';
 import {useAuthStore, useGlobalStore} from '../../../stores';
 import {Input, Button, Gap, RadioButton} from '../../../components/atoms';
 

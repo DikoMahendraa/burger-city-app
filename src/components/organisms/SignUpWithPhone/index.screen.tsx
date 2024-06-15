@@ -10,7 +10,7 @@ import {scale} from '../../../utils';
 import {FormProvider, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useAuthStore, useGlobalStore} from '../../../stores';
-import {signUpPhoneSchema} from '../../../schemas/authSchema';
+import {signUpPhoneSchema} from '../../../schema/authSchema';
 
 type FormData = {
   phone: string;

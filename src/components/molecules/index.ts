@@ -4,6 +4,7 @@ import CardMenu from './CardMenu';
 import ListOffersMenu from './ListOffersMenu';
 import ListTrackAndOrder from './ListTrackAndOrder';
 import CardBurgerItem from './CardBurgerItem';
+import FloatingBasket from './FloatingBasket';
 
 export {
   CardMenu,
@@ -12,4 +13,5 @@ export {
   Hero,
   ListTrackAndOrder,
   CardBurgerItem,
+  FloatingBasket,
 };

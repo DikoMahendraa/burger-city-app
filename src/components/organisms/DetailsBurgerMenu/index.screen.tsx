@@ -5,171 +5,16 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {ArrowLeft} from 'lucide-react-native';
 
 import {Gap, Label} from '../../atoms';
-import {colors} from '../../../constants';
-import {CardBurgerItem} from '../../molecules';
 import {scale, scaleHeight} from '../../../utils';
+import {useOurBurgerStore} from '../../../stores';
 import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
-
-const ITEMS_BURGERS = [
-  {
-    id: 'cheese_burger',
-    name: 'Cheesy Burger',
-    price: '49.260',
-    image: require('../../../assets/images/burger-menu/menu-1.png'),
-  },
-  {
-    id: 'chicken_burger',
-    name: 'Chicken Big Burger',
-    price: '49.260',
-    image: require('../../../assets/images/burger-menu/menu-3.png'),
-  },
-  {
-    id: 'beef_burger',
-    name: 'Beef Burger',
-    price: '49.260',
-    image: require('../../../assets/images/burger-menu/menu-2.png'),
-  },
-  {
-    id: 'special_burger',
-    name: 'Chicken Spicy Burger',
-    price: '49.260',
-    image: require('../../../assets/images/burger-menu/menu-1.png'),
-  },
-];
-
-const ITEMS_BAVERAGES = [
-  {
-    id: 'pespi',
-    name: 'Pepsi Small',
-    price: '10.000',
-    image: require('../../../assets/images/list-baverages/baverages-1.png'),
-  },
-  {
-    id: 'cocal_small',
-    name: 'Coca Cola Small',
-    price: '10.000',
-    image: require('../../../assets/images/list-baverages/baverages-2.png'),
-  },
-  {
-    id: 'coca_large',
-    name: 'Coca Cola Large',
-    price: '10.000',
-    image: require('../../../assets/images/list-baverages/baverages-3.png'),
-  },
-  {
-    id: 'red_lemon_soda',
-    name: 'Red Lemon Soda',
-    price: '10.000',
-    image: require('../../../assets/images/list-baverages/baverages-4.png'),
-  },
-  {
-    id: 'blue_soda',
-    name: 'Bluesea Soda',
-    price: '10.000',
-    image: require('../../../assets/images/list-baverages/baverages-5.png'),
-  },
-];
-
-const ITEMS_SALADS = [
-  {
-    id: 'white_salads',
-    name: 'White Purple Salads',
-    price: '49.260',
-    image: require('../../../assets/images/list-salads/salad-1.png'),
-  },
-  {
-    id: 'dragon_salads',
-    name: 'Dragon Salads',
-    price: '49.260',
-    image: require('../../../assets/images/list-salads/salad-2.png'),
-  },
-  {
-    id: 'red_salads',
-    name: 'Red Salads',
-    price: '49.260',
-    image: require('../../../assets/images/list-salads/salad-3.png'),
-  },
-  {
-    id: 'beef_salads',
-    name: 'Beef Meat Salad',
-    price: '49.260',
-    image: require('../../../assets/images/list-salads/salad-4.png'),
-  },
-];
-
-const ITEMS_DESERTS = [
-  {
-    id: 'vanilla',
-    name: 'Vanilla Ice Cream',
-    price: '49.260',
-    image: require('../../../assets/images/list-desserts/desserts-1.png'),
-  },
-  {
-    id: 'strawberry',
-    name: 'Strawberry Ice Cream',
-    price: '49.260',
-    image: require('../../../assets/images/list-desserts/desserts-2.png'),
-  },
-  {
-    id: 'matcha',
-    name: 'Red Lemon Soda',
-    price: '49.260',
-    image: require('../../../assets/images/list-desserts/desserts-3.png'),
-  },
-  {
-    id: 'mango',
-    name: 'Bluesea Soda',
-    price: '49.260',
-    image: require('../../../assets/images/list-desserts/desserts-4.png'),
-  },
-];
-
-const ITEMS_MEALS = [
-  {
-    id: 'lunch',
-    name: 'Lunch Pack',
-    price: '49.260',
-    image: require('../../../assets/images/list-meals/meals-1.png'),
-  },
-  {
-    id: 'chessy',
-    name: 'Chessy MiLo',
-    price: '49.260',
-    image: require('../../../assets/images/list-meals/meals-2.png'),
-  },
-  {
-    id: 'cola_beef',
-    name: 'Cola Beef',
-    price: '49.260',
-    image: require('../../../assets/images/list-meals/meals-3.png'),
-  },
-  {
-    id: 'burger_meal',
-    name: 'Cheese Burger Meal ',
-    price: '49.260',
-    image: require('../../../assets/images/list-meals/meals-4.png'),
-  },
-];
-
-const LIST_ITEMS = {
-  burger: ITEMS_BURGERS,
-  salads: ITEMS_SALADS,
-  meals: ITEMS_MEALS,
-  baverages: ITEMS_BAVERAGES,
-  dessert: ITEMS_DESERTS,
-};
-
-const SWITCH_HERO_IMAGE = {
-  burger: require('../../../assets/images/hero-slider-2.png'),
-  salads: require('../../../assets/images/hero-salads.png'),
-  meals: require('../../../assets/images/hero-burger.png'),
-  baverages: require('../../../assets/images/hero-baverages.png'),
-  dessert: require('../../../assets/images/hero-escream.png'),
-};
+import {FloatingBasket, CardBurgerItem} from '../../molecules';
+import {TCarts, TFavorites} from '../../../stores/ourBurgerStore';
+import {LIST_ITEMS, SWITCH_HERO_IMAGE, colors} from '../../../constants';
 
 const DetailsBurgerMenuOrganism: React.FC<{
   route: {
@@ -182,15 +27,58 @@ const DetailsBurgerMenuOrganism: React.FC<{
 }> = ({route}) => {
   const {id, name, description} = route.params || {};
   const hasViewMenu = id.includes('meals');
+  const {setFavorites, setRemoveFavorite, favorites, setCarts, carts} =
+    useOurBurgerStore();
+
+  const listFavorites = favorites?.flatMap(item => item.id);
+  const hasCarts = Number(carts?.length) >= 1;
+  const totalCart = useMemo(
+    () =>
+      carts
+        ?.flatMap(item => Number(item.price))
+        .reduce((acc, cur) => acc + cur, 0),
+    [carts],
+  );
+  const hasSelected = useCallback(
+    (params: string) => listFavorites?.includes(params),
+    [listFavorites],
+  );
 
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
 
-  const onViewMenu = useCallback(() => {
-    if (hasViewMenu) {
-      navigate(AppDetailRoutes.DETAIL_BURGER_MEALS);
-    } else {
-    }
-  }, [hasViewMenu]);
+  const onViewMenu = useCallback(
+    (items: TFavorites) => {
+      if (hasSelected(items.id)) {
+        setRemoveFavorite(items.id);
+      } else {
+        setFavorites({
+          id: items.id,
+          image: items.image,
+          name: items.name,
+          price: items.price,
+          type: items.type,
+        });
+      }
+    },
+    [hasSelected, setFavorites, setRemoveFavorite],
+  );
+
+  const onAddMenu = useCallback(
+    (items: TCarts) => {
+      setCarts({
+        id: items.id,
+        image: items.image,
+        name: items.name,
+        price: items.price,
+        type: items.type,
+      });
+    },
+    [setCarts],
+  );
+
+  const onViewCart = useCallback(() => {
+    navigate(AppDetailRoutes.DETAIL_CART);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -205,7 +93,25 @@ const DetailsBurgerMenuOrganism: React.FC<{
               image={item.image}
               price={item.price}
               hasDetail={hasViewMenu}
-              onPressIcon={onViewMenu}
+              selected={hasSelected(item.id)}
+              onPressIcon={() =>
+                onViewMenu({
+                  id: item.id,
+                  name: item.name,
+                  price: item.price,
+                  image: item.image,
+                  type: item.type,
+                })
+              }
+              onPressButton={() =>
+                onAddMenu({
+                  id: item.id,
+                  name: item.name,
+                  price: item.price,
+                  image: item.image,
+                  type: item.type,
+                })
+              }
               textButton="Add +"
               textButtonStyle={styles.fontSmall}
             />
@@ -273,29 +179,14 @@ const DetailsBurgerMenuOrganism: React.FC<{
           </>
         }
       />
-      <View style={styles.containerCart}>
-        <TouchableOpacity onPress={() => ({})} style={styles.buttonCart}>
-          <View style={styles.textCount}>
-            <Label
-              customText="1"
-              color={colors.primary}
-              weight="semibold"
-              variant="normal"
-            />
-          </View>
-          <Label
-            customText="View your cart"
-            color={colors.white}
-            variant="normal"
-          />
-          <Label
-            customText="Rp.50.000"
-            color={colors.white}
-            weight="semibold"
-            variant="normal"
-          />
-        </TouchableOpacity>
-      </View>
+
+      {hasCarts && (
+        <FloatingBasket
+          onPress={onViewCart}
+          length={String(carts?.length)}
+          total={Number(totalCart)}
+        />
+      )}
     </View>
   );
 };
@@ -351,32 +242,5 @@ const styles = StyleSheet.create({
   },
   containerListItem: {
     paddingHorizontal: scale(24),
-  },
-  textCount: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-    color: colors.primary,
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
-  containerCart: {
-    backgroundColor: colors.white,
-    position: 'absolute',
-    bottom: scale(0),
-    paddingBottom: 30,
-    paddingHorizontal: scale(24),
-    zIndex: 20,
-  },
-  buttonCart: {
-    backgroundColor: colors.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingVertical: scale(12),
-    paddingHorizontal: scale(16),
-    borderRadius: 8,
   },
 });

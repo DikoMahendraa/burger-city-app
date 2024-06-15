@@ -21,6 +21,7 @@ const HomeOrganism: React.FC = () => {
         <ListOffersMenu label="Best Offers" />
         <Gap height={12} />
         <ListOffersMenu label="Burgers Menu" />
+        <Gap height={80} />
       </ScrollView>
     </MainLayout>
   );

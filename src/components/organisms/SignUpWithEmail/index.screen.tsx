@@ -9,7 +9,7 @@ import {colors} from '../../../constants';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {AuthRoutes, navigate} from '../../../navigation';
 import {Input, Button, Gap} from '../../../components/atoms';
-import {signUpEmailSchema} from '../../../schemas/authSchema';
+import {signUpEmailSchema} from '../../../schema/authSchema';
 import {useAuthStore, useGlobalStore} from '../../../stores';
 
 type FormData = {

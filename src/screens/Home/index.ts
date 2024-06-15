@@ -4,6 +4,7 @@ import OurBurgerScreen from './OurBurgerScreen';
 import ProfileScreen from './ProfileScreen';
 import BurgerMealsScreen from './BurgerMealsScreen';
 import BurgerMenuScreen from './BurgerMenuScreen';
+import ViewCartScreen from './ViewCartScreen';
 
 export {
   FavoriteScreen,
@@ -12,4 +13,5 @@ export {
   ProfileScreen,
   BurgerMealsScreen,
   BurgerMenuScreen,
+  ViewCartScreen,
 };

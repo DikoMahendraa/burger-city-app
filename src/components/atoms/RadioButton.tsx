@@ -4,7 +4,7 @@ import {colors} from '../../constants';
 import {scale, scaleHeight} from '../../utils';
 
 interface RadioButtonProps {
-  label: string;
+  label?: string;
   selected: boolean;
   onPress: () => void;
 }
@@ -19,7 +19,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       <View style={styles.radioCircle}>
         {selected && <View style={styles.selectedRb} />}
       </View>
-      <Text style={styles.radioText}>{label}</Text>
+      {label && <Text style={styles.radioText}>{label}</Text>}
     </TouchableOpacity>
   );
 };
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: scale(15),
     borderRadius: 7.5,
     borderWidth: 2,
-    borderColor: colors.white,
+    borderColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
     width: scale(8),
     height: scaleHeight(8),
     borderRadius: 4,
-    backgroundColor: colors.white,
+    backgroundColor: colors.primary,
   },
   radioText: {
-    color: colors.white,
+    color: colors.primary,
     marginLeft: scale(10),
     fontSize: scale(14),
   },

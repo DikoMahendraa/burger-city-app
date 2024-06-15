@@ -45,7 +45,7 @@ const TabItem: React.FC<{focused: boolean; name: string}> = ({
     fontWeight: focused ? '600' : '400',
     textTransform: 'capitalize',
     fontSize: scale(12),
-    marginTop: -12,
+    marginTop: scale(-12),
     textAlign: 'center',
     color: focused ? colors.primary : colors.disabled,
   };
@@ -61,7 +61,7 @@ const BottomTabNavigator = () => {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.disabled,
       }}
-      initialRouteName={AppRoutes.HOME}>
+      initialRouteName={AppRoutes.OUR_BURGER}>
       {LIST_TABS.map(item => (
         <Tab.Screen
           key={item.name}
@@ -79,8 +79,12 @@ const BottomTabNavigator = () => {
             tabBarStyle: {
               height: scaleHeight(90),
               backgroundColor: colors.white,
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
+              borderTopLeftRadius: scale(52),
+              borderTopRightRadius: scale(52),
+              position: 'absolute',
+              shadowColor: colors.dark,
+              shadowOffset: {height: 2, width: 0},
+              shadowOpacity: 0.4,
             },
             tabBarItemStyle: {
               flexDirection: 'column',
