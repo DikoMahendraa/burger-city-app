@@ -1,36 +1,53 @@
-import React, {useCallback} from 'react';
-import {View, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import {ChevronRight, LucideIcon, Pencil} from 'lucide-react-native';
+import React, {useCallback, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  TextInput,
+} from 'react-native';
+import {ChevronRight, LucideIcon, Pencil, PlusIcon} from 'lucide-react-native';
 
 import {Header} from '../../molecules';
 import {MainLayout} from '../../../layouts';
-import {navigate} from '../../../navigation';
-import {scale, scaleHeight} from '../../../utils';
+import {AppRoutes, navigate} from '../../../navigation';
+import {formatCurrency, scale, scaleHeight} from '../../../utils';
 import {Gap, Label, RadioButton} from '../../atoms';
 import {SELECT_ORDERS_METHOD, colors} from '../../../constants';
+import {useOurBurgerStore} from '../../../stores';
 
 const SectionOrderMethod: React.FC<{
   icon: LucideIcon;
   name: string;
-}> = ({name, ...props}) => {
+  selected: boolean;
+  onPress: () => void;
+}> = ({name, selected = false, onPress, ...props}) => {
   return (
-    <TouchableOpacity style={[styles.row, styles.cardOrderMethod]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.row, styles.cardOrderMethod]}>
       <View style={[styles.row]}>
         <props.icon color={colors.disabled} />
         <Gap width={24} />
         <Label color={colors.dark} variant="small" customText={name} />
       </View>
-      <RadioButton onPress={() => ({})} selected />
+      <RadioButton onPress={onPress} selected={selected} />
     </TouchableOpacity>
   );
 };
 
-const SectionDeliveryAddress: React.FC = () => {
+const SectionDeliveryAddress: React.FC<{
+  onPress: () => void;
+  visible: boolean;
+  value: string;
+  onChange: (params: string) => void;
+}> = ({visible, onPress, onChange, value}) => {
+  console.log({value});
   return (
     <>
       <Label customText="Delivery Address" variant="normal" weight="semibold" />
       <Gap height={30} />
-      <View style={styles.row}>
+      <View style={{flexDirection: 'row'}}>
         <View style={styles['delivery-image-address']} />
         <Gap width={20} />
         <View style={styles['delivery-detail-address']}>
@@ -40,15 +57,36 @@ const SectionDeliveryAddress: React.FC = () => {
             color={colors.dark}
             variant="small"
           />
-
-          <Gap height={12} />
-          <View style={styles.row}>
-            <Label
-              customText="Add a note to driver"
-              color={colors.disabled}
-              variant="small"
-            />
-            <Pencil size={14} color={colors.primary} />
+          <Gap height={8} />
+          <View style={[styles.row, {paddingRight: 24}]}>
+            {visible ? (
+              <TextInput
+                multiline
+                value={value}
+                placeholder="Enter your notes"
+                onChangeText={onChange}
+                style={{
+                  width: '80%',
+                  fontSize: 12,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.disabled,
+                  paddingBottom: 6,
+                }}
+              />
+            ) : (
+              <Label
+                customText={value || 'Add a note to driver'}
+                color={colors.disabled}
+                variant="small"
+              />
+            )}
+            <TouchableOpacity onPress={onPress}>
+              {visible ? (
+                <PlusIcon size={16} color={colors.primary} />
+              ) : (
+                <Pencil size={16} color={colors.primary} />
+              )}
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -106,13 +144,17 @@ const SectionTotalPayment: React.FC = () => {
   );
 };
 
-const SectionItemOrder: React.FC = () => {
+const SectionItemOrder: React.FC<{
+  price: number;
+  total: number;
+  name: string;
+}> = ({price = 0, total = 1, name}) => {
   return (
     <View style={[styles.row, {paddingVertical: 12}]}>
       <View style={styles.row}>
         <Label
           color={colors.primary}
-          customText="1x"
+          customText={total + 'x'}
           variant="small"
           weight="semibold"
         />
@@ -120,7 +162,7 @@ const SectionItemOrder: React.FC = () => {
         <View>
           <Label
             color={colors.dark}
-            customText="Chicken Big Burger"
+            customText={name}
             variant="small"
             weight="normalWeight"
           />
@@ -133,32 +175,50 @@ const SectionItemOrder: React.FC = () => {
           />
         </View>
       </View>
-      <Label color={colors.dark} customText="Rp. 50.000" variant="small" />
+      <Label
+        color={colors.dark}
+        customText={formatCurrency(price)}
+        variant="small"
+      />
     </View>
   );
 };
 
 const SectionItemList: React.FC = () => {
+  const {carts} = useOurBurgerStore();
+
+  const onAddItems = useCallback(() => {
+    navigate(AppRoutes.OUR_BURGER);
+  }, []);
+
   return (
     <FlatList
-      data={[{id: '1'}, {id: '3'}, {id: '5'}, {id: '4'}]}
+      data={carts}
       keyExtractor={item => item.id}
       ListHeaderComponent={
         <>
           <Gap height={30} />
           <View style={styles.row}>
             <Label customText="Item List" variant="normal" weight="semibold" />
-            <Label
-              color={colors.primary}
-              customText="Add Items"
-              variant="normal"
-              weight="semibold"
-            />
+            <TouchableOpacity onPress={onAddItems}>
+              <Label
+                color={colors.primary}
+                customText="Add Items"
+                variant="normal"
+                weight="semibold"
+              />
+            </TouchableOpacity>
           </View>
-          <Gap height={30} />
+          <Gap height={12} />
         </>
       }
-      renderItem={({}) => <SectionItemOrder />}
+      renderItem={({item}) => (
+        <SectionItemOrder
+          total={2}
+          name={item.name}
+          price={Number(item.price)}
+        />
+      )}
       ListFooterComponent={
         <>
           <SectionSubTotal />
@@ -187,7 +247,23 @@ const SectionButtonPayment: React.FC = () => {
 };
 
 const ViewCartOrganism: React.FC = () => {
-  const onBack = useCallback(() => navigate('OUR_BURGER'), []);
+  const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
+  const [selectMethod, setSelectMethod] = useState<string>();
+  const [notes, setNotes] = useState<{visible: boolean; value: string}>({
+    visible: false,
+    value: '',
+  });
+
+  const onSelectMethod = useCallback((name: string) => {
+    setSelectMethod(name);
+  }, []);
+
+  const onChangeNotes = useCallback(
+    (params: string) => {
+      setNotes({...notes, value: params});
+    },
+    [notes],
+  );
 
   return (
     <MainLayout>
@@ -208,12 +284,22 @@ const ViewCartOrganism: React.FC = () => {
         }
         keyExtractor={item => item.name}
         renderItem={({item}) => (
-          <SectionOrderMethod icon={item.icon} name={item.name} />
+          <SectionOrderMethod
+            icon={item.icon}
+            name={item.name}
+            selected={selectMethod === item.name}
+            onPress={() => onSelectMethod(item.name)}
+          />
         )}
         ListFooterComponent={
           <>
             <Gap height={30} />
-            <SectionDeliveryAddress />
+            <SectionDeliveryAddress
+              visible={notes.visible}
+              value={notes.value}
+              onChange={onChangeNotes}
+              onPress={() => setNotes({...notes, visible: !notes.visible})}
+            />
             <SectionItemList />
           </>
         }

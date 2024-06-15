@@ -6,7 +6,7 @@ import {scale, scaleHeight} from '../../utils';
 interface RadioButtonProps {
   label?: string;
   selected: boolean;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
