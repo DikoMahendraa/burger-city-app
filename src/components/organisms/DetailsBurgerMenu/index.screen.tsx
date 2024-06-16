@@ -10,9 +10,9 @@ import {ArrowLeft} from 'lucide-react-native';
 
 import {Gap, Label} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
-import {useOurBurgerStore} from '../../../stores';
+import {useBurgerStore} from '../../../stores';
 import {FloatingBasket, CardBurgerItem} from '../../molecules';
-import {TCarts, TFavorites} from '../../../stores/ourBurgerStore';
+import {CartItem, FavoriteItem} from '../../../stores/burgerStore';
 import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
 import {LIST_ITEMS, SWITCH_HERO_IMAGE, colors} from '../../../constants';
 
@@ -28,15 +28,15 @@ const DetailsBurgerMenuOrganism: React.FC<{
   const {id, name, description} = route.params || {};
   const hasViewMenu = id.includes('meals');
   const {
-    setFavorites,
-    setDecreaseOrder,
-    setIncreaseOrder,
-    setRemoveFavorite,
+    addFavorite,
+    decreaseOrder,
+    increaseOrder,
+    removeFavorite,
     favorites,
-    setCarts,
+    addToCart,
     carts,
-    showBasket,
-  } = useOurBurgerStore();
+    shouldShowBasket,
+  } = useBurgerStore();
 
   const listFavorites = favorites?.flatMap(item => item.id);
   const listCarts = carts?.flatMap(cart => cart?.id);
@@ -54,11 +54,11 @@ const DetailsBurgerMenuOrganism: React.FC<{
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
 
   const onViewMenu = useCallback(
-    (items: TFavorites) => {
+    (items: FavoriteItem) => {
       if (hasSelected(items.id)) {
-        setRemoveFavorite(items.id);
+        removeFavorite(items.id);
       } else {
-        setFavorites({
+        addFavorite({
           id: items.id,
           image: items.image,
           name: items.name,
@@ -67,12 +67,12 @@ const DetailsBurgerMenuOrganism: React.FC<{
         });
       }
     },
-    [hasSelected, setFavorites, setRemoveFavorite],
+    [hasSelected, removeFavorite, addFavorite],
   );
 
   const onAddMenu = useCallback(
-    (items: TCarts) => {
-      setCarts({
+    (items: CartItem) => {
+      addToCart({
         id: items.id,
         image: items.image,
         name: items.name,
@@ -81,7 +81,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
         count: 1,
       });
     },
-    [setCarts],
+    [addToCart],
   );
 
   const onViewCart = useCallback(() => {
@@ -124,8 +124,8 @@ const DetailsBurgerMenuOrganism: React.FC<{
               count={numberOrder(item.id)?.count}
               textButton="Add +"
               textButtonStyle={styles.fontSmall}
-              onDecrease={() => setDecreaseOrder(item)}
-              onIncrease={() => setIncreaseOrder(item)}
+              onDecrease={() => decreaseOrder(item.id)}
+              onIncrease={() => increaseOrder(item.id)}
             />
             <Gap height={8} />
           </View>
@@ -192,7 +192,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
         }
       />
 
-      {showBasket() && (
+      {shouldShowBasket() && (
         <FloatingBasket
           onPress={onViewCart}
           length={String(carts?.length)}
