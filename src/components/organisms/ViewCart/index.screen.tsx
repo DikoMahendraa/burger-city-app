@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useState} from 'react';
 import {
   View,
@@ -93,8 +94,10 @@ const SectionSubTotal: React.FC<{total: number; fee: number}> = ({
 }) => {
   return (
     <>
+      <Gap height={24} />
       <View style={styles.dashedLine} />
-      <View style={{paddingVertical: 18}}>
+      <Gap height={12} />
+      <View>
         <View style={styles.row}>
           <Label customText="Subtotal" variant="small" weight="normalWeight" />
           <Label
@@ -117,6 +120,7 @@ const SectionSubTotal: React.FC<{total: number; fee: number}> = ({
           />
         </View>
       </View>
+      <Gap height={12} />
       <View style={styles.dashedLine} />
     </>
   );
@@ -160,7 +164,7 @@ const SectionItemOrder: React.FC<{
   onPressRight?: () => void;
 }> = ({price = 0, total = 1, name, onPressLeft, onPressRight}) => {
   return (
-    <View style={[styles.row, {paddingVertical: 12}]}>
+    <View style={[styles.row]}>
       <View style={styles.row}>
         <Label
           color={colors.primary}
@@ -177,7 +181,7 @@ const SectionItemOrder: React.FC<{
             weight="normalWeight"
           />
           <Gap height={12} />
-          <View style={{width: 100}}>
+          <View>
             <ButtonCount
               onPressLeft={onPressLeft}
               onPressRight={onPressRight}
