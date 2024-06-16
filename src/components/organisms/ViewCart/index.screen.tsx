@@ -10,11 +10,11 @@ import {ChevronRight, LucideIcon, Pencil, PlusIcon} from 'lucide-react-native';
 
 import {Header} from '../../molecules';
 import {MainLayout} from '../../../layouts';
-import {AppRoutes, navigate} from '../../../navigation';
-import {formatCurrency, scale, scaleHeight} from '../../../utils';
-import {Gap, Label, RadioButton} from '../../atoms';
-import {SELECT_ORDERS_METHOD, colors} from '../../../constants';
 import {useOurBurgerStore} from '../../../stores';
+import {Gap, Label, RadioButton} from '../../atoms';
+import {AppRoutes, navigate} from '../../../navigation';
+import {SELECT_ORDERS_METHOD, colors} from '../../../constants';
+import {formatCurrency, scale, scaleHeight} from '../../../utils';
 
 const SectionOrderMethod: React.FC<{
   icon: LucideIcon;
@@ -42,7 +42,6 @@ const SectionDeliveryAddress: React.FC<{
   value: string;
   onChange: (params: string) => void;
 }> = ({visible, onPress, onChange, value}) => {
-  console.log({value});
   return (
     <>
       <Label customText="Delivery Address" variant="normal" weight="semibold" />
@@ -65,13 +64,7 @@ const SectionDeliveryAddress: React.FC<{
                 value={value}
                 placeholder="Enter your notes"
                 onChangeText={onChange}
-                style={{
-                  width: '80%',
-                  fontSize: 12,
-                  borderBottomWidth: 1,
-                  borderBottomColor: colors.disabled,
-                  paddingBottom: 6,
-                }}
+                style={styles.inputNotes}
               />
             ) : (
               <Label
@@ -94,14 +87,21 @@ const SectionDeliveryAddress: React.FC<{
   );
 };
 
-const SectionSubTotal: React.FC = () => {
+const SectionSubTotal: React.FC<{total: number; fee: number}> = ({
+  total = 0,
+  fee,
+}) => {
   return (
     <>
       <View style={styles.dashedLine} />
       <View style={{paddingVertical: 18}}>
         <View style={styles.row}>
           <Label customText="Subtotal" variant="small" weight="normalWeight" />
-          <Label customText="Rp.50.000" variant="small" weight="normalWeight" />
+          <Label
+            customText={formatCurrency(total)}
+            variant="small"
+            weight="normalWeight"
+          />
         </View>
         <Gap height={12} />
         <View style={styles.row}>
@@ -110,7 +110,11 @@ const SectionSubTotal: React.FC = () => {
             variant="small"
             weight="normalWeight"
           />
-          <Label customText="Rp.12.000" variant="small" weight="normalWeight" />
+          <Label
+            customText={formatCurrency(fee)}
+            variant="small"
+            weight="normalWeight"
+          />
         </View>
       </View>
       <View style={styles.dashedLine} />
@@ -167,12 +171,14 @@ const SectionItemOrder: React.FC<{
             weight="normalWeight"
           />
           <Gap height={4} />
-          <Label
-            color={colors.primary}
-            customText="Edit"
-            variant="small"
-            weight="semibold"
-          />
+          <TouchableOpacity>
+            <Label
+              color={colors.primary}
+              customText="Edit"
+              variant="small"
+              weight="semibold"
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <Label
@@ -185,7 +191,7 @@ const SectionItemOrder: React.FC<{
 };
 
 const SectionItemList: React.FC = () => {
-  const {carts} = useOurBurgerStore();
+  const {carts, subTotal, deliveryFee} = useOurBurgerStore();
 
   const onAddItems = useCallback(() => {
     navigate(AppRoutes.OUR_BURGER);
@@ -214,14 +220,14 @@ const SectionItemList: React.FC = () => {
       }
       renderItem={({item}) => (
         <SectionItemOrder
-          total={2}
+          total={Number(item.count)}
           name={item.name}
           price={Number(item.price)}
         />
       )}
       ListFooterComponent={
         <>
-          <SectionSubTotal />
+          <SectionSubTotal fee={deliveryFee()} total={subTotal()} />
           <Gap height={24} />
           <SectionTotalPayment />
           <Gap height={100} />
@@ -336,6 +342,13 @@ const styles = StyleSheet.create({
     fontSize: scale(16),
     color: colors.disabled,
     paddingHorizontal: scale(30),
+  },
+  inputNotes: {
+    width: '80%',
+    fontSize: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.disabled,
+    paddingBottom: 6,
   },
   containerContain: {
     flex: 1,

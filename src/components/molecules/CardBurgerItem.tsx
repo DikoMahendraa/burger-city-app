@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ChevronRight, Star} from 'lucide-react-native';
+import {ChevronRight, Minus, Plus, Star} from 'lucide-react-native';
 import React from 'react';
 import {colors} from '../../constants';
 import {formatCurrency, scale, scaleHeight} from '../../utils';
@@ -20,11 +20,15 @@ type TPropsCardBurgerItem = {
   name: string;
   hasButton?: boolean;
   hasDetail?: boolean;
+  hasButtonIncrease?: boolean;
   textButton?: string;
   selected?: boolean;
+  onDecrease?: () => void;
+  onIncrease?: () => void;
   textButtonStyle?: TextStyle;
   onPressIcon?: () => void;
   onPressButton?: () => void;
+  count?: string;
 };
 
 const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
@@ -38,6 +42,10 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
   onPressButton,
   onPressIcon,
   selected,
+  hasButtonIncrease,
+  onDecrease,
+  onIncrease,
+  count = 1,
 }) => {
   const hasButtonStyle: ViewStyle = {
     flexDirection: 'column',
@@ -46,7 +54,7 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
     gap: 8,
   };
   return (
-    <TouchableOpacity style={styles.card}>
+    <View style={styles.card}>
       <View style={styles.cardContent}>
         <Image style={styles.cardContentImg} alt="list-image" source={image} />
 
@@ -59,10 +67,16 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
           </Text>
         </View>
       </View>
-      <View style={hasButton ? hasButtonStyle : {}}>
+      <View style={hasButtonStyle}>
         <TouchableOpacity onPress={onPressIcon}>
           {hasDetail ? (
-            <ChevronRight size={20} color={colors.primary} />
+            <View style={styles.chevron}>
+              <ChevronRight
+                size={14}
+                strokeWidth={4}
+                color={colors.disabledSoft}
+              />
+            </View>
           ) : (
             <Star
               size={20}
@@ -80,8 +94,19 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
             onPress={onPressButton}
           />
         )}
+        {hasButtonIncrease && (
+          <View style={styles.buttonIncrease}>
+            <TouchableOpacity onPress={onDecrease}>
+              <Minus size={12} strokeWidth={3} color={colors.primary} />
+            </TouchableOpacity>
+            <Text style={styles.textIncrease}>{count}</Text>
+            <TouchableOpacity onPress={onIncrease}>
+              <Plus size={12} strokeWidth={3} color={colors.primary} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -105,6 +130,11 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
   },
+  chevron: {
+    backgroundColor: colors['gray-05'],
+    padding: 4,
+    borderRadius: 12,
+  },
   cardContentTitle: {
     fontWeight: '500',
     fontSize: scale(16),
@@ -120,5 +150,22 @@ const styles = StyleSheet.create({
     width: scale(66),
     height: scaleHeight(43),
     objectFit: 'contain',
+  },
+  buttonIncrease: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: colors.white,
+    shadowColor: colors.dark,
+    shadowOffset: {height: 1, width: 0},
+    shadowOpacity: 0.2,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+  },
+  textIncrease: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: colors.dark,
   },
 });

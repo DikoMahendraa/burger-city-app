@@ -11,9 +11,9 @@ import {ArrowLeft} from 'lucide-react-native';
 import {Gap, Label} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
 import {useOurBurgerStore} from '../../../stores';
-import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
 import {FloatingBasket, CardBurgerItem} from '../../molecules';
 import {TCarts, TFavorites} from '../../../stores/ourBurgerStore';
+import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
 import {LIST_ITEMS, SWITCH_HERO_IMAGE, colors} from '../../../constants';
 
 const DetailsBurgerMenuOrganism: React.FC<{
@@ -27,10 +27,19 @@ const DetailsBurgerMenuOrganism: React.FC<{
 }> = ({route}) => {
   const {id, name, description} = route.params || {};
   const hasViewMenu = id.includes('meals');
-  const {setFavorites, setRemoveFavorite, favorites, setCarts, carts} =
-    useOurBurgerStore();
+  const {
+    setFavorites,
+    setDecreaseOrder,
+    setIncreaseOrder,
+    setRemoveFavorite,
+    favorites,
+    setCarts,
+    carts,
+  } = useOurBurgerStore();
 
   const listFavorites = favorites?.flatMap(item => item.id);
+  const listCarts = carts?.flatMap(cart => cart.id);
+
   const hasCarts = Number(carts?.length) >= 1;
   const totalCart = useMemo(
     () =>
@@ -71,6 +80,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
         name: items.name,
         price: items.price,
         type: items.type,
+        count: 1,
       });
     },
     [setCarts],
@@ -88,7 +98,8 @@ const DetailsBurgerMenuOrganism: React.FC<{
         renderItem={({item}) => (
           <View style={styles.containerCard}>
             <CardBurgerItem
-              hasButton
+              hasButton={!listCarts?.includes(item.id)}
+              hasButtonIncrease={listCarts?.includes(item.id)}
               name={item.name}
               image={item.image}
               price={item.price}
@@ -112,8 +123,11 @@ const DetailsBurgerMenuOrganism: React.FC<{
                   type: item.type,
                 })
               }
+              count={carts?.flatMap(k => k.id === item.id && k.count)}
               textButton="Add +"
               textButtonStyle={styles.fontSmall}
+              onDecrease={() => setDecreaseOrder(item)}
+              onIncrease={() => setIncreaseOrder(item)}
             />
             <Gap height={8} />
           </View>

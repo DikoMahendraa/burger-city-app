@@ -16,7 +16,3 @@ export const formatCurrency = (
   }).format(amount);
   return formatted.replace(/^Rp/, 'Rp.');
 };
-
-// Example usage:
-const formattedAmount = formatCurrency(1500000);
-console.log(formattedAmount); // Output: "Rp1.500.000,00"
