@@ -40,12 +40,11 @@ const Card = ({
 
 const OurBurgerOrganism: React.FC = () => {
   const methods = useForm<{search: string}>();
-  const {carts} = useOurBurgerStore();
-  const hasCarts = Number(carts?.length) >= 1;
+  const {carts, showBasket} = useOurBurgerStore();
   const totalCart = useMemo(
     () =>
       carts
-        ?.flatMap(item => Number(item.price))
+        ?.flatMap(item => Number(item?.price))
         .reduce((acc, cur) => acc + cur, 0),
     [carts],
   );
@@ -123,7 +122,7 @@ const OurBurgerOrganism: React.FC = () => {
             </>
           }
         />
-        {hasCarts && (
+        {showBasket() && (
           <FloatingBasket
             onPress={onViewCart}
             rootStyle={styles.resetPaddingBottom}

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -8,11 +9,10 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ChevronRight, Minus, Plus, Star} from 'lucide-react-native';
-import React from 'react';
+import {ChevronRight, Star} from 'lucide-react-native';
 import {colors} from '../../constants';
 import {formatCurrency, scale, scaleHeight} from '../../utils';
-import {Button, Gap} from '../atoms';
+import {Button, ButtonCount, Gap} from '../atoms';
 
 type TPropsCardBurgerItem = {
   image: ImageSourcePropType;
@@ -28,7 +28,7 @@ type TPropsCardBurgerItem = {
   textButtonStyle?: TextStyle;
   onPressIcon?: () => void;
   onPressButton?: () => void;
-  count?: string;
+  count?: number;
 };
 
 const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
@@ -95,15 +95,11 @@ const CardBurgerItem: React.FC<TPropsCardBurgerItem> = ({
           />
         )}
         {hasButtonIncrease && (
-          <View style={styles.buttonIncrease}>
-            <TouchableOpacity onPress={onDecrease}>
-              <Minus size={12} strokeWidth={3} color={colors.primary} />
-            </TouchableOpacity>
-            <Text style={styles.textIncrease}>{count}</Text>
-            <TouchableOpacity onPress={onIncrease}>
-              <Plus size={12} strokeWidth={3} color={colors.primary} />
-            </TouchableOpacity>
-          </View>
+          <ButtonCount
+            title={Number(count)}
+            onPressLeft={onDecrease}
+            onPressRight={onIncrease}
+          />
         )}
       </View>
     </View>
@@ -150,22 +146,5 @@ const styles = StyleSheet.create({
     width: scale(66),
     height: scaleHeight(43),
     objectFit: 'contain',
-  },
-  buttonIncrease: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: colors.white,
-    shadowColor: colors.dark,
-    shadowOffset: {height: 1, width: 0},
-    shadowOpacity: 0.2,
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-  },
-  textIncrease: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: colors.dark,
   },
 });

@@ -11,7 +11,7 @@ import {ChevronRight, LucideIcon, Pencil, PlusIcon} from 'lucide-react-native';
 import {Header} from '../../molecules';
 import {MainLayout} from '../../../layouts';
 import {useOurBurgerStore} from '../../../stores';
-import {Gap, Label, RadioButton} from '../../atoms';
+import {ButtonCount, Gap, Label, RadioButton} from '../../atoms';
 import {AppRoutes, navigate} from '../../../navigation';
 import {SELECT_ORDERS_METHOD, colors} from '../../../constants';
 import {formatCurrency, scale, scaleHeight} from '../../../utils';
@@ -122,7 +122,7 @@ const SectionSubTotal: React.FC<{total: number; fee: number}> = ({
   );
 };
 
-const SectionTotalPayment: React.FC = () => {
+const SectionTotalPayment: React.FC<{total: number}> = ({total = 0}) => {
   return (
     <>
       <View style={styles.row}>
@@ -142,7 +142,11 @@ const SectionTotalPayment: React.FC = () => {
           color={colors.dark}
           weight="semibold"
         />
-        <Label customText="Rp.12.0000" color={colors.dark} weight="semibold" />
+        <Label
+          customText={formatCurrency(total)}
+          color={colors.dark}
+          weight="semibold"
+        />
       </View>
     </>
   );
@@ -152,7 +156,9 @@ const SectionItemOrder: React.FC<{
   price: number;
   total: number;
   name: string;
-}> = ({price = 0, total = 1, name}) => {
+  onPressLeft?: () => void;
+  onPressRight?: () => void;
+}> = ({price = 0, total = 1, name, onPressLeft, onPressRight}) => {
   return (
     <View style={[styles.row, {paddingVertical: 12}]}>
       <View style={styles.row}>
@@ -170,15 +176,14 @@ const SectionItemOrder: React.FC<{
             variant="small"
             weight="normalWeight"
           />
-          <Gap height={4} />
-          <TouchableOpacity>
-            <Label
-              color={colors.primary}
-              customText="Edit"
-              variant="small"
-              weight="semibold"
+          <Gap height={12} />
+          <View style={{width: 100}}>
+            <ButtonCount
+              onPressLeft={onPressLeft}
+              onPressRight={onPressRight}
+              title={total}
             />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
       <Label
@@ -191,7 +196,14 @@ const SectionItemOrder: React.FC<{
 };
 
 const SectionItemList: React.FC = () => {
-  const {carts, subTotal, deliveryFee} = useOurBurgerStore();
+  const {
+    carts,
+    subTotal,
+    deliveryFee,
+    totalPayment,
+    setIncreaseOrder,
+    setDecreaseOrder,
+  } = useOurBurgerStore();
 
   const onAddItems = useCallback(() => {
     navigate(AppRoutes.OUR_BURGER);
@@ -220,6 +232,8 @@ const SectionItemList: React.FC = () => {
       }
       renderItem={({item}) => (
         <SectionItemOrder
+          onPressLeft={() => setDecreaseOrder(item)}
+          onPressRight={() => setIncreaseOrder(item)}
           total={Number(item.count)}
           name={item.name}
           price={Number(item.price)}
@@ -229,7 +243,7 @@ const SectionItemList: React.FC = () => {
         <>
           <SectionSubTotal fee={deliveryFee()} total={subTotal()} />
           <Gap height={24} />
-          <SectionTotalPayment />
+          <SectionTotalPayment total={totalPayment()} />
           <Gap height={100} />
         </>
       }

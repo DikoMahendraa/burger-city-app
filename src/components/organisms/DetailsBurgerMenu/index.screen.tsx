@@ -5,7 +5,7 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {ArrowLeft} from 'lucide-react-native';
 
 import {Gap, Label} from '../../atoms';
@@ -35,19 +35,17 @@ const DetailsBurgerMenuOrganism: React.FC<{
     favorites,
     setCarts,
     carts,
+    showBasket,
   } = useOurBurgerStore();
 
   const listFavorites = favorites?.flatMap(item => item.id);
-  const listCarts = carts?.flatMap(cart => cart.id);
+  const listCarts = carts?.flatMap(cart => cart?.id);
+  const totalAmount = carts
+    ?.flatMap(cart => cart?.price)
+    ?.reduce((acc, cur) => Number(acc) + Number(cur), 1);
+  const numberOrder = (menuId: string) =>
+    carts?.find(cart => cart?.id === menuId && cart?.count);
 
-  const hasCarts = Number(carts?.length) >= 1;
-  const totalCart = useMemo(
-    () =>
-      carts
-        ?.flatMap(item => Number(item.price))
-        .reduce((acc, cur) => acc + cur, 0),
-    [carts],
-  );
   const hasSelected = useCallback(
     (params: string) => listFavorites?.includes(params),
     [listFavorites],
@@ -104,7 +102,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
               image={item.image}
               price={item.price}
               hasDetail={hasViewMenu}
-              selected={hasSelected(item.id)}
+              selected={hasSelected(item?.id)}
               onPressIcon={() =>
                 onViewMenu({
                   id: item.id,
@@ -123,7 +121,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
                   type: item.type,
                 })
               }
-              count={carts?.flatMap(k => k.id === item.id && k.count)}
+              count={numberOrder(item.id)?.count}
               textButton="Add +"
               textButtonStyle={styles.fontSmall}
               onDecrease={() => setDecreaseOrder(item)}
@@ -194,11 +192,11 @@ const DetailsBurgerMenuOrganism: React.FC<{
         }
       />
 
-      {hasCarts && (
+      {showBasket() && (
         <FloatingBasket
           onPress={onViewCart}
           length={String(carts?.length)}
-          total={Number(totalCart)}
+          total={Number(totalAmount)}
         />
       )}
     </View>
