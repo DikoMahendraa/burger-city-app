@@ -40,6 +40,7 @@ export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
     const showBasket = Boolean((get().carts?.length as number) > 0);
     return showBasket;
   },
+
   subTotal: () => {
     const accumulate = get().carts?.flatMap(
       cart => Number(cart?.count) * Number(cart?.price),
@@ -48,16 +49,19 @@ export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
 
     return Number(calculate);
   },
+
   deliveryFee: () => {
-    const feeRate = 0.1; //per 10k / 0.1%
+    const feeRate = 0.1;
     const unitCount = Math.floor(get().subTotal() / 10000);
     const deliveryFee = unitCount * feeRate * 10000;
     return deliveryFee;
   },
+
   totalPayment: () => {
     const payment = get().deliveryFee() + get().subTotal();
     return payment;
   },
+
   setFavorites: ({...props}) => {
     const existingCart = get().favorites;
     const itemExists = existingCart?.some(
@@ -70,6 +74,7 @@ export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
       });
     }
   },
+
   setRemoveFavorite: id => {
     const favorites = get().favorites;
     const findIndex = favorites?.findIndex(item => item.id === id);
@@ -82,6 +87,7 @@ export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
       });
     }
   },
+
   setCarts: ({...props}) => {
     const existingCart = get().carts;
     const itemExists = existingCart?.some(
@@ -94,6 +100,7 @@ export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
       });
     }
   },
+
   setIncreaseOrder: ({...props}) => {
     const existingCart = get().carts;
 
@@ -112,24 +119,24 @@ export const useOurBurgerStore = create<TOurBurgerStore>((set, get) => ({
 
     set({carts: updatedCart});
   },
+
   setDecreaseOrder: ({...props}) => {
     const existingCart = get().carts;
 
-    const findIdx = existingCart?.findIndex(item => item.id === props.id);
-
-    const updateCart = existingCart?.map(item => {
-      if (item.id === props.id) {
-        if (Number(item.count) > 0) {
-          return {...item, count: (item?.count as number) - 1};
-        } else {
-          const newCarts = {...(existingCart as Array<TCarts>)};
-          newCarts.splice(Number(findIdx), 1);
-
-          return newCarts;
+    const updateCart = existingCart
+      ?.map(item => {
+        if (item.id === props.id) {
+          if (Number(item.count) > 1) {
+            return {...item, count: (item?.count as number) - 1};
+          } else {
+            return {...item, count: 0};
+          }
         }
-      }
-    });
+        return item;
+      })
+      .filter(item => Number(item?.count) > 0);
 
+    console.log(updateCart);
     set({carts: updateCart as Array<TCarts>});
   },
 }));
