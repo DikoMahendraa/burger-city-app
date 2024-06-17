@@ -1,5 +1,5 @@
 import {useAuthStore} from './authStore';
 import {useGlobalStore} from './globalStore';
-import {useOurBurgerStore} from './ourBurgerStore';
+import {useBurgerStore} from './burgerStore';
 
-export {useAuthStore, useGlobalStore, useOurBurgerStore};
+export {useAuthStore, useGlobalStore, useBurgerStore};

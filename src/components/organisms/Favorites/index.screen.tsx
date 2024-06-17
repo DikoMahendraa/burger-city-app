@@ -3,21 +3,21 @@ import {View, StyleSheet, Text, Image, FlatList} from 'react-native';
 
 import {colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
-import {useOurBurgerStore} from '../../../stores';
+import {useBurgerStore} from '../../../stores';
 import {scale, scaleHeight} from '../../../utils';
 import {AppRoutes, navigate} from '../../../navigation';
 import {Button, Gap, Label} from '../../../components/atoms';
 import {CardBurgerItem, Header} from '../../../components/molecules';
 
 const FavoriteOrganism: React.FC = () => {
-  const {favorites, setRemoveFavorite} = useOurBurgerStore();
+  const {favorites, removeFavorite} = useBurgerStore();
   const hasFavorite = favorites?.length;
 
   const onCheckMenu = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
   const onBack = useCallback(() => navigate('OUR_BURGER'), []);
   const onRemoveItem = useCallback(
-    (id: string) => setRemoveFavorite(id),
-    [setRemoveFavorite],
+    (id: string) => removeFavorite(id),
+    [removeFavorite],
   );
 
   return (

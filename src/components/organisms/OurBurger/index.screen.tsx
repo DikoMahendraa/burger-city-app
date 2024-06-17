@@ -13,7 +13,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 
 import {MainLayout} from '../../../layouts';
 import {Button, Gap, Input} from '../../atoms';
-import {useOurBurgerStore} from '../../../stores';
+import {useBurgerStore} from '../../../stores';
 import {scale, scaleHeight} from '../../../utils';
 import {LIST_MENU, colors} from '../../../constants';
 import {Header, FloatingBasket} from '../../molecules';
@@ -40,7 +40,7 @@ const Card = ({
 
 const OurBurgerOrganism: React.FC = () => {
   const methods = useForm<{search: string}>();
-  const {carts, showBasket} = useOurBurgerStore();
+  const {carts, shouldShowBasket} = useBurgerStore();
   const totalCart = useMemo(
     () =>
       carts
@@ -122,7 +122,7 @@ const OurBurgerOrganism: React.FC = () => {
             </>
           }
         />
-        {showBasket() && (
+        {shouldShowBasket() && (
           <FloatingBasket
             onPress={onViewCart}
             rootStyle={styles.resetPaddingBottom}
