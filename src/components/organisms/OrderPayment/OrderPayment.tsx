@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -5,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
 import {Button, Gap, Label} from '../../atoms';
 import {LIST_WALLET, colors} from '../../../constants';
 import {formatCurrency, scale, scaleHeight} from '../../../utils';
@@ -22,25 +22,22 @@ const OrderPayment: React.FC = () => {
         data={LIST_WALLET}
         keyExtractor={item => item.name}
         renderItem={({item}) => (
-          <>
+          <View style={styles.walletItem}>
             <TouchableOpacity>
               <Image style={styles.cardWallet} source={item.image} />
             </TouchableOpacity>
             <Gap width={8} />
-          </>
+          </View>
         )}
       />
       <Gap height={42} />
       <View>
-        <View style={styles.row}>
-          <Label text="Subtotal Order" />
-          <Label weight="semibold" text={formatCurrency(150000)} />
-        </View>
+        <OrderSummaryRow
+          label="Subtotal Order"
+          value={formatCurrency(150000)}
+        />
         <Gap height={12} />
-        <View style={styles.row}>
-          <Label text="Delivery Fee" />
-          <Label weight="semibold" text={formatCurrency(50000)} />
-        </View>
+        <OrderSummaryRow label="Delivery Fee" value={formatCurrency(50000)} />
         <Gap height={24} />
         <View style={styles.dashedLine} />
         <Gap height={24} />
@@ -52,6 +49,7 @@ const OrderPayment: React.FC = () => {
             <Label
               weight="semibold"
               size="sm"
+              hasScratch
               color={colors.disabled}
               text={formatCurrency(24000)}
             />
@@ -64,16 +62,30 @@ const OrderPayment: React.FC = () => {
   );
 };
 
+const OrderSummaryRow: React.FC<{label: string; value: string}> = ({
+  label,
+  value,
+}) => (
+  <View style={styles.row}>
+    <Label text={label} />
+    <Label weight="semibold" text={value} />
+  </View>
+);
+
 export default OrderPayment;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
+    paddingHorizontal: scale(24),
+  },
+  walletItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   cardWallet: {
-    objectFit: 'contain',
     width: scale(242),
     height: scaleHeight(130),
+    objectFit: 'contain',
   },
   row: {
     flexDirection: 'row',

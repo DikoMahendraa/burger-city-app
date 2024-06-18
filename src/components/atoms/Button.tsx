@@ -20,7 +20,7 @@ interface CustomButtonProps {
   prefix?: string;
   weight?: TextStyle['fontWeight'];
   textStyle?: TextStyle;
-  variant?: 'primary' | 'secondary' | 'transparent';
+  variant?: 'primary' | 'secondary' | 'transparent' | 'dark';
   size?: 'small' | 'medium' | 'large' | 'wide';
 }
 
@@ -93,15 +93,16 @@ const styles = StyleSheet.create({
   secondary: {
     backgroundColor: colors.disabled,
   },
+  dark: {
+    backgroundColor: colors.dark,
+  },
   transparent: {
     shadowColor: colors.dark,
     shadowOffset: {height: 1, width: 0},
     shadowOpacity: 0.2,
-    backgroundColor: colors.white,
-  },
-  small: {
-    paddingVertical: scale(5),
-    paddingHorizontal: scale(10),
+    borderWidth: 1,
+    borderColor: colors.white,
+    backgroundColor: 'transparent',
   },
   medium: {
     paddingVertical: scale(10),

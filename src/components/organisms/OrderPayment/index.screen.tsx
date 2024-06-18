@@ -7,7 +7,7 @@ import OrderConfirmed from './OrderConfirmed';
 import OrderPayment from './OrderPayment';
 
 const OrderPaymentOrganism: React.FC = () => {
-  const success = true;
+  const success = false;
   return (
     <MainLayout>
       <Header isBack />
