@@ -14,7 +14,7 @@ const SectionDeliveryAddress: React.FC<{
 }> = ({visible, onPress, onChange, value}) => {
   return (
     <>
-      <Label customText="Delivery Address" variant="normal" weight="semibold" />
+      <Label text="Delivery Address" weight="semibold" />
       <Gap height={30} />
       <View style={styles.row}>
         <View style={styles['delivery-image-address']} />
@@ -22,9 +22,9 @@ const SectionDeliveryAddress: React.FC<{
         <View style={styles['delivery-detail-address']}>
           <Label
             style={styles.address}
-            customText="Cirangpen no 6, Majalaya, Kab Karawang. Jawa Barat"
+            text="Cirangpen no 6, Majalaya, Kab Karawang. Jawa Barat"
             color={colors.dark}
-            variant="small"
+            size="sm"
           />
           <Gap height={8} />
           <View style={[styles.row, styles.addNotes]}>
@@ -39,9 +39,9 @@ const SectionDeliveryAddress: React.FC<{
             ) : (
               <Label
                 style={styles.inputNotes}
-                customText={value || 'Add a note to driver'}
+                text={value || 'Add a note to driver'}
                 color={colors.disabled}
-                variant="small"
+                size="sm"
               />
             )}
 

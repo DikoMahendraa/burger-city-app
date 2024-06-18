@@ -41,11 +41,7 @@ const ViewCartOrganism: React.FC = () => {
         ListHeaderComponent={
           <>
             <Gap height={24} />
-            <Label
-              customText="Order Method"
-              variant="normal"
-              weight="semibold"
-            />
+            <Label text="Order Method" weight="semibold" />
             <Gap height={14} />
           </>
         }

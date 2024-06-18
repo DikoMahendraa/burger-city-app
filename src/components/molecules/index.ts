@@ -5,6 +5,7 @@ import ListOffersMenu from './ListOffersMenu';
 import ListTrackAndOrder from './ListTrackAndOrder';
 import CardBurgerItem from './CardBurgerItem';
 import FloatingBasket from './FloatingBasket';
+import LoadingScreen from './LoadingScreen';
 
 export {
   CardMenu,
@@ -14,4 +15,5 @@ export {
   ListTrackAndOrder,
   CardBurgerItem,
   FloatingBasket,
+  LoadingScreen,
 };

@@ -16,25 +16,13 @@ const SectionSubTotal: React.FC<{total: number; fee: number}> = ({
       <Gap height={12} />
       <View>
         <View style={styles.row}>
-          <Label customText="Subtotal" variant="small" weight="normalWeight" />
-          <Label
-            customText={formatCurrency(total)}
-            variant="small"
-            weight="normalWeight"
-          />
+          <Label text="Subtotal" size="sm" weight="normalWeight" />
+          <Label text={formatCurrency(total)} size="sm" weight="normalWeight" />
         </View>
         <Gap height={12} />
         <View style={styles.row}>
-          <Label
-            customText="Delivery Fee"
-            variant="small"
-            weight="normalWeight"
-          />
-          <Label
-            customText={formatCurrency(fee)}
-            variant="small"
-            weight="normalWeight"
-          />
+          <Label text="Delivery Fee" size="sm" weight="normalWeight" />
+          <Label text={formatCurrency(fee)} size="sm" weight="normalWeight" />
         </View>
       </View>
       <Gap height={12} />

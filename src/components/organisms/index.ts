@@ -12,6 +12,7 @@ import VerificationOTPOrganism from './VerificationOTP/index.screen';
 import DetailsBurgerMenuOrganism from './DetailsBurgerMenu/index.screen';
 import BurgerMealsOrganism from './BurgerMeals/index.screen';
 import ViewCartOrganism from './ViewCart/index.screen';
+import OrderPaymentOrganism from './OrderPayment/index.screen';
 
 export {
   FavoritesOrganism,
@@ -28,4 +29,5 @@ export {
   DetailsBurgerMenuOrganism,
   BurgerMealsOrganism,
   ViewCartOrganism,
+  OrderPaymentOrganism,
 };

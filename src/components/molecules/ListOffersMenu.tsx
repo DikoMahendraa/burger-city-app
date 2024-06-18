@@ -31,7 +31,7 @@ const ListOffersMenu: React.FC<{label: string}> = ({label}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerLabel}>
-        <Label variant="normal" weight="semibold" customText={label} />
+        <Label weight="semibold" text={label} />
         <TouchableOpacity>
           <Text style={styles.textViewAll}>View All</Text>
         </TouchableOpacity>

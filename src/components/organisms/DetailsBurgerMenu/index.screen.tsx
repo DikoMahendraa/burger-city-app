@@ -142,50 +142,37 @@ const DetailsBurgerMenuOrganism: React.FC<{
             </ImageBackground>
             <View style={styles.containerDescription}>
               <View>
-                <Label variant="large" weight="semibold" customText={name} />
+                <Label size="lg" weight="semibold" text={name} />
                 <Gap height={8} />
-                <Label
-                  variant="normal"
-                  color={colors.disabledSoft}
-                  customText={description}
-                />
+                <Label color={colors.disabledSoft} text={description} />
               </View>
               <Gap height={16} />
               <View style={styles.dashedLine} />
               <Gap height={16} />
               <View>
                 <View style={styles.row}>
-                  <Label variant="small" customText="Delivery cost" />
+                  <Label size="sm" text="Delivery cost" />
                   <Label
-                    variant="normal"
                     weight="semibold"
                     color={colors.primary}
-                    customText="Rp 15.000"
+                    text="Rp 15.000"
                   />
                 </View>
                 <Gap height={12} />
                 <View style={styles.row}>
-                  <Label
-                    variant="small"
-                    customText="Check for available promos"
-                  />
+                  <Label size="sm" text="Check for available promos" />
 
                   <Label
-                    variant="normal"
                     weight="semibold"
                     color={colors.primary}
-                    customText="See Promos"
+                    text="See Promos"
                   />
                 </View>
               </View>
             </View>
             <Gap height={12} />
             <View style={styles.containerListItem}>
-              <Label
-                weight="semibold"
-                variant="normal"
-                customText="Item List"
-              />
+              <Label weight="semibold" text="Item List" />
               <Gap height={12} />
             </View>
           </>

@@ -18,7 +18,7 @@ type FormData = {
   confirm_password: string;
 };
 
-const SignUpWithPhoneOrganism = () => {
+const SignUpWithPhoneOrganism: React.FC = () => {
   const onSignUp = useCallback(() => navigate(AuthRoutes.SIGN_UP_EMAIL), []);
 
   const {isLoading, setLoading} = useGlobalStore();

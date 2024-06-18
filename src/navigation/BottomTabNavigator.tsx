@@ -53,7 +53,7 @@ const TabItem: React.FC<{focused: boolean; name: string}> = ({
   return <Text style={textStyles}>{replaceUnderScore}</Text>;
 };
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -61,7 +61,7 @@ const BottomTabNavigator = () => {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.disabled,
       }}
-      initialRouteName={AppRoutes.OUR_BURGER}>
+      initialRouteName={AppRoutes.HOME}>
       {LIST_TABS.map(item => (
         <Tab.Screen
           key={item.name}

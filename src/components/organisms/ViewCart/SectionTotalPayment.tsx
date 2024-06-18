@@ -11,7 +11,7 @@ const SectionTotalPayment: React.FC<{total: number}> = ({total = 0}) => {
     <>
       <View style={styles.row}>
         <Label
-          customText="Add Your Promos Code"
+          text="Add Your Promos Code"
           color={colors.primary}
           weight="semibold"
         />
@@ -21,13 +21,9 @@ const SectionTotalPayment: React.FC<{total: number}> = ({total = 0}) => {
       </View>
       <Gap height={40} />
       <View style={styles.row}>
+        <Label text="Total Payment" color={colors.dark} weight="semibold" />
         <Label
-          customText="Total Payment"
-          color={colors.dark}
-          weight="semibold"
-        />
-        <Label
-          customText={formatCurrency(total)}
+          text={formatCurrency(total)}
           color={colors.dark}
           weight="semibold"
         />

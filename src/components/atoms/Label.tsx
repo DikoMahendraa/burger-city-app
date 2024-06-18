@@ -1,53 +1,75 @@
 import React from 'react';
 import {Text, TextProps, StyleSheet, ColorValue} from 'react-native';
+
 import {scale} from '../../utils';
 import {colors} from '../../constants';
 import {TColors} from '../../constants/colors';
 
 interface CustomLabelProps extends TextProps {
-  customText: string;
-  variant?: 'large' | 'normal' | 'small' | 'xsmall';
-  weight?: 'bold' | 'semibold' | 'normalWeight';
+  text: string;
+  size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
+  weight?: 'bold' | 'semibold' | 'normal' | 'light';
   color?: TColors | ColorValue;
+  hasScratch?: boolean;
 }
 
-const CustomLabel: React.FC<CustomLabelProps> = ({
-  customText,
-  variant = 'normal',
-  weight = 'normalWeight',
+const Label: React.FC<CustomLabelProps> = ({
+  text,
+  size = 'md',
+  weight = 'normal',
   color = colors.black,
   style,
+  hasScratch = false,
   ...rest
 }) => {
   return (
-    <Text style={[styles[variant], styles[weight], {color}, style]} {...rest}>
-      {customText}
+    <Text
+      style={[
+        styles[size],
+        styles[weight],
+        {color},
+        style,
+        [hasScratch ? styles.scratch : null],
+      ]}
+      {...rest}>
+      {text}
     </Text>
   );
 };
 
 const styles = StyleSheet.create({
-  large: {
+  xl: {
+    fontSize: scale(24),
+  },
+  lg: {
     fontSize: scale(20),
   },
-  normal: {
+  md: {
     fontSize: scale(16),
   },
-  small: {
+  scratch: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
+    textDecorationColor: 'black',
+  },
+  sm: {
     fontSize: scale(14),
   },
-  xsmall: {
+  xs: {
     fontSize: scale(10),
   },
   bold: {
-    fontWeight: '800',
+    fontWeight: '700',
   },
   semibold: {
     fontWeight: '600',
   },
-  normalWeight: {
+  normal: {
     fontWeight: '400',
+  },
+  light: {
+    fontWeight: '300',
   },
 });
 
-export default React.memo(CustomLabel);
+export default React.memo(Label);

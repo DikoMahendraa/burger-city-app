@@ -31,11 +31,15 @@ type BurgerStore = {
   getDeliveryFee: () => number;
   getTotalPayment: () => number;
   shouldShowBasket: () => boolean;
+  submitOrder: () => void;
+  resetCart: () => void;
+  statusPayment: 'pending' | 'success';
 };
 
 export const useBurgerStore = create<BurgerStore>((set, get) => ({
   favorites: [],
   carts: [],
+  statusPayment: 'pending',
 
   shouldShowBasket: () => get().carts.length > 0,
 
@@ -94,5 +98,12 @@ export const useBurgerStore = create<BurgerStore>((set, get) => ({
         )
         .filter(cart => Number(cart.count) > 0),
     });
+  },
+
+  submitOrder: () => {
+    set({statusPayment: 'success'});
+  },
+  resetCart: () => {
+    set({carts: [], statusPayment: 'pending'});
   },
 }));

@@ -16,6 +16,9 @@ const colors = {
   textPrimary: '#1d3557',
   textSecondary: '#457b9d',
 
+  // white
+  ['soft-white']: '#f5f5f7',
+
   // orange variant
   ['orange-01']: '#fa7a02',
   ['orange-02']: '#fa8e23',

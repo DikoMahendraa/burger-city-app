@@ -24,7 +24,7 @@ type FormData = {
   confirm_password?: string;
 };
 
-const ForgotPasswordOrganism = () => {
+const ForgotPasswordOrganism: React.FC = () => {
   const [switchMethod, setSwitchMethod] = useState<'phone' | 'email'>('email');
   const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false);
   const [isSendOTP, setIsSendOTP] = useState<boolean>(false);

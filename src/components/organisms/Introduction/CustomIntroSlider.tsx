@@ -23,7 +23,7 @@ type TPropsCustomIntroSlider = {
   }>;
 };
 
-const CustomIntroSlider = ({slides}: TPropsCustomIntroSlider) => {
+const CustomIntroSlider: React.FC<TPropsCustomIntroSlider> = ({slides}) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef(null);
 
