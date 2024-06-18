@@ -100,16 +100,18 @@ export const ITEMS_SALADS = [
   },
 ];
 
-export const ITEMS_DESERTS = [
+export const ITEMS_DESSERTS = [
   {
     id: 'desserts_vanilla',
     type: 'desserts',
     name: 'Vanilla Ice Cream',
     price: '50000',
+    available: false,
     image: require('../assets/images/list-desserts/desserts-1.png'),
   },
   {
     id: 'desserts_strawberry',
+    available: true,
     type: 'desserts',
     name: 'Strawberry Ice Cream',
     price: '49260',
@@ -118,11 +120,13 @@ export const ITEMS_DESERTS = [
   {
     id: 'desserts_lemon_soda',
     name: 'Red Lemon Soda',
+    available: true,
     price: '35000',
     type: 'desserts',
     image: require('../assets/images/list-desserts/desserts-3.png'),
   },
   {
+    available: true,
     id: 'desserts_mango',
     name: 'Bluesea Soda',
     type: 'desserts',
@@ -137,38 +141,38 @@ export const ITEMS_MEALS = [
     type: 'meals',
     name: 'Lunch Pack',
     price: '100000',
+    packet: '1',
+    desserts: [ITEMS_DESSERTS[0], ITEMS_DESSERTS[1], ITEMS_DESSERTS[2]],
     image: require('../assets/images/list-meals/meals-1.png'),
   },
   {
     id: 'meals_chessy',
     type: 'meals',
+    desserts: [ITEMS_DESSERTS[0], ITEMS_DESSERTS[2], ITEMS_DESSERTS[3]],
     name: 'Chessy MiLo',
+    packet: '2',
     price: '89260',
     image: require('../assets/images/list-meals/meals-2.png'),
   },
   {
     id: 'meals_cola_beef',
+    packet: '3',
+    desserts: [ITEMS_DESSERTS[1], ITEMS_DESSERTS[2], ITEMS_DESSERTS[3]],
     type: 'meals',
     name: 'Cola Beef',
     price: '87260',
     image: require('../assets/images/list-meals/meals-3.png'),
   },
   {
+    packet: '4',
     id: 'meals_burger',
+    desserts: [ITEMS_DESSERTS[0], ITEMS_DESSERTS[2], ITEMS_DESSERTS[3]],
     name: 'Cheese Burger Meal ',
     price: '155260',
     type: 'meals',
     image: require('../assets/images/list-meals/meals-4.png'),
   },
 ];
-
-export const LIST_ITEMS = {
-  burger: ITEMS_BURGERS,
-  salads: ITEMS_SALADS,
-  meals: ITEMS_MEALS,
-  baverages: ITEMS_BAVERAGES,
-  dessert: ITEMS_DESERTS,
-};
 
 export const LIST_MENU = [
   {
@@ -222,14 +226,6 @@ export const LIST_BURGER_MEALS = [
   },
 ];
 
-export const SWITCH_HERO_IMAGE = {
-  burger: require('../assets/images/hero-slider-2.png'),
-  salads: require('../assets/images/hero-salads.png'),
-  meals: require('../assets/images/hero-burger.png'),
-  baverages: require('../assets/images/hero-baverages.png'),
-  dessert: require('../assets/images/hero-escream.png'),
-};
-
 export const SELECT_ORDERS_METHOD = [
   {
     name: 'In - Store',
@@ -277,3 +273,19 @@ export const LIST_TRANSACTION = [
     name: 'Beef Burger',
   },
 ];
+
+export const LIST_ITEMS = {
+  burger: ITEMS_BURGERS,
+  salads: ITEMS_SALADS,
+  meals: ITEMS_MEALS,
+  beverages: ITEMS_BAVERAGES,
+  dessert: ITEMS_DESSERTS,
+};
+
+export const SWITCH_HERO_IMAGE = {
+  burger: require('../assets/images/hero-slider-2.png'),
+  salads: require('../assets/images/hero-salads.png'),
+  meals: require('../assets/images/hero-burger.png'),
+  beverages: require('../assets/images/hero-baverages.png'),
+  dessert: require('../assets/images/hero-escream.png'),
+};
