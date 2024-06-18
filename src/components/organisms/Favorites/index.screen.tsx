@@ -24,7 +24,7 @@ const FavoriteOrganism: React.FC = () => {
     <MainLayout>
       <Header isBack onPressLeft={onBack} />
       <View style={styles.container}>
-        <Label customText="Favorites" variant="large" weight="semibold" />
+        <Label text="Favorites" size="lg" weight="semibold" />
         <Gap height={30} />
         {hasFavorite ? (
           <FlatList

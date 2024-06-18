@@ -19,15 +19,13 @@ import {LIST_MENU, colors} from '../../../constants';
 import {Header, FloatingBasket} from '../../molecules';
 import {navigate, AppDetailRoutes} from '../../../navigation';
 
-const Card = ({
-  title,
-  image,
-  onPress,
-}: {
+type CardProps = {
   title: string;
   onPress: () => void;
   image: ImageSourcePropType;
-}) => (
+};
+
+const Card: React.FC<CardProps> = ({title, image, onPress}) => (
   <TouchableOpacity onPress={onPress} style={styles.card}>
     <Image
       style={styles.cardHero}

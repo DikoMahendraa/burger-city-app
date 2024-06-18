@@ -18,7 +18,7 @@ const SectionOrderMethod: React.FC<{
       <View style={[styles.row]}>
         <props.icon color={colors.disabled} />
         <Gap width={24} />
-        <Label color={colors.dark} variant="small" customText={name} />
+        <Label color={colors.dark} size="sm" text={name} />
       </View>
       <RadioButton onPress={onPress} selected={selected} />
     </TouchableOpacity>

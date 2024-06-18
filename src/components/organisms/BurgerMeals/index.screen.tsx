@@ -30,17 +30,9 @@ const ListHeaderComponent = () => {
     <>
       <View style={styles.header}>
         <View>
-          <Label
-            weight="semibold"
-            variant="large"
-            customText="Cheese Burger Meal"
-          />
+          <Label weight="semibold" size="lg" text="Cheese Burger Meal" />
           <Gap height={4} />
-          <Label
-            variant="normal"
-            color={colors.disabled}
-            customText="Please customize your meal"
-          />
+          <Label color={colors.disabled} text="Please customize your meal" />
         </View>
         <TouchableOpacity>
           <Star color={colors.primary} size={22} />
@@ -61,7 +53,7 @@ const ListHeaderComponent = () => {
             icon={<CirclePlus color={colors.primary} size={20} />}
             variant="transparent"
           />
-          <Label customText="1" weight="semibold" color={colors.disabled} />
+          <Label text="1" weight="semibold" color={colors.disabled} />
           <Button
             icon={<CircleMinus color={colors.primary} size={20} />}
             variant="transparent"
@@ -72,12 +64,7 @@ const ListHeaderComponent = () => {
       </View>
       <Gap height={30} />
       <View>
-        <Label
-          customText="Includes"
-          variant="normal"
-          weight="semibold"
-          color={colors.dark}
-        />
+        <Label text="Includes" weight="semibold" color={colors.dark} />
         <Gap height={24} />
       </View>
     </>
@@ -154,11 +141,7 @@ const BurgerMealsOrganism: React.FC = () => {
           data={LIST_BURGER_MEALS}
           ListHeaderComponent={
             <View style={styles.headerDrawer}>
-              <Label
-                customText="Change Drinks"
-                variant="normal"
-                weight="semibold"
-              />
+              <Label text="Change Drinks" weight="semibold" />
               <Text />
 
               <TouchableOpacity onPress={onChangeMenu}>

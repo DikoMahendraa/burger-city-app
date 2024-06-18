@@ -1,53 +1,60 @@
 import React from 'react';
 import {Text, TextProps, StyleSheet, ColorValue} from 'react-native';
+
 import {scale} from '../../utils';
 import {colors} from '../../constants';
 import {TColors} from '../../constants/colors';
 
 interface CustomLabelProps extends TextProps {
-  customText: string;
-  variant?: 'large' | 'normal' | 'small' | 'xsmall';
-  weight?: 'bold' | 'semibold' | 'normalWeight';
+  text: string;
+  size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
+  weight?: 'bold' | 'semibold' | 'normal' | 'light';
   color?: TColors | ColorValue;
 }
 
-const CustomLabel: React.FC<CustomLabelProps> = ({
-  customText,
-  variant = 'normal',
-  weight = 'normalWeight',
+const Label: React.FC<CustomLabelProps> = ({
+  text,
+  size = 'md',
+  weight = 'normal',
   color = colors.black,
   style,
   ...rest
 }) => {
   return (
-    <Text style={[styles[variant], styles[weight], {color}, style]} {...rest}>
-      {customText}
+    <Text style={[styles[size], styles[weight], {color}, style]} {...rest}>
+      {text}
     </Text>
   );
 };
 
 const styles = StyleSheet.create({
-  large: {
+  xl: {
+    fontSize: scale(24),
+  },
+  lg: {
     fontSize: scale(20),
   },
-  normal: {
+  md: {
     fontSize: scale(16),
   },
-  small: {
+  sm: {
     fontSize: scale(14),
   },
-  xsmall: {
+  xs: {
     fontSize: scale(10),
   },
   bold: {
-    fontWeight: '800',
+    fontWeight: '700',
   },
   semibold: {
     fontWeight: '600',
   },
-  normalWeight: {
+  normal: {
     fontWeight: '400',
+  },
+  light: {
+    fontWeight: '300',
   },
 });
 
-export default React.memo(CustomLabel);
+export default React.memo(Label);

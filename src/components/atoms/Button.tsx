@@ -40,7 +40,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   let buttonStyles: ViewStyle[] = [
     styles.button,
     styles[variant],
-    styles[isLoading || disabled ? 'disabled' : 'primary'],
+    isLoading ? styles[isLoading || disabled ? 'disabled' : 'primary'] : {},
   ];
   switch (size) {
     case 'small':
@@ -94,7 +94,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.disabled,
   },
   transparent: {
-    backgroundColor: 'transparent',
+    shadowColor: colors.dark,
+    shadowOffset: {height: 1, width: 0},
+    shadowOpacity: 0.2,
+    backgroundColor: colors.white,
   },
   small: {
     paddingVertical: scale(5),

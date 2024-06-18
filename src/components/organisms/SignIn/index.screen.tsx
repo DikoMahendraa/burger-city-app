@@ -17,7 +17,7 @@ type FormData = {
   email: string;
 };
 
-const SignInOrganism = () => {
+const SignInOrganism: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const {setLoading, isLoading} = useGlobalStore();
   const {setLogin} = useAuthStore();

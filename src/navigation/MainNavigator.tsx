@@ -7,13 +7,16 @@ import {
   BurgerMealsScreen,
   BurgerMenuScreen,
   ViewCartScreen,
+  OrderPaymentScreen,
 } from '../screens/Home';
 
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      initialRouteName={AppDetailRoutes.DETAIL_PAYMENT_ORDER}
+      screenOptions={{headerShown: false}}>
       <Stack.Screen
         name={AppRoutes.BOTTOM_NAVIGATION}
         component={BottomTabNavigator}
@@ -29,6 +32,10 @@ const MainNavigator = () => {
       <Stack.Screen
         name={AppDetailRoutes.DETAIL_CART}
         component={ViewCartScreen}
+      />
+      <Stack.Screen
+        name={AppDetailRoutes.DETAIL_PAYMENT_ORDER}
+        component={OrderPaymentScreen}
       />
     </Stack.Navigator>
   );

@@ -9,12 +9,7 @@ import {colors} from '../../../constants';
 const SectionButtonPayment: React.FC = () => {
   return (
     <TouchableOpacity style={styles.buttonPayment}>
-      <Label
-        customText="Payment Method"
-        color={colors.white}
-        variant="normal"
-        weight="semibold"
-      />
+      <Label text="Payment Method" color={colors.white} weight="semibold" />
 
       <ChevronRight color={colors.white} size={18} />
     </TouchableOpacity>

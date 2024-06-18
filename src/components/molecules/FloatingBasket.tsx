@@ -16,22 +16,16 @@ const FloatingBasket: React.FC<{
       <TouchableOpacity onPress={onPress} style={styles.button}>
         <View style={styles.textCount}>
           <Label
-            customText={String(length)}
+            text={String(length)}
             color={colors.primary}
             weight="semibold"
-            variant="normal"
           />
         </View>
+        <Label text="View your cart" color={colors.white} />
         <Label
-          customText="View your cart"
-          color={colors.white}
-          variant="normal"
-        />
-        <Label
-          customText={formatCurrency(total)}
+          text={formatCurrency(total)}
           color={colors.white}
           weight="semibold"
-          variant="normal"
         />
       </TouchableOpacity>
     </View>

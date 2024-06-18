@@ -17,16 +17,16 @@ const SectionItemOrder: React.FC<{
       <View style={styles.row}>
         <Label
           color={colors.primary}
-          customText={total + 'x'}
-          variant="small"
+          text={total + 'x'}
+          size="sm"
           weight="semibold"
         />
         <Gap width={30} />
         <View>
           <Label
             color={colors.dark}
-            customText={name}
-            variant="small"
+            text={name}
+            size="sm"
             weight="normalWeight"
           />
           <Gap height={12} />
@@ -39,11 +39,7 @@ const SectionItemOrder: React.FC<{
           </View>
         </View>
       </View>
-      <Label
-        color={colors.dark}
-        customText={formatCurrency(price)}
-        variant="small"
-      />
+      <Label color={colors.dark} text={formatCurrency(price)} size="sm" />
     </View>
   );
 };

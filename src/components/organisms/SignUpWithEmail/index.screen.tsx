@@ -19,7 +19,7 @@ type FormData = {
   confirm_password: string;
 };
 
-const SignUpWithEmailOrganism = () => {
+const SignUpWithEmailOrganism: React.FC = () => {
   const methods = useForm<FormData>({
     resolver: zodResolver(signUpEmailSchema),
   });

@@ -10,11 +10,11 @@ import {
 
 import {Header} from '../../molecules';
 import {Gap, Label} from '../../atoms';
-import {LIST_TRANSACTION, LIST_WALLET, colors} from '../../../constants';
 import {MainLayout} from '../../../layouts';
 import {scale, scaleHeight} from '../../../utils';
+import {LIST_TRANSACTION, LIST_WALLET, colors} from '../../../constants';
 
-const ProfileOrganism = () => {
+const ProfileOrganism: React.FC = () => {
   return (
     <MainLayout>
       <Header />
@@ -45,11 +45,7 @@ const ProfileOrganism = () => {
             </View>
             <Gap height={22} />
             <View style={styles.containerEWaller}>
-              <Label
-                variant="normal"
-                color={colors['gray-01']}
-                customText="Your wallet"
-              />
+              <Label color={colors['gray-01']} text="Your wallet" />
               <Gap height={12} />
               <FlatList
                 horizontal
@@ -72,11 +68,7 @@ const ProfileOrganism = () => {
               style={styles.containerTransaction}
               ListHeaderComponent={
                 <>
-                  <Label
-                    variant="normal"
-                    color={colors['gray-01']}
-                    customText="Recent Transaction"
-                  />
+                  <Label color={colors['gray-01']} text="Recent Transaction" />
                   <Gap height={24} />
                 </>
               }
@@ -86,24 +78,11 @@ const ProfileOrganism = () => {
               renderItem={({item}) => (
                 <TouchableOpacity style={styles.cardTransaction}>
                   <View>
-                    <Label
-                      customText={item.date}
-                      variant="normal"
-                      weight="normalWeight"
-                      color={colors['gray-01']}
-                    />
+                    <Label text={item.date} color={colors['gray-01']} />
                     <Gap height={8} />
-                    <Label
-                      customText={item.name}
-                      variant="normal"
-                      weight="semibold"
-                    />
+                    <Label text={item.name} weight="semibold" />
                   </View>
-                  <Label
-                    customText={'Rp.' + item.price}
-                    variant="normal"
-                    weight="bold"
-                  />
+                  <Label text={'Rp.' + item.price} weight="bold" />
                 </TouchableOpacity>
               )}
             />
@@ -121,10 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
+    width: scale(150),
+    height: scaleHeight(150),
+    borderRadius: scale(75),
+    marginBottom: scale(20),
   },
   containerProfile: {
     flexDirection: 'column',
@@ -154,16 +133,16 @@ const styles = StyleSheet.create({
     height: scaleHeight(130),
   },
   containerTransaction: {
-    paddingHorizontal: 24,
+    paddingHorizontal: scale(24),
   },
   cardTransaction: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.white,
     borderRadius: 8,
-    paddingVertical: 12,
-    marginBottom: 12,
-    paddingHorizontal: 18,
+    paddingVertical: scale(12),
+    marginBottom: scale(12),
+    paddingHorizontal: scale(18),
     alignItems: 'center',
     shadowColor: colors.dark,
     shadowOffset: {

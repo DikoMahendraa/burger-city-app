@@ -10,6 +10,7 @@ export const AppDetailRoutes = {
   DETAIL_BURGER_MENU: 'DETAIL_BURGER_MENU',
   DETAIL_BURGER_MEALS: 'DETAIL_BURGER_MEALS',
   DETAIL_CART: 'DETAIL_CART',
+  DETAIL_PAYMENT_ORDER: 'DETAIL_PAYMENT_ORDER',
 } as const;
 
 export const AuthRoutes = {

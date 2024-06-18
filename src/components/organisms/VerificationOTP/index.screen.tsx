@@ -12,7 +12,7 @@ import {Input, Button, Gap} from '../../../components/atoms';
 import {useAuthStore, useGlobalStore} from '../../../stores';
 import {verifyOTPSchema} from '../../../schema/authSchema';
 
-const VerificationOTPOrganism = () => {
+const VerificationOTPOrganism: React.FC = () => {
   const methods = useForm<{code: string}>({
     resolver: zodResolver(verifyOTPSchema),
   });
