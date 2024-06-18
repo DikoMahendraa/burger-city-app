@@ -6,6 +6,7 @@ import {scale, scaleHeight} from '../../utils';
 
 type TPropsHeader = {
   isBack?: boolean;
+  iconOnly?: boolean;
   onPressLeft?: () => void;
   onPressRight?: () => void;
 };
@@ -14,19 +15,22 @@ const Header: React.FC<TPropsHeader> = ({
   isBack,
   onPressLeft,
   onPressRight,
+  iconOnly = false,
 }) => {
   return (
-    <View style={styles.header}>
-      <TouchableOpacity onPress={onPressLeft} style={styles.language}>
-        {isBack ? (
-          <ArrowLeft size={22} color={colors.primary} />
-        ) : (
-          <>
-            <Text style={styles.textLanguage}>EN</Text>
-            <ChevronDown color={colors.primary} />
-          </>
-        )}
-      </TouchableOpacity>
+    <View style={[styles.header]}>
+      {!iconOnly && (
+        <TouchableOpacity onPress={onPressLeft} style={styles.language}>
+          {isBack ? (
+            <ArrowLeft size={22} color={colors.primary} />
+          ) : (
+            <>
+              <Text style={styles.textLanguage}>EN</Text>
+              <ChevronDown color={colors.primary} />
+            </>
+          )}
+        </TouchableOpacity>
+      )}
 
       <View style={styles.logoCenter}>
         <Image
@@ -36,9 +40,11 @@ const Header: React.FC<TPropsHeader> = ({
         />
       </View>
 
-      <TouchableOpacity onPress={onPressRight}>
-        <Bell color={colors.disabled} />
-      </TouchableOpacity>
+      {!iconOnly && (
+        <TouchableOpacity onPress={onPressRight}>
+          <Bell color={colors.disabled} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

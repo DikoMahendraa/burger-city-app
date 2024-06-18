@@ -67,10 +67,10 @@ const OrderConfirmed: React.FC = () => {
           ListFooterComponent={
             <>
               <Gap height={100} />
-              <Button size="large" text="TRACK YOUR ORDER" weight="600" />
+              <Button size="large" text="Track Your Order" weight="600" />
               <Gap height={12} />
               <Button
-                text="CLOSE"
+                text="Close"
                 variant="transparent"
                 onPress={onClose}
                 size="large"

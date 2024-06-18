@@ -23,7 +23,7 @@ const OrderPaymentOrganism: React.FC = () => {
 
   return (
     <MainLayout>
-      <Header isBack onPressLeft={onBackButton} />
+      <Header isBack iconOnly onPressLeft={onBackButton} />
       <LoadingScreen visible={isLoading} />
       {paymentSuccess ? <OrderConfirmed /> : <OrderPayment />}
     </MainLayout>

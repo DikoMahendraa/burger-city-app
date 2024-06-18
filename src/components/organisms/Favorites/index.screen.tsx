@@ -56,7 +56,7 @@ const FavoriteOrganism: React.FC = () => {
               Burger or Menu what do You Want
             </Text>
             <Gap height={22} />
-            <Button onPress={onCheckMenu} weight="600" text="Check menu" />
+            <Button onPress={onCheckMenu} weight="600" text="Menu" />
           </View>
         )}
       </View>
