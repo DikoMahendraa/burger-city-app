@@ -32,7 +32,7 @@ const SectionItemList: React.FC = () => {
         <>
           <Gap height={30} />
           <View style={styles.row}>
-            <Label text="Item List" weight="semibold" />
+            <Label text={`Item List (${carts?.length})`} weight="semibold" />
             <TouchableOpacity onPress={onAddItems}>
               <Label
                 color={colors.primary}

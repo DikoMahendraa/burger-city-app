@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {FlatList, ImageBackground, StyleSheet, View} from 'react-native';
-import {Button, Gap, Label} from '../../atoms';
+
 import {colors} from '../../../constants';
+import {useBurgerStore} from '../../../stores';
+import {Button, Gap, Label} from '../../atoms';
+import {AppRoutes, navigate} from '../../../navigation';
 import {formatCurrency, scale, scaleHeight} from '../../../utils';
 
 const OrderConfirmed: React.FC = () => {
+  const {getSubTotal, carts, resetCart} = useBurgerStore();
+  const onClose = useCallback(() => {
+    navigate(AppRoutes.BOTTOM_NAVIGATION);
+    resetCart();
+  }, [resetCart]);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -23,55 +32,54 @@ const OrderConfirmed: React.FC = () => {
         <View style={styles.dashedLineContainer}>
           <View style={styles.dashedLine} />
         </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.row}>
-            <Label text="Customer Name" />
-            <Label text="Subtotal" />
-          </View>
-          <Gap height={12} />
-          <View style={styles.row}>
-            <Label text="Darrell Steward" size="lg" weight="semibold" />
-            <Label weight="semibold" text={formatCurrency(150000)} />
-          </View>
-          <Gap height={12} />
 
-          <FlatList
-            data={[{id: '1'}, {id: '2'}, {id: '3'}, {id: '4'}]}
-            keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={
-              <>
-                <Gap height={24} />
-                <Label text="Order List" />
-                <Gap height={8} />
-              </>
-            }
-            renderItem={({item}) => (
-              <View style={styles.listItem}>
-                <Label
-                  weight="semibold"
-                  color={colors.disabled}
-                  text={`${item.id}. `}
-                />
-                <Label text="Chicken Big Burger" weight="semibold" />
+        <FlatList
+          data={carts}
+          keyExtractor={item => item.id}
+          style={styles.infoContainer}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <>
+              <View style={styles.row}>
+                <Label text="Customer Name" />
+                <Label text="Subtotal" />
               </View>
-            )}
-            ListFooterComponent={
-              <>
-                <Gap height={100} />
-                <Button size="large" text="TRACK YOUR ORDER" weight="600" />
-                <Gap height={12} />
-                <Button
-                  text="CLOSE"
-                  variant="transparent"
-                  size="large"
-                  textStyle={{color: colors.primary}}
-                  weight="600"
-                />
-              </>
-            }
-          />
-        </View>
+              <Gap height={12} />
+              <View style={styles.row}>
+                <Label text="Darrell Steward" size="lg" weight="semibold" />
+                <Label weight="semibold" text={formatCurrency(getSubTotal())} />
+              </View>
+              <Gap height={24} />
+              <Label text="Order List" />
+              <Gap height={8} />
+            </>
+          }
+          renderItem={({item, index}) => (
+            <View style={styles.listItem}>
+              <Label
+                weight="semibold"
+                color={colors.disabled}
+                text={`${index + 1}. `}
+              />
+              <Label text={`${item.name} - ${item.count}x`} weight="semibold" />
+            </View>
+          )}
+          ListFooterComponent={
+            <>
+              <Gap height={100} />
+              <Button size="large" text="TRACK YOUR ORDER" weight="600" />
+              <Gap height={12} />
+              <Button
+                text="CLOSE"
+                variant="transparent"
+                onPress={onClose}
+                size="large"
+                textStyle={{color: colors.primary}}
+                weight="600"
+              />
+            </>
+          }
+        />
       </ImageBackground>
     </View>
   );
@@ -105,8 +113,7 @@ const styles = StyleSheet.create({
     right: scale(40),
   },
   infoContainer: {
-    position: 'absolute',
-    top: scaleHeight(200),
+    marginTop: scaleHeight(200),
     width: '100%',
     paddingHorizontal: scale(32),
   },

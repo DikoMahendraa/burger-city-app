@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   FlatList,
   Image,
@@ -9,8 +9,22 @@ import {
 import {Button, Gap, Label} from '../../atoms';
 import {LIST_WALLET, colors} from '../../../constants';
 import {formatCurrency, scale, scaleHeight} from '../../../utils';
+import {useBurgerStore, useGlobalStore} from '../../../stores';
 
 const OrderPayment: React.FC = () => {
+  const {submitOrder, getDeliveryFee, getSubTotal, getTotalPayment} =
+    useBurgerStore();
+  const {isLoading, setLoading} = useGlobalStore();
+
+  const onOrder = useCallback(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      submitOrder();
+    }, 3000);
+  }, [setLoading, submitOrder]);
+
   return (
     <View style={styles.container}>
       <Gap height={24} />
@@ -34,17 +48,20 @@ const OrderPayment: React.FC = () => {
       <View>
         <OrderSummaryRow
           label="Subtotal Order"
-          value={formatCurrency(150000)}
+          value={formatCurrency(getSubTotal())}
         />
         <Gap height={12} />
-        <OrderSummaryRow label="Delivery Fee" value={formatCurrency(50000)} />
+        <OrderSummaryRow
+          label="Delivery Fee"
+          value={formatCurrency(getDeliveryFee())}
+        />
         <Gap height={24} />
         <View style={styles.dashedLine} />
         <Gap height={24} />
         <View style={styles.row}>
           <Label text="Total Payment" />
           <View>
-            <Label weight="semibold" text={formatCurrency(50000)} />
+            <Label weight="semibold" text={formatCurrency(getTotalPayment())} />
             <Gap height={8} />
             <Label
               weight="semibold"
@@ -57,7 +74,13 @@ const OrderPayment: React.FC = () => {
         </View>
       </View>
       <Gap height={42} />
-      <Button text="ORDER" weight="600" size="large" />
+      <Button
+        disabled={isLoading}
+        onPress={onOrder}
+        text="ORDER"
+        weight="600"
+        size="large"
+      />
     </View>
   );
 };

@@ -12,10 +12,10 @@ import {
 
 const Stack = createStackNavigator();
 
-const MainNavigator = () => {
+const MainNavigator: React.FC = () => {
   return (
     <Stack.Navigator
-      initialRouteName={AppDetailRoutes.DETAIL_PAYMENT_ORDER}
+      initialRouteName={AppRoutes.BOTTOM_NAVIGATION}
       screenOptions={{headerShown: false}}>
       <Stack.Screen
         name={AppRoutes.BOTTOM_NAVIGATION}
