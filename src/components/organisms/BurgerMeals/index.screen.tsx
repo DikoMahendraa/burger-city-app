@@ -27,13 +27,37 @@ import {colors} from '../../../constants';
 const {height} = Dimensions.get('window');
 
 const ListHeaderComponent: React.FC = () => {
-  const {meals, addFavorite, removeFavorite, favorites} = useBurgerStore();
+  const {
+    meals,
+    addFavorite,
+    increaseOrder,
+    decreaseOrder,
+    removeFavorite,
+    favorites,
+    addToCart,
+    carts,
+  } = useBurgerStore();
   const mapFavorite = favorites?.flatMap(item => item?.id);
   const selected = mapFavorite?.includes(meals.id);
+  const listCart = carts.flatMap(item => item.id);
+  const readyOnCart = listCart.includes(meals.id);
 
   const onAddToFavorite = useCallback(() => {
     return selected ? removeFavorite(meals.id) : addFavorite(meals);
   }, [addFavorite, meals, removeFavorite, selected]);
+
+  const onAddToCart = useCallback(() => {
+    addToCart(meals);
+  }, [addToCart, meals]);
+
+  const onIncreaseOrder = useCallback(() => {
+    addToCart(meals);
+    increaseOrder(meals.id);
+  }, [addToCart, increaseOrder, meals]);
+  const onDecreaseOrder = useCallback(() => {
+    addToCart(meals);
+    decreaseOrder(meals.id);
+  }, [addToCart, decreaseOrder, meals]);
 
   return (
     <>
@@ -61,19 +85,30 @@ const ListHeaderComponent: React.FC = () => {
       </View>
       <Gap height={12} />
       <View style={styles.row}>
-        <View style={styles.buttonCount}>
-          <Button
-            icon={<CircleMinus color={colors.primary} size={20} />}
-            variant="transparent"
-          />
-          <Label text="1" weight="semibold" color={colors.disabled} />
-          <Button
-            icon={<CirclePlus color={colors.primary} size={20} />}
-            variant="transparent"
-          />
-        </View>
-        <Gap width={20} />
-        <Button text="Add to Cart" size="large" />
+        {readyOnCart ? (
+          <View style={styles.buttonCount}>
+            <Button
+              onPress={onDecreaseOrder}
+              icon={<CircleMinus color={colors.primary} size={20} />}
+              variant="transparent"
+            />
+            <Label
+              text={String(meals?.count)}
+              weight="semibold"
+              color={colors.disabled}
+            />
+            <Button
+              onPress={onIncreaseOrder}
+              icon={<CirclePlus color={colors.primary} size={20} />}
+              variant="transparent"
+            />
+          </View>
+        ) : (
+          <>
+            <Gap width={20} />
+            <Button onPress={onAddToCart} text="Add to Cart" size="large" />
+          </>
+        )}
       </View>
       <Gap height={30} />
       <View>

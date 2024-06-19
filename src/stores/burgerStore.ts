@@ -93,16 +93,28 @@ export const useBurgerStore = create<BurgerStore>((set, get) => ({
   },
 
   increaseOrder: id => {
+    const isMeal = id?.includes('meals');
     const carts = get().carts;
     set({
       carts: carts.map(cart =>
         cart.id === id ? {...cart, count: (cart.count ?? 0) + 1} : cart,
       ),
+      ...(isMeal
+        ? {
+            meals: {
+              ...get().meals,
+              count: Number(get().meals.count) + 1,
+            },
+          }
+        : {}),
     });
   },
 
   decreaseOrder: id => {
+    const isMeal = id?.includes('meals');
     const carts = get().carts;
+    const moreThanOne = Number(get().meals?.count) > 1;
+
     set({
       carts: carts
         .map(cart =>
@@ -111,6 +123,14 @@ export const useBurgerStore = create<BurgerStore>((set, get) => ({
             : cart,
         )
         .filter(cart => Number(cart.count) > 0),
+      ...(isMeal && moreThanOne
+        ? {
+            meals: {
+              ...get().meals,
+              count: Number(get().meals.count) - 1,
+            },
+          }
+        : {}),
     });
   },
 
@@ -123,6 +143,14 @@ export const useBurgerStore = create<BurgerStore>((set, get) => ({
   },
 
   addMeals: meals => {
-    set({meals: {...meals, count: 1}});
+    const listCart = get()
+      .carts?.flatMap(item => item)
+      .filter(cart => meals.id === cart.id);
+
+    if (listCart.length !== 0) {
+      set({meals: {...meals, count: listCart[0].count || 1}});
+    } else {
+      set({meals: {...meals, count: 1}});
+    }
   },
 }));
