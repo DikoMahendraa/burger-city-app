@@ -16,17 +16,30 @@ export type CartItem = {
   price: string;
   count?: number;
   id: string;
+  visible?: boolean;
   type?: string;
+};
+
+export type MealItem = {
+  image: ImageSourcePropType;
+  name: string;
+  price: string;
+  count?: number;
+  id: string;
+  type?: string;
+  desserts?: Array<CartItem>;
 };
 
 type BurgerStore = {
   favorites: FavoriteItem[];
   carts: CartItem[];
+  meals: MealItem;
   addFavorite: (item: FavoriteItem) => void;
   removeFavorite: (id: string) => void;
   addToCart: (item: CartItem) => void;
   increaseOrder: (id: string) => void;
   decreaseOrder: (id: string) => void;
+  addMeals: (item: MealItem) => void;
   getSubTotal: () => number;
   getDeliveryFee: () => number;
   getTotalPayment: () => number;
@@ -39,6 +52,7 @@ type BurgerStore = {
 export const useBurgerStore = create<BurgerStore>((set, get) => ({
   favorites: [],
   carts: [],
+  meals: {} as MealItem,
   statusPayment: 'pending',
 
   shouldShowBasket: () => get().carts.length > 0,
@@ -79,16 +93,28 @@ export const useBurgerStore = create<BurgerStore>((set, get) => ({
   },
 
   increaseOrder: id => {
+    const isMeal = id?.includes('meals');
     const carts = get().carts;
     set({
       carts: carts.map(cart =>
         cart.id === id ? {...cart, count: (cart.count ?? 0) + 1} : cart,
       ),
+      ...(isMeal
+        ? {
+            meals: {
+              ...get().meals,
+              count: Number(get().meals.count) + 1,
+            },
+          }
+        : {}),
     });
   },
 
   decreaseOrder: id => {
+    const isMeal = id?.includes('meals');
     const carts = get().carts;
+    const moreThanOne = Number(get().meals?.count) > 1;
+
     set({
       carts: carts
         .map(cart =>
@@ -97,13 +123,34 @@ export const useBurgerStore = create<BurgerStore>((set, get) => ({
             : cart,
         )
         .filter(cart => Number(cart.count) > 0),
+      ...(isMeal && moreThanOne
+        ? {
+            meals: {
+              ...get().meals,
+              count: Number(get().meals.count) - 1,
+            },
+          }
+        : {}),
     });
   },
 
   submitOrder: () => {
     set({statusPayment: 'success'});
   },
+
   resetCart: () => {
     set({carts: [], statusPayment: 'pending'});
+  },
+
+  addMeals: meals => {
+    const listCart = get()
+      .carts?.flatMap(item => item)
+      .filter(cart => meals.id === cart.id);
+
+    if (listCart.length !== 0) {
+      set({meals: {...meals, count: listCart[0].count || 1}});
+    } else {
+      set({meals: {...meals, count: 1}});
+    }
   },
 }));

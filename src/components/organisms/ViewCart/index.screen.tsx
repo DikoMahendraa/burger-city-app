@@ -15,7 +15,10 @@ import SectionItemList from './SectionItemList';
 
 const ViewCartOrganism: React.FC = () => {
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
-  const [selectMethod, setSelectMethod] = useState<string>();
+
+  const [selectMethod, setSelectMethod] = useState(
+    SELECT_ORDERS_METHOD[1].name,
+  );
   const [notes, setNotes] = useState<{visible: boolean; value: string}>({
     visible: false,
     value: '',

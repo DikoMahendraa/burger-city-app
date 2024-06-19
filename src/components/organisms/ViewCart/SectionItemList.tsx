@@ -46,6 +46,7 @@ const SectionItemList: React.FC = () => {
       }
       renderItem={({item}) => (
         <SectionItemOrder
+          image={item.image}
           onPressLeft={() => decreaseOrder(item.id)}
           onPressRight={() => increaseOrder(item.id)}
           total={Number(item.count)}

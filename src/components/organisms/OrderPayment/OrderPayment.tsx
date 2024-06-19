@@ -9,21 +9,23 @@ import {
 import {Button, Gap, Label} from '../../atoms';
 import {LIST_WALLET, colors} from '../../../constants';
 import {formatCurrency, scale, scaleHeight} from '../../../utils';
-import {useBurgerStore, useGlobalStore} from '../../../stores';
+import {useBurgerStore, useGlobalStore, useProfileStore} from '../../../stores';
 
 const OrderPayment: React.FC = () => {
-  const {submitOrder, getDeliveryFee, getSubTotal, getTotalPayment} =
+  const {submitOrder, carts, getDeliveryFee, getSubTotal, getTotalPayment} =
     useBurgerStore();
   const {isLoading, setLoading} = useGlobalStore();
+  const {addToHistory} = useProfileStore();
 
-  const onOrder = useCallback(() => {
+  const onOrder = useCallback(async () => {
     setLoading(true);
+    addToHistory(carts);
 
     setTimeout(() => {
       setLoading(false);
       submitOrder();
     }, 3000);
-  }, [setLoading, submitOrder]);
+  }, [addToHistory, carts, setLoading, submitOrder]);
 
   return (
     <View style={styles.container}>

@@ -9,10 +9,10 @@ import React, {useCallback} from 'react';
 import {ArrowLeft} from 'lucide-react-native';
 
 import {Gap, Label} from '../../atoms';
-import {scale, scaleHeight} from '../../../utils';
 import {useBurgerStore} from '../../../stores';
+import {scale, scaleHeight} from '../../../utils';
+import {CartItem} from '../../../stores/burgerStore';
 import {FloatingBasket, CardBurgerItem} from '../../molecules';
-import {CartItem, FavoriteItem} from '../../../stores/burgerStore';
 import {AppDetailRoutes, AppRoutes, navigate} from '../../../navigation';
 import {LIST_ITEMS, SWITCH_HERO_IMAGE, colors} from '../../../constants';
 
@@ -36,6 +36,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
     addToCart,
     carts,
     shouldShowBasket,
+    addMeals,
   } = useBurgerStore();
 
   const listFavorites = favorites?.flatMap(item => item.id);
@@ -54,20 +55,25 @@ const DetailsBurgerMenuOrganism: React.FC<{
   const onBack = useCallback(() => navigate(AppRoutes.OUR_BURGER), []);
 
   const onViewMenu = useCallback(
-    (items: FavoriteItem) => {
-      if (hasSelected(items.id)) {
-        removeFavorite(items.id);
+    (items: CartItem) => {
+      if (items.type === 'meals') {
+        addMeals(items);
+        navigate(AppDetailRoutes.DETAIL_BURGER_MEALS);
       } else {
-        addFavorite({
-          id: items.id,
-          image: items.image,
-          name: items.name,
-          price: items.price,
-          type: items.type,
-        });
+        if (hasSelected(items.id)) {
+          removeFavorite(items.id);
+        } else {
+          addFavorite({
+            id: items.id,
+            image: items.image,
+            name: items.name,
+            price: items.price,
+            type: items.type,
+          });
+        }
       }
     },
-    [hasSelected, removeFavorite, addFavorite],
+    [hasSelected, addMeals, removeFavorite, addFavorite],
   );
 
   const onAddMenu = useCallback(
@@ -88,6 +94,8 @@ const DetailsBurgerMenuOrganism: React.FC<{
     navigate(AppDetailRoutes.DETAIL_CART);
   }, []);
 
+  console.log(LIST_ITEMS.beverages);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -103,15 +111,7 @@ const DetailsBurgerMenuOrganism: React.FC<{
               price={item.price}
               hasDetail={hasViewMenu}
               selected={hasSelected(item?.id)}
-              onPressIcon={() =>
-                onViewMenu({
-                  id: item.id,
-                  name: item.name,
-                  price: item.price,
-                  image: item.image,
-                  type: item.type,
-                })
-              }
+              onPressIcon={() => onViewMenu({...item})}
               onPressButton={() =>
                 onAddMenu({
                   id: item.id,

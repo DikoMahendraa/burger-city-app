@@ -19,48 +19,96 @@ import React, {useCallback, useState} from 'react';
 import {Header} from '../../molecules';
 import {goBack} from '../../../navigation';
 import {MainLayout} from '../../../layouts';
+import {useBurgerStore} from '../../../stores';
 import {Button, Gap, Label} from '../../atoms';
 import {scale, scaleHeight} from '../../../utils';
-import {LIST_BURGER_MEALS, colors} from '../../../constants';
+import {colors} from '../../../constants';
 
 const {height} = Dimensions.get('window');
 
-const ListHeaderComponent = () => {
+const ListHeaderComponent: React.FC = () => {
+  const {
+    meals,
+    addFavorite,
+    increaseOrder,
+    decreaseOrder,
+    removeFavorite,
+    favorites,
+    addToCart,
+    carts,
+  } = useBurgerStore();
+  const mapFavorite = favorites?.flatMap(item => item?.id);
+  const selected = mapFavorite?.includes(meals.id);
+  const listCart = carts.flatMap(item => item.id);
+  const readyOnCart = listCart.includes(meals.id);
+
+  const onAddToFavorite = useCallback(() => {
+    return selected ? removeFavorite(meals.id) : addFavorite(meals);
+  }, [addFavorite, meals, removeFavorite, selected]);
+
+  const onAddToCart = useCallback(() => {
+    addToCart(meals);
+  }, [addToCart, meals]);
+
+  const onIncreaseOrder = useCallback(() => {
+    addToCart(meals);
+    increaseOrder(meals.id);
+  }, [addToCart, increaseOrder, meals]);
+  const onDecreaseOrder = useCallback(() => {
+    addToCart(meals);
+    decreaseOrder(meals.id);
+  }, [addToCart, decreaseOrder, meals]);
+
   return (
     <>
       <View style={styles.header}>
         <View>
-          <Label weight="semibold" size="lg" text="Cheese Burger Meal" />
+          <Label weight="semibold" size="lg" text={meals.name} />
           <Gap height={4} />
           <Label color={colors.disabled} text="Please customize your meal" />
         </View>
-        <TouchableOpacity>
-          <Star color={colors.primary} size={22} />
+        <TouchableOpacity onPress={onAddToFavorite}>
+          <Star
+            color={colors.primary}
+            fill={selected ? colors.primary : colors.white}
+            size={22}
+          />
         </TouchableOpacity>
       </View>
       <Gap height={12} />
       <View style={styles.row}>
         <Image
           style={styles.imageHero}
-          alt="detail-menu"
-          source={require('../../../assets/images/list-meals/meals-1.png')}
+          alt={`detail-menu-${meals.name?.toLowerCase()}`}
+          source={meals.image}
         />
       </View>
       <Gap height={12} />
       <View style={styles.row}>
-        <View style={styles.buttonCount}>
-          <Button
-            icon={<CirclePlus color={colors.primary} size={20} />}
-            variant="transparent"
-          />
-          <Label text="1" weight="semibold" color={colors.disabled} />
-          <Button
-            icon={<CircleMinus color={colors.primary} size={20} />}
-            variant="transparent"
-          />
-        </View>
-        <Gap width={20} />
-        <Button text="Add to Cart" size="large" />
+        {readyOnCart ? (
+          <View style={styles.buttonCount}>
+            <Button
+              onPress={onDecreaseOrder}
+              icon={<CircleMinus color={colors.primary} size={20} />}
+              variant="transparent"
+            />
+            <Label
+              text={String(meals?.count)}
+              weight="semibold"
+              color={colors.disabled}
+            />
+            <Button
+              onPress={onIncreaseOrder}
+              icon={<CirclePlus color={colors.primary} size={20} />}
+              variant="transparent"
+            />
+          </View>
+        ) : (
+          <>
+            <Gap width={20} />
+            <Button onPress={onAddToCart} text="Add to Cart" size="large" />
+          </>
+        )}
       </View>
       <Gap height={30} />
       <View>
@@ -100,6 +148,7 @@ const ContentRenderItem: React.FC<{
 const BurgerMealsOrganism: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const translateY = useSharedValue(height);
+  const {meals} = useBurgerStore();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -122,14 +171,14 @@ const BurgerMealsOrganism: React.FC = () => {
       <FlatList
         style={styles.container}
         contentContainerStyle={styles.paddingBottom}
-        data={LIST_BURGER_MEALS}
+        data={meals.desserts}
         ListHeaderComponent={<ListHeaderComponent />}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <ContentRenderItem
             image={item.image}
             name={item.name}
-            hasButton={item.hasButton}
+            hasButton={item.visible}
             onPress={onChangeMenu}
           />
         )}
@@ -138,7 +187,7 @@ const BurgerMealsOrganism: React.FC = () => {
       <Animated.View style={[styles.drawer, animatedStyle]}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={LIST_BURGER_MEALS}
+          data={meals.desserts}
           ListHeaderComponent={
             <View style={styles.headerDrawer}>
               <Label text="Change Drinks" weight="semibold" />
