@@ -12,14 +12,18 @@ import {Header} from '../../molecules';
 import {Gap, Label} from '../../atoms';
 import {MainLayout} from '../../../layouts';
 import {scale, scaleHeight} from '../../../utils';
-import {LIST_TRANSACTION, LIST_WALLET, colors} from '../../../constants';
+import {LIST_WALLET, colors} from '../../../constants';
+import {useProfileStore} from '../../../stores';
 
 const ProfileOrganism: React.FC = () => {
+  const {history} = useProfileStore();
+
   return (
     <MainLayout>
       <Header />
       <FlatList
         style={styles.container}
+        showsVerticalScrollIndicator={false}
         data={[{id: '1'}]}
         keyExtractor={item => item.id}
         renderItem={() => (
@@ -73,16 +77,19 @@ const ProfileOrganism: React.FC = () => {
                 </>
               }
               showsVerticalScrollIndicator={false}
-              data={LIST_TRANSACTION}
+              data={history}
               keyExtractor={item => item.name}
               renderItem={({item}) => (
                 <TouchableOpacity style={styles.cardTransaction}>
                   <View>
-                    <Label text={item.date} color={colors['gray-01']} />
+                    <Label
+                      text={String(new Date().toLocaleDateString())}
+                      color={colors['gray-01']}
+                    />
                     <Gap height={8} />
-                    <Label text={item.name} weight="semibold" />
+                    <Label text={item.name} />
                   </View>
-                  <Label text={'Rp.' + item.price} weight="bold" />
+                  <Label text={'Rp.' + item.price} weight="semibold" />
                 </TouchableOpacity>
               )}
             />

@@ -197,7 +197,7 @@ export const LIST_MENU = [
     image: require('../assets/images/list-menus/menu-2.png'),
   },
   {
-    id: 'baverages',
+    id: 'beverages',
     description: 'Pepsi, CocaCola, Soft Drinks',
     name: 'Beverages',
     imagePath: 'menu-3.png',
