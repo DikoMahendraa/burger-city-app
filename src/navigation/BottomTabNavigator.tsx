@@ -10,7 +10,7 @@ import {
 } from '../screens/Home';
 import {AppRoutes} from './routes';
 import {colors} from '../constants';
-import {scale, scaleHeight} from '../utils';
+import {scale} from '../utils';
 
 const LIST_TABS = [
   {
@@ -45,7 +45,6 @@ const TabItem: React.FC<{focused: boolean; name: string}> = ({
     fontWeight: focused ? '600' : '400',
     textTransform: 'capitalize',
     fontSize: scale(12),
-    marginTop: scale(-12),
     textAlign: 'center',
     color: focused ? colors.primary : colors.disabled,
   };
@@ -73,20 +72,19 @@ const BottomTabNavigator: React.FC = () => {
                 <item.icon
                   strokeWidth={focused ? 3 : 2}
                   color={color}
-                  size={20}
+                  size={scale(20)}
                 />
               ) as JSX.Element,
             tabBarStyle: {
-              height: scaleHeight(90),
               backgroundColor: colors.white,
-              borderTopLeftRadius: scale(52),
-              borderTopRightRadius: scale(52),
-              position: 'absolute',
+              borderTopLeftRadius: scale(24),
+              borderTopRightRadius: scale(24),
               shadowColor: colors.dark,
               shadowOffset: {height: 2, width: 0},
               shadowOpacity: 0.4,
             },
             tabBarItemStyle: {
+              paddingBottom: scale(6),
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
