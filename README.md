@@ -29,15 +29,15 @@ src
 
 ## Tech setup
 
-[React Native SVG](https://www.npmjs.com/package/react-native-svg)
-[Zustand](https://github.com/pmndrs/zustand/tree/main/docs)
-[Tanstack](https://tanstack.com/query/v5/docs/framework/react/installation)
-[Axios](https://github.com/axios/axios)
-[Lucide Icon](https://lucide.dev/guide/packages/lucide-react-native)
-[React Navigation](https://reactnavigation.org/docs/getting-started)
-[Husky pre commit](https://typicode.github.io/husky/get-started.html)
-[React Native Testing Library](https://callstack.github.io/react-native-testing-library/docs/start/quick-start)
-[Eslint Plugin RTL](https://github.com/testing-library/eslint-plugin-testing-library)
+- [React Native SVG](https://www.npmjs.com/package/react-native-svg)
+- [Zustand](https://github.com/pmndrs/zustand/tree/main/docs)
+- [Tanstack](https://tanstack.com/query/v5/docs/framework/react/installation)
+- [Axios](https://github.com/axios/axios)
+- [Lucide Icon](https://lucide.dev/guide/packages/lucide-react-native)
+- [React Navigation](https://reactnavigation.org/docs/getting-started)
+- [Husky pre commit](https://typicode.github.io/husky/get-started.html)
+- [React Native Testing Library](https://callstack.github.io/react-native-testing-library/docs/start/quick-start)
+- [Eslint Plugin RTL](https://github.com/testing-library/eslint-plugin-testing-library)
 
 ## Run Locally
 
