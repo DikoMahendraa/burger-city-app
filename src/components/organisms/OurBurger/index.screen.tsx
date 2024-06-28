@@ -120,15 +120,15 @@ const OurBurgerOrganism: React.FC = () => {
             </>
           }
         />
-        {shouldShowBasket() && (
-          <FloatingBasket
-            onPress={onViewCart}
-            rootStyle={styles.resetPaddingBottom}
-            length={String(carts?.length)}
-            total={Number(totalCart)}
-          />
-        )}
       </View>
+      {shouldShowBasket() && (
+        <FloatingBasket
+          onPress={onViewCart}
+          rootStyle={styles.resetPaddingBottom}
+          length={String(carts?.length)}
+          total={Number(totalCart)}
+        />
+      )}
     </MainLayout>
   );
 };
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   resetPaddingBottom: {
     right: 0,
     left: 0,
-    bottom: 50,
     paddingBottom: 12,
   },
   row: {

@@ -94,8 +94,6 @@ const DetailsBurgerMenuOrganism: React.FC<{
     navigate(AppDetailRoutes.DETAIL_CART);
   }, []);
 
-  console.log(LIST_ITEMS.beverages);
-
   return (
     <View style={styles.container}>
       <FlatList

@@ -1,20 +1,30 @@
 import {z} from 'zod';
 
-export const signInSchema = z.object({
-  email: z.string().email().min(1, {message: 'email is required'}),
-  password: z.string().min(1, {message: 'passsword is required'}),
-});
+const emailValidation = {
+  email: z
+    .string({message: 'email is required'})
+    .email()
+    .min(1, {message: 'email is required'}),
+};
 
 const passwordValidation = {
-  password: z.string().min(1, {message: 'Password is required'}),
+  password: z
+    .string({message: 'Password is required'})
+    .min(1, {message: 'Password is required'}),
   confirm_password: z
-    .string()
+    .string({message: 'Confirm password is required'})
     .min(1, {message: 'Confirm password is required'}),
 };
 
+export const signInSchema = z.object({
+  password: passwordValidation.password,
+  ...emailValidation,
+});
+
 const phoneValidation = {
   phone: z
-    .string()
+    .string({message: 'Phone number is required'})
+    .min(1, {message: 'Phone number is required'})
     .min(10, {message: 'Phone must be at least 10 digits long'})
     .max(15, {message: 'Phone must be at most 15 digits long'})
     .regex(/^[0-9]+$/, {message: 'Phone must contain only digits'}),
@@ -22,11 +32,10 @@ const phoneValidation = {
 
 export const signUpEmailSchema = z
   .object({
-    username: z.string().min(1, {message: 'Username is required'}),
-    email: z
-      .string()
-      .email({message: 'Invalid email'})
-      .min(1, {message: 'Email is required'}),
+    username: z
+      .string({message: 'Username is required'})
+      .min(1, {message: 'Username is required'}),
+    ...emailValidation,
     ...passwordValidation,
   })
   .refine(data => data.password === data.confirm_password, {
